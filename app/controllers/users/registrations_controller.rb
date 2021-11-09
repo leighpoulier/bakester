@@ -39,9 +39,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def upgrade_to_baker
     if user_signed_in?
-      current_user.update(params.require(:user).permit(:baker))
-      unless current_user.save
-        flash.alert "Unable to upgrade to baker for some reason...?"
+      if params[:user][:baker]
+        current_user.update(params.require(:user).permit(:baker))
+        current_user.baker_at = DateTime.now
+        unless current_user.save
+          flash.alert "Unable to upgrade to baker for some reason...?"
+        end
       end
     end
     redirect_to :root
