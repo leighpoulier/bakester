@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @categories = Category.all
@@ -35,7 +36,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category.destroy
-    redirect_to categories_url, notice: "Category was successfully destroyed."
+    redirect_to categories_url, notice: "Category was successfully deleted."
   end
 
   private

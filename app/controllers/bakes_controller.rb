@@ -42,7 +42,7 @@ class BakesController < ApplicationController
 
   def destroy
     @bake.destroy
-    redirect_to bakes_url, notice: "Bake was successfully destroyed."
+    redirect_to bakes_url, notice: "Bake was successfully deleted."
 
   end
 
@@ -54,5 +54,23 @@ class BakesController < ApplicationController
 
   def bake_params
     params.require(:bake).permit(:name, :description, :unit_price, :unit, :category_id, :lead_time_days)
+  end
+
+  def upload_pic
+    if uploaded_file = params[:recipe][:picture]
+      
+      # Save locally = NO
+      # pathname = Rails.root.join 'public','images',uploaded_file.original_filename
+      # File.open(pathname, 'wb') do |file|
+      #   file.write uploaded_file.read
+      # end
+
+      # Upload to AWS
+
+
+      # uuid = SecureRandom.uuid   # Version 4 UUID
+
+      @recipe.update_attribute :picture_url, uploaded_file.original_filename
+    end
   end
 end
