@@ -29,10 +29,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  def upgrade_user
+  def show
+    id = params[:id]
+    @user = User.find(id)
   end
 
-  def upgrade_user_to_baker
+  def upgrade
+  end
+
+  def upgrade_to_baker
     if user_signed_in?
       current_user.update(params.require(:user).permit(:baker))
       unless current_user.save

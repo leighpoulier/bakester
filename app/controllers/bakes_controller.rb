@@ -1,5 +1,7 @@
 class BakesController < ApplicationController
   before_action :set_bake, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [:index, :show]
+
 
   def index
     @bakes = Bake.all
@@ -10,7 +12,7 @@ class BakesController < ApplicationController
   end
 
   def show
-    @bake.view_count.increment
+    @bake.increment!(:view_count)
   end
 
   def new

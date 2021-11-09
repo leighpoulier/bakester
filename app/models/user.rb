@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   has_many :bakes
 
+  validates :first_name, :last_name, presence: true
 
   def full_name
     self.first_name + " " + self.last_name

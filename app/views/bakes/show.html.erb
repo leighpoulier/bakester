@@ -1,11 +1,14 @@
-<h1>Bakes#show</h1>
+<h1><%= @bake.name %></h1>
 
-      <% if @bake.picture_url %>
-        <%= image_tag bake.picture_url %>
-      <% end %>
-      <h3><%= @bake.name %></h3>
-      <p><%= @bake.category.name %></p>
-      <p><%= @bake.description %></p>
-      <p><%= number_to_currency(@bake.unit_price/100) %> per <%= @bake.unit %></p>
-      <p>Delivered in <%= @bake.lead_time_days %> days</p>
-      <p><%= @bake.view_count %> views</p>
+<% if @bake.picture_url %>
+  <%= image_tag bake.picture_url %>
+<% end %>
+<p><%= @bake.category.name %></p>
+<p><%= @bake.description %></p>
+<p><%= number_to_currency(@bake.unit_price/100) %> per <%= @bake.unit %></p>
+<p>Delivered in <%= @bake.lead_time_days %> days</p>
+<p><%= @bake.view_count %> views</p>
+
+<% if user_signed_in? && current_user.id == @bake.user.id %>
+  <%= button_to "Edit", :edit_bake, method: :get %>
+<% end %>
