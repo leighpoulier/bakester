@@ -1,0 +1,20 @@
+<ul>
+  <% @bakes.each do |bake| %>
+    <%= link_to bake do %>
+      <li>
+        <% if bake.picture_url %>
+          <%= image_tag bake.picture_url %>
+        <% end %>
+        <h3><%= bake.name %></h3>
+        <% if current_page?(action: 'index') %>
+          <p><%= bake.user.full_name %></p>
+        <% end %>
+        <p><%= bake.category.name %></p>
+        <p><%= bake.description %></p>
+        <p><%= number_to_currency(bake.unit_price/100) %> per <%= bake.unit %></p>
+        <p>Delivered in <%= bake.lead_time_days %> days</p>
+        <p><%= bake.view_count %> views</p>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

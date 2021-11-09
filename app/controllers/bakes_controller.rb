@@ -5,15 +5,20 @@ class BakesController < ApplicationController
     @bakes = Bake.all
   end
 
+  def mybakes
+    @bakes = current_user.bakes
+  end
+
   def show
+    @bake.view_count.increment
   end
 
   def new
-    @bake = Bake.new
+    @bake = current_user.bakes.new
   end
 
   def create
-    @bake = Bake.new(bake_params)
+    @bake = current_user.bakes.new(bake_params)
 
     if @bake.save
       redirect_to @bake, notice: "Bake was successfully created."
@@ -46,6 +51,6 @@ class BakesController < ApplicationController
   end
 
   def bake_params
-    params.require(:bake).permit(:name, :description, :unit_price, :unit, :category_id, :view_count, :lead_time_days)
+    params.require(:bake).permit(:name, :description, :unit_price, :unit, :category_id, :lead_time_days)
   end
 end

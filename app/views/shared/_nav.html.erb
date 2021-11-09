@@ -5,12 +5,15 @@
 
   <% if user_signed_in? %>
 
-      <li>
-    <% if current_user.baker %>
-        <%= link_to "New", :new_bake %>
-    <% else %>
-        <%= link_to "Become a Baker!", :edit_user_registration %>
-    <% end %>
+    <li>
+      <% if current_user.baker %>
+          <%= link_to "My Bakes", :mybakes %>
+      <% else %>
+          <%= link_to "Become a Baker!", :upgrade_user %>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to "My Account", :myaccount %>
     </li>
     <li>
       <%= link_to "Log Out", :logout %>

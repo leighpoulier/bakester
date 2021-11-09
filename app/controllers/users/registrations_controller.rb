@@ -29,6 +29,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
+  def upgrade_user
+  end
+
+  def upgrade_user_to_baker
+    if user_signed_in?
+      current_user.update(params.require(:user).permit(:baker))
+      unless current_user.save
+        flash.alert "Unable to upgrade to baker for some reason...?"
+      end
+    end
+    redirect_to :root
+  end
+
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
   # in to be expired now. This is useful if the user wants to
