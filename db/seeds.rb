@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+if Category.count == 0
+  categories = %w[Cakes Cupcakes Biscuits Slices]
+  categories.each do |category|
+    Category.create(name: category)
+    puts "Created category: #{category}"
+  end
+end
