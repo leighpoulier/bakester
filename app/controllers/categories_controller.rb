@@ -42,11 +42,11 @@ class CategoriesController < ApplicationController
 
   private
 
-    def is_admin?
-      if !user_signed_in? || !current_user.admin
-        redirect_to :root
-      end
-    end
+    # def is_admin?
+    #   if !user_signed_in? || !current_user.admin
+    #     redirect_to :root
+    #   end
+    # end
   
     def set_category
       @category = Category.find(params[:id])
