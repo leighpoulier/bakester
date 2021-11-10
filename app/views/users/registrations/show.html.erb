@@ -5,4 +5,5 @@
 <% if @user.baker %>
   <p>Baker since <%= @user.baker_at.year %>
 <% end %>
-<p><%= pluralize(@user.bakes.count, "bake") %></p>
+
+<%= render 'bakes/list', bakes: @user.bakes %>

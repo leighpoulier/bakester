@@ -8,11 +8,13 @@ Rails.application.routes.draw do
     get '/logout', to: 'devise/sessions#destroy'
     get '/signup', to: 'devise/registrations#new'
     get '/myaccount', to: 'devise/registrations#edit'
+    get '/changepassword', to: 'users/registrations#change_password', as: 'change_password'
     get '/upgrade', to: 'users/registrations#upgrade', as: 'upgrade_user'
     post '/upgrade', to: 'users/registrations#upgrade_to_baker', as: 'upgrade_user_to_baker'
     get '/users/:id', to: 'users/registrations#show', as: 'user'
   end
   get '/mybakes', to: 'bakes#mybakes'
+  get '/admin', to: 'admin#admin'
   resources :bakes
   resources :categories
 end

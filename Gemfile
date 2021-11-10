@@ -56,3 +56,9 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "devise", "~> 4.8"
+
+gem "aws-sdk-s3", "~> 1.105", require: false
+
+gem "image_processing", "~> 1.12"
+
+gem "activestorage-validator", "~> 0.2.0"

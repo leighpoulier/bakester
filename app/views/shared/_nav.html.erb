@@ -18,6 +18,11 @@
     <li>
       <%= link_to "My Account", :myaccount %>
     </li>
+      <% if current_user.admin %>
+        <li>
+          <%= link_to "Admin", :admin %>
+        </li>
+      <% end %>
     <li>
       <%= link_to "Log Out", :logout %>
     </li>

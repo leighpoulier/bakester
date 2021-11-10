@@ -1,4 +1,14 @@
 <%= form_with model: @bake do |f| %>
+
+  <% if @bake.errors.any? %>
+    <h3>There are <%= pluralize(@bake.errors.count, "error") %></h3>
+    <ul>
+      <% @bake.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
   <div>
     <%= f.label :name %>
     <%= f.text_field :name %>
@@ -11,8 +21,9 @@
 
   <div>
     <div>
-      <%= f.label :unit_price %>
-      <%= f.text_field :unit_price %>
+    <% byebug %>
+      <%= label_tag :unit_price_dollars %>
+      <%= number_field_tag :unit_price_dollars, @bake.unit_price_dollars, step: 0.05, min: 0.05 %>
     </div>
 
     <div>
@@ -32,8 +43,13 @@
   </div>
 
   <div>
-    <%= f.label :picture %>
-    <%= f.file_field :picture %>
+    <%= f.label :image %>
+    <% if (action_name == "edit" || action_name == "update")  && @bake.image.attached? && @bake.errors[:image].count == 0  %>
+      <%= image_tag @bake.image %>
+      <%= label_tag :bake_remove_image, "Remove Image" %>
+      <%= check_box_tag :bake_remove_image %>
+    <% end %>
+    <%= f.file_field :image, accept: Bake::IMAGE_TYPES.join(", ") %>
   <div>
 
   <div>
