@@ -13,6 +13,8 @@ class Bake < ApplicationRecord
 
   IMAGE_TYPES = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp']
   IMAGE_MAX_SIZE = 5.megabytes
+  IMAGE_UPLOAD_MAX_WIDTH = 500
+  IMAGE_UPLOAD_MAX_HEIGHT = 500
 
   belongs_to :user
   belongs_to :category

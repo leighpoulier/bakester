@@ -7,6 +7,6 @@
 <p>Delivered in <%= @bake.lead_time_days %> days</p>
 <p><%= @bake.view_count %> views</p>
 
-<% if user_signed_in? && current_user.id == @bake.user.id %>
+<% if user_signed_in? && (current_user.id == @bake.user.id || current_user.admin) %>
   <%= button_to "Edit", :edit_bake, method: :get %>
 <% end %>

@@ -39,7 +39,11 @@ class BakesController < ApplicationController
   def update
 
     if params[:bake_remove_image]
+      byebug
       @bake.image.purge
+    end
+    if params[:bake][:bake_image_upload]
+      resize_image
     end
 
     set_unit_price
@@ -74,9 +78,26 @@ class BakesController < ApplicationController
     end
   end
 
-  def resize_image(max_width, max_height)
+  def resize_image
     byebug
+    uploaded_image = params[:bake][:bake_image_upload]
+    uploaded_image_path = Pathname.new(uploaded_image)
+    # uploaded_image_filename = ActiveStorage::Filename.new(uploaded_image)
+    # new_image_name = uploaded_image_filename.base + "_resized" + uploaded_image_filename.extension_with_delimiter
+    # new_image_path = uploaded_image_path.dirname.join(Pathname.new(new_image_name))
+    image = MiniMagick::Image.new(uploaded_image_path)
+    image.resize "#{Bake::IMAGE_UPLOAD_MAX_WIDTH}x#{Bake::IMAGE_UPLOAD_MAX_HEIGHT}>"
+    
+    if image.data["geometry"]["width"] <= Bake::IMAGE_UPLOAD_MAX_WIDTH && image.data["geometry"]["height"] <= Bake::IMAGE_UPLOAD_MAX_HEIGHT
+      params[:bake][:image] = params[:bake][:bake_image_upload]
+      params[:bake].delete(:bake_image_upload)
+    else
+      @bake.errors.add(:image, "Image resizing failed !")
+    end
 
   end
+
+
+
 
 end
