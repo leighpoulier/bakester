@@ -74,33 +74,8 @@ class BakesController < ApplicationController
     end
   end
 
-  # def upload_pic
-  #   if uploaded_file = params[:bake][:image]
-      
-  #     # Save locally BAD
-  #     # pathname = Rails.root.join 'public','images',uploaded_file.original_filename
-  #     # File.open(pathname, 'wb') do |file|
-  #     #   file.write uploaded_file.read
-  #     # end
-  #     # @recipe.update_attribute :picture_url, uploaded_file.original_filename
+  def resize_image(max_width, max_height)
 
-  #     # Upload to AWS
-  #     if uploaded_file.size <= 5.megabytes
-  #       if ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'].include?(uploaded_file.content_type)
-  #         @bake.image.attach(params[:bake][:image])
-  #         return true
-  #       else
-  #         @bake.errors.add(:image, "Permitted image types are JPG and PNG")
-  #         return false
-  #       end
-  #     else
-  #       @bake.errors.add(:image, "Maximum image size is 5MB")
-  #       return false
-  #     end
+  end
 
-  #     # uuid = SecureRandom.uuid   # Version 4 UUID
-  #   else
-  #     return true  # there is no file to upload, so this is success.
-  #   end
-  # end
 end
