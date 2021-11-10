@@ -24,7 +24,7 @@ class Bake < ApplicationRecord
   has_one_attached :image
 
   def unit_price_dollars
-    self.unit_price / 100.0
+    self.unit_price ? self.unit_price / 100.0 : 0
   end
 
 end
