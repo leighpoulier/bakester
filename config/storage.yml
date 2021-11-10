@@ -7,17 +7,17 @@ local:
   root: <%= Rails.root.join("storage") %>
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
-amazon-development:
+amazon_development:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws-development, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws-development, :secret_access_key) %>
+  access_key_id: <%= Rails.application.credentials.dig(:aws_development, :access_key_id) %>
+  secret_access_key: <%= Rails.application.credentials.dig(:aws_development, :secret_access_key) %>
   region: us-east-2
   bucket: bakester-image-upload-development
 
-amazon-production:
+amazon_production:
   service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws-production, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws-production, :secret_access_key) %>
+  access_key_id: <%= Rails.application.credentials.dig(:aws_production, :access_key_id) %>
+  secret_access_key: <%= Rails.application.credentials.dig(:aws_production, :secret_access_key) %>
   region: us-east-2
   bucket: bakester-image-upload-production
 
