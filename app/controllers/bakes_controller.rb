@@ -75,6 +75,7 @@ class BakesController < ApplicationController
   end
 
   def resize_image(max_width, max_height)
+    byebug
 
   end
 
