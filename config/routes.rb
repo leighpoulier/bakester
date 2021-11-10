@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get '/upgrade', to: 'users/registrations#upgrade', as: 'upgrade_user'
     post '/upgrade', to: 'users/registrations#upgrade_to_baker', as: 'upgrade_user_to_baker'
     get '/users/:id', to: 'users/registrations#show', as: 'user'
+    get '/users', to: 'users/registrations#index'
   end
   get '/mybakes', to: 'bakes#mybakes'
   delete '/bakes_image/:id', to: 'bakes#purge_image', as: 'bakes_image_purge'
