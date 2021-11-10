@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get '/users/:id', to: 'users/registrations#show', as: 'user'
   end
   get '/mybakes', to: 'bakes#mybakes'
+  delete '/bakes_image/:id', to: 'bakes#purge_image', as: 'bakes_image_purge'
   get '/admin', to: 'admin#admin'
   resources :bakes
   resources :categories
