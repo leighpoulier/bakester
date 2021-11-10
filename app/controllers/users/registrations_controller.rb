@@ -58,6 +58,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   end
 
+  def index
+    @users = User.all
+  end
+
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
   # in to be expired now. This is useful if the user wants to

@@ -1,7 +1,7 @@
 class BakesController < ApplicationController
   before_action :set_bake, only: %i[ show edit update destroy purge_image ]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :authorise_user, except: [:index, :show, :new, :mybakes]
+  before_action :authorise_user, except: [:index, :show, :new, :create, :mybakes]
 
 
   def index
