@@ -5,7 +5,6 @@ class BakesController < ApplicationController
 
 
   def index
-    byebug
     @bakes = Bake.all
   end
 

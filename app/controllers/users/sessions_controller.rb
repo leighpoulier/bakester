@@ -18,6 +18,16 @@ class Users::SessionsController < Devise::SessionsController
   #   super
   # end
 
+
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) ||
+      if resource.is_a?(User) && resource.baker
+        my_bakes_url
+      else
+        super
+      end
+  end
+
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.
