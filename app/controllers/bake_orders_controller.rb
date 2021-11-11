@@ -42,7 +42,6 @@ class BakeOrdersController < ApplicationController
     @cart.update_attribute(:complete_at, DateTime.now)
     @cart.update_attribute(:complete, true)
     if @cart.valid?
-      byebug
       redirect_to @cart
     else
       render :cart
