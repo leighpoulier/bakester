@@ -1,0 +1,17 @@
+<% if bake.image.attached? %>
+  <%= link_to bake do %>
+    <%= image_tag bake.image %>
+  <% end %>
+<% end %>
+<h3><%= link_to bake.name, bake %></h3>
+<p><%= controller_name + "#" + action_name %><p>
+<% unless (controller_name == 'bakes' && action_name == 'my_bakes') || (controller_name == 'registrations' && action_name == 'show') %>
+  <p><%= link_to bake.baker.full_name, bake.baker %></p>
+<% end %>
+<% unless controller_name == 'categories' && action_name = 'show' %>
+  <p><%= link_to bake.category.name, bake.category %></p>
+<% end %>
+<p><%= bake.description %></p>
+<p><%= number_to_currency(bake.unit_price_dollars) %> per <%= bake.unit %></p>
+<p>Delivered in <%= bake.lead_time_days %> days</p>
+<p><%= bake.view_count %> views</p>

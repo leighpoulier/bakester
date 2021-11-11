@@ -1,10 +1,11 @@
 class AdminController < ApplicationController
 
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!
   before_action :is_admin?
 
   def admin
   end
+
 
   # private
   #   def is_admin?

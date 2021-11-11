@@ -10,7 +10,7 @@
 
     <li>
       <% if current_user.baker %>
-          <%= link_to "My Bakes", :mybakes %>
+          <%= link_to "My Bakes", :my_bakes %>
       <% else %>
           <%= link_to "Become a Baker!", :upgrade_user %>
       <% end %>

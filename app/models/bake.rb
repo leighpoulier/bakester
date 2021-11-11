@@ -16,14 +16,17 @@ class Bake < ApplicationRecord
   IMAGE_UPLOAD_MAX_WIDTH = 500
   IMAGE_UPLOAD_MAX_HEIGHT = 500
 
-  belongs_to :user
+  # belongs_to :user
+  belongs_to :baker, class_name: "User"
   belongs_to :category
+  has_many :bake_jobs
+  has_many :bake_orders, through: :bake_jobs
+  has_one_attached :image
 
-  validates :name, :description, :unit_price, :unit, :category_id, :lead_time_days, :user_id, presence: true
+  validates :name, :description, :unit_price, :unit, :category_id, :lead_time_days, :baker_id, presence: true
   validates :unit_price, :lead_time_days, numericality: {only_integer: true}
   validates :image, blob: { content_type: Bake::IMAGE_TYPES, size_range: 0..(Bake::IMAGE_MAX_SIZE) }
 
-  has_one_attached :image
 
   def unit_price_dollars
     self.unit_price ? self.unit_price / 100.0 : 0

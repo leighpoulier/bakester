@@ -3,7 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
-  before_action :is_admin?, only: [:index]
+  before_action :is_admin?, except: [:show, :upgrade, :upgrade_to_baker, :edit_password, :update_password, ]
 
   # GET /resource/sign_up
   # def new
@@ -38,29 +38,39 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def upgrade
   end
 
+
   def upgrade_to_baker
-    if user_signed_in?
-      if params[:user][:baker]
-        current_user.update(params.require(:user).permit(:baker))
+    byebug
+    if user_signed_in? 
+      if !current_user.baker && params[:user][:baker] == "true"
+        current_user.baker = true
         current_user.baker_at = DateTime.now
-        unless current_user.save
+        if current_user.save
+          redirect_to :my_bakes
+        else
           flash.alert "Unable to upgrade to baker for some reason...?"
+          redirect_to :root
         end
+      else
+        redirect_to :root
       end
+    else
+      redirect_to :root
     end
-    redirect_to :root
   end
 
-  def change_password
-
+  def edit_password
   end
 
   def update_password
-
   end
 
   def index
     @users = User.all
+  end
+
+  def upgrade_to_admin
+    @user.update_attribute(:admin, true)
   end
 
   # GET /resource/cancel
@@ -94,6 +104,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
 
+  private
   def resource_name
     :user
   end

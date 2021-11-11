@@ -1,0 +1,7 @@
+<h1>My Bakes</h1>
+<%= button_to "Add new Bake", :new_bake, method: :get %>
+<p><%= pluralize(@bakes.count, "bake") %></p>
+
+<%= render 'list', bakes: @bakes %>
+
+<%= button_to "Add new Bake", :new_bake, method: :get if @bakes.count > 0 %>

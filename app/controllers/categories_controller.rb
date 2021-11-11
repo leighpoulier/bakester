@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :is_admin?
+  before_action :is_admin?, except: [:show]
 
   def index
     @categories = Category.all

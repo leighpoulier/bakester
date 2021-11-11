@@ -1,14 +1,15 @@
 class BakesController < ApplicationController
   before_action :set_bake, only: %i[ show edit update destroy purge_image ]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :authorise_user, except: [:index, :show, :new, :create, :mybakes]
+  before_action :authorise_user, except: [:index, :show, :new, :create, :my_bakes]
 
 
   def index
+    byebug
     @bakes = Bake.all
   end
 
-  def mybakes
+  def my_bakes
     @bakes = current_user.bakes
   end
 
@@ -50,7 +51,6 @@ class BakesController < ApplicationController
 
     set_unit_price
 
-
     if @bake.update(bake_params)
       redirect_to @bake, notice: "Bake was successfully updated."
     else
@@ -76,7 +76,7 @@ class BakesController < ApplicationController
   end
 
   def authorise_user
-    unless current_user.id == @bake.user.id || current_user.admin
+    unless current_user.id == @bake.baker.id || current_user.admin
       # flash.notice = "You're not allowed to do that"
       redirect_to :root
     end

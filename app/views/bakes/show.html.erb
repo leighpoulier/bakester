@@ -1,12 +1,5 @@
-<h1><%= @bake.name %></h1>
+<%= render 'card', bake: @bake %>
 
-<%= image_tag @bake.image if @bake.image.attached?%>
-<p><%= @bake.category.name %></p>
-<p><%= @bake.description %></p>
-<p><%= number_to_currency(@bake.unit_price_dollars) %> per <%= @bake.unit %></p>
-<p>Delivered in <%= @bake.lead_time_days %> days</p>
-<p><%= @bake.view_count %> views</p>
-
-<% if user_signed_in? && (current_user.id == @bake.user.id || current_user.admin) %>
+<% if user_signed_in? && (current_user.id == @bake.baker.id || current_user.admin) %>
   <%= button_to "Edit", :edit_bake, method: :get %>
 <% end %>

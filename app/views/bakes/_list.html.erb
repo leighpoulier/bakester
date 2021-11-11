@@ -1,23 +1,8 @@
-<p><%= pluralize(bakes.count, "bake") %></p>
+
 <ul>
   <% bakes.each do |bake| %>
-    <%= link_to bake do %>
       <li>
-        <% if bake.image.attached? %>
-          <%= link_to bake do %>
-            <%= image_tag bake.image %>
-          <%  end %>
-        <% end %>
-        <h3><%= link_to bake.name, bake %></h3>
-        <% if action_name == 'index' %>
-          <p><%= link_to bake.user.full_name, bake.user %></p>
-        <% end %>
-        <p><%= link_to bake.category.name, bake.category %></p>
-        <p><%= bake.description %></p>
-        <p><%= number_to_currency(bake.unit_price_dollars) %> per <%= bake.unit %></p>
-        <p>Delivered in <%= bake.lead_time_days %> days</p>
-        <p><%= bake.view_count %> views</p>
+        <%= render 'bakes/card', bake: bake %>
       </li>
-    <% end %>
   <% end %>
 </ul>
