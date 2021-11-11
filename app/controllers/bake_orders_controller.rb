@@ -39,9 +39,9 @@ class BakeOrdersController < ApplicationController
       bake_job.update_attribute(:price_at_order, bake_job.bake.unit_price)
       bake_job.update_attribute(:status, :confirmed)
     end
-    @cart.update_attribute(:complete_at, DateTime.now)
-    @cart.update_attribute(:complete, true)
-    if @cart.valid?
+    if @cart.valid? && @cart.bake_jobs.count > 0
+      @cart.update_attribute(:complete_at, DateTime.now)
+      @cart.update_attribute(:complete, true)
       redirect_to @cart
     else
       render :cart
