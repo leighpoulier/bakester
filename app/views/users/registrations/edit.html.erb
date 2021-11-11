@@ -36,6 +36,11 @@
   <h2>Change Password</h2>
   <%= button_to "Change Password", :change_password, method: :get %>
 
+  <h2>My Orders</h2>
+  <%= link_to "View My Orders", :myorders %>
+
+
+
   <% if current_user.baker %>
     <h2>My Bakes</h2>
     <p>Placeholder to my bakes page</p>

@@ -16,6 +16,12 @@
       <% end %>
     </li>
     <li>
+      <% cart_label = "Cart" %>
+      <% cart_label << " (#{current_user.cart_size})" if current_user.cart_size %>
+      <%= link_to cart_label , :cart %>
+    </li>
+
+    <li>
       <%= link_to "My Account", :myaccount %>
     </li>
       <% if current_user.admin %>

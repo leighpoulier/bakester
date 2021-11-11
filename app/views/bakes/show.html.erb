@@ -1,5 +1,2 @@
 <%= render 'card', bake: @bake %>
 
-<% if user_signed_in? && (current_user.id == @bake.baker.id || current_user.admin) %>
-  <%= button_to "Edit", :edit_bake, method: :get %>
-<% end %>

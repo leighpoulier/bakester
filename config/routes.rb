@@ -19,7 +19,11 @@ Rails.application.routes.draw do
   get '/admin', to: 'admin#admin'
   resources :bakes
   resources :categories
-  
-  get '/*page', to: 'bakes#index', page: /(?!bakes|categories|users|admin|rails).*/  
+  get '/cart', to: 'bake_orders#cart'
+  post '/cart', to: 'bake_orders#add_to_cart'
+  post '/checkout', to: 'bake_orders#checkout'
+  get '/myorders', to: 'bake_orders#my_orders'
+  resources :bake_orders, path: 'orders'
+  get '/*page', to: 'bakes#index', page: /(?!bakes|categories|users|orders|admin|rails).*/  
 
 end

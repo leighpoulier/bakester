@@ -8,10 +8,18 @@
 <% unless (controller_name == 'bakes' && action_name == 'my_bakes') || (controller_name == 'registrations' && action_name == 'show') %>
   <p><%= link_to bake.baker.full_name, bake.baker %></p>
 <% end %>
-<% unless controller_name == 'categories' && action_name = 'show' %>
+<% unless controller_name == 'categories' && action_name == 'show' %>
   <p><%= link_to bake.category.name, bake.category %></p>
 <% end %>
 <p><%= bake.description %></p>
 <p><%= number_to_currency(bake.unit_price_dollars) %> per <%= bake.unit %></p>
 <p>Delivered in <%= bake.lead_time_days %> days</p>
 <p><%= bake.view_count %> views</p>
+<% if user_signed_in? %>
+  <% unless  current_user.id == bake.baker.id %>
+    <%= button_to "Add to Cart", {action: 'cart', controller: 'bake_orders', params: {bake_id: bake.id} } %>
+  <% end %>
+  <% if (bake.baker.id == current_user.id || current_user.admin ) %>
+    <%= button_to "Edit", edit_bake_path(bake) ,method: :get %>
+  <% end %>
+<% end %>

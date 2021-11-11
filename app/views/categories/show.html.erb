@@ -1,5 +1,7 @@
 <h2><%= @category.name %></h2>
 
+
+<p><%= pluralize(@category.bakes.count, "bake") %></p>
 <%= render 'bakes/list', bakes: @category.bakes %>
 
 

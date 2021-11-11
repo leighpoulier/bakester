@@ -5,4 +5,6 @@ class BakeJob < ApplicationRecord
 
   enum status: [:in_cart, :confirmed, :processing, :shipped, :delivered, :cancelled]
 
+  validates :price_at_order, presence: true, if: -> { self.bake_order.complete }
+
 end

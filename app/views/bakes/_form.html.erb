@@ -55,7 +55,7 @@
       <div>
         <%= f.label :image, "Add Image" %>
     <% end %>
-    <%= f.file_field :bake_image_upload, accept: Bake::IMAGE_TYPES.join(", "), {type: "image"} %>
+    <%= f.file_field :bake_image_upload, accept: Bake::IMAGE_TYPES.join(", ") %>
     </div>
   <div>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_11_082837) do
+ActiveRecord::Schema.define(version: 2021_11_11_133626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2021_11_11_082837) do
     t.bigint "bake_order_id", null: false
     t.bigint "bake_id", null: false
     t.integer "quantity", default: 1, null: false
-    t.integer "price_at_order", null: false
+    t.integer "price_at_order"
     t.integer "status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 2021_11_11_082837) do
     t.boolean "complete", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "complete_at", precision: 6
     t.index ["user_id"], name: "index_bake_orders_on_user_id"
   end
 
