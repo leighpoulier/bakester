@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th>Order No</th>
+      <th>User</th>
       <th>Complete?</th>
       <th>Submitted</th>
       <th>Bakes</th>
@@ -12,8 +13,9 @@
     <% bake_orders.each do |bake_order| %>
       <tr>
         <td><%= link_to bake_order.id, bake_order %></td>
+        <td><%= link_to bake_order.user.full_name, bake_order %></td>
         <td><%= link_to bake_order.complete ? "Y" : "N", bake_order %></td>
-        <td><%= link_to bake_order.complete_at.to_formatted_s(:day_month_year), bake_order %></td>
+        <td><%= link_to bake_order.complete ? bake_order.complete_at.to_formatted_s(:day_month_year) : "", bake_order %></td>
         <td><%= link_to bake_order.bake_jobs.sum(:quantity), bake_order %></td>
         <td><%= link_to number_to_currency(bake_order.bake_jobs.sum("quantity * price_at_order") / 100.0), bake_order %></td>
       </tr>

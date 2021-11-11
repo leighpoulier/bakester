@@ -13,8 +13,7 @@ class BakeOrdersController < ApplicationController
   end
 
   def show
-    @byebug
-    if current_user.id != @bake_order.user.id
+    unless current_user.id == @bake_order.user.id || current_user.admin
       redirect_to :root
     end
   end

@@ -1,48 +1,17 @@
 <h1>Cart</h1>
-  <% if @cart.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@cart.errors.count, "error") %> prohibited checkout:</h2>
 
-      <ul>
-        <% @cart.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<% if @cart.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(cart.errors.count, "error") %> prohibited checkout:</h2>
 
-<% if @cart.bake_jobs.count > 0 %>
-  <table>
-    <thead>
-      <tr>
-        <th>Bake</th>
-        <th>Qty</th>
-        <th>Unit Price</th>
-        <th>Line Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% running_total = 0 %>
-      <% @cart.bake_jobs.each do |bake_job| %>
-        <tr>
-          <td><%= link_to bake_job.bake.name, bake_job.bake %></td>
-          <td><%= bake_job.quantity %></td>
-          <% bake_price = bake_job.bake.unit_price %>
-          <td><%= number_to_currency(bake_price/100.0) %></td>
-          <% line_total = bake_job.quantity * bake_price %>
-          <% running_total += line_total %>
-          <td><%= number_to_currency(line_total / 100.0) %></td>
-        </tr>
+    <ul>
+      <% @cart.errors.each do |error| %>
+        <li><%= error.full_message %></li>
       <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <th scope="row" colspan ="4">Total</tf>
-        <td><%= number_to_currency(running_total / 100.0) %></td>
-      </tr>
-    </tfoot>
-  </table>
-  <%= button_to "Checkout", {action: 'checkout', controller: 'bake_orders'}, data: {confirm: "Confirm this order and send to Bakers?"} %>
-<% else %>
-  <p>Your cart is empty!</p>
+    </ul>
+  </div>
 <% end %>
+
+<%= render 'cart', cart: @cart %>
+
+<%= button_to "Checkout", {action: 'checkout', controller: 'bake_orders'}, data: {confirm: "Confirm this order and send to Bakers?"} %>
