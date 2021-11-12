@@ -3,6 +3,9 @@ class BakeJobsController < ApplicationController
   before_action :authenticate_user!, except: []
   before_action :is_admin?, only: [:index]
   before_action :set_bake_job, only: [:show, :update, :destroy]
+  before_action except: [:index, :my_bake_jobs] do
+    is_admin_or_owner?(@bake_job)
+  end
 
   def index
     @bake_jobs = BakeJob.all

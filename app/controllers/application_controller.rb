@@ -18,5 +18,11 @@ class ApplicationController < ActionController::Base
     end
 
 
+    def is_admin_or_owner?(resource)
+      puts "IS ADMIN OR OWNER"
+      unless current_user.id == resource.owner.id || current_user.admin
+        redirect_to :root
+      end
+    end
 
 end

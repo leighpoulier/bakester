@@ -31,4 +31,8 @@ class Bake < ApplicationRecord
     self.unit_price ? self.unit_price / 100.0 : 0
   end
 
+  def owner
+    self.baker
+  end
+
 end

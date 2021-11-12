@@ -3,7 +3,9 @@ class BakeOrdersController < ApplicationController
   before_action :is_admin?, only: [:index]
   before_action :set_order, only: [:show]
   before_action :set_cart, only: [:cart, :checkout, :empty_cart, :update_cart, :add_to_cart]
-  before_action :is_admin_or_owner?, only: [:show, :cart, :update_cart, :checkout, :empty_cart, :add_to_cart]
+  before_action except: [:index, :my_bake_orders] do
+    is_admin_or_owner?(@bake_order)
+  end
 
   def index
     @bake_orders = BakeOrder.all
@@ -71,12 +73,6 @@ class BakeOrdersController < ApplicationController
     @bake_order = BakeOrder.find(params[:id])
   end
 
-  def is_admin_or_owner?
-    puts "IS ADMIN OR OWNER"
-    unless current_user.id == @bake_order.user.id || current_user.admin
-      redirect_to :root
-    end
-  end
 
   def bake_order_params
     params.require(:bake_order).permit(:bake_jobs_attributes).permit(:bake_id, :quantity, :status)

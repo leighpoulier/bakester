@@ -7,4 +7,8 @@ class BakeJob < ApplicationRecord
 
   validates :price_at_order, presence: true, if: -> { self.bake_order.submitted }
 
+  def owner
+    self.bake_order.user
+  end
+
 end
