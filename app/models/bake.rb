@@ -16,7 +16,6 @@ class Bake < ApplicationRecord
   IMAGE_UPLOAD_MAX_WIDTH = 500
   IMAGE_UPLOAD_MAX_HEIGHT = 500
 
-  # belongs_to :user
   belongs_to :baker, class_name: "User"
   belongs_to :category
   has_many :bake_jobs

@@ -1,4 +1,4 @@
-<% if cart.bake_jobs.count > 0 %>
+<% if cart.bake_jobs.any? %>
   <table>
     <thead>
       <tr>
@@ -6,6 +6,7 @@
         <th>Qty</th>
         <th>Unit Price</th>
         <th>Line Total</th>
+        <th colspan="3"></th>
       </tr>
     </thead>
     <tbody>
@@ -19,13 +20,17 @@
           <% line_total = bake_job.quantity * bake_price %>
           <% running_total += line_total %>
           <td><%= number_to_currency(line_total / 100.0) %></td>
+          <td><%= button_to "\u2795", bake_job, method: :put, params: {increment: 1} %></td>
+          <td><%= button_to "\u2796", bake_job, method: :put, params: {decrement: 1} %></td>
+          <td><%= button_to "\u2718", bake_job, method: :delete %></td>
         </tr>
       <% end %>
     </tbody>
     <tfoot>
       <tr>
-        <th scope="row" colspan ="4">Total</tf>
+        <th scope="row" colspan ="3">Total</tf>
         <td><%= number_to_currency(running_total / 100.0) %></td>
+        <td colspan="3"></td>
       </tr>
     </tfoot>
   </table>

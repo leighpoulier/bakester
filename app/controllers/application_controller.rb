@@ -11,8 +11,12 @@ class ApplicationController < ActionController::Base
 
   private
     def is_admin?
-      if !user_signed_in? || !current_user.admin
+      puts "IS ADMIN"
+      unless user_signed_in? && current_user.admin
         redirect_to :root
       end
     end
+
+
+
 end

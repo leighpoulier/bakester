@@ -1,0 +1,52 @@
+<% if bake_jobs.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Job No</th>
+        <th>Customer</th>
+        <% unless controller_name == 'bake_jobs' && action_name == 'my_bake_jobs' %>
+          <th>Baker</th>
+        <% end %>
+        <th>Status</th>
+        <th>Submitted</th>
+        <th>Bake</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>Payment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% bake_jobs.each do |bake_job| %>
+        <tr>
+          <td><%= link_to bake_job.id, bake_job %></td>
+          <td><%= link_to bake_job.bake_order.user.full_name, bake_job.bake_order.user %></td>
+          <% unless controller_name == 'bake_jobs' && action_name == 'my_bake_jobs' %>
+            <td><%= link_to bake_job.baker.full_name, bake_job.baker %></td>
+          <% end %>
+          <td><%= bake_job.status %></td>
+          <td><%= bake_job.bake_order.submitted ? bake_job.bake_order.submitted_at.to_formatted_s(:hour_minute_day_month_year) : "" %></td>
+          <td><%= link_to bake_job.bake.name, bake_job.bake %></td>
+          <td>
+            <% if bake_job.bake_order.submitted %>
+              <% bake_price = bake_job.price_at_order %>
+              <%= number_to_currency(bake_price / 100.0) %>
+            <% else %>
+              <%= "" %>
+            <% end %>
+          </td>
+          <% bake_quantity = bake_job.quantity %>
+          <td><%= bake_job.quantity %></td>
+          <td>
+            <% if bake_job.bake_order.submitted %>
+              <%= number_to_currency(bake_quantity * bake_price / 100.0) %>
+            <% else %>
+              <%= "" %>
+            <% end %>          
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>You have no orders</p>
+<% end %>

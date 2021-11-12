@@ -17,7 +17,7 @@ class User < ApplicationRecord
   has_many :bake_orders
 
   # ignoring the "cart" incomplete order
-  has_many :complete_bake_orders, -> {where(complete: true)}, class_name: 'BakeOrder'
+  has_many :submitted_bake_orders, -> {where(submitted: true)}, class_name: 'BakeOrder'
 
   # has_many :incoming_bake_orders, through: :bake_jobs, source: :bake_order
 
@@ -31,11 +31,11 @@ class User < ApplicationRecord
 
   def cart_size
     # returns nil if there is no cart
-    self.bake_orders.where(complete: false).first&.bake_jobs&.sum(:quantity)
+    self.bake_orders.where(submitted: false).first&.bake_jobs&.sum(:quantity)
   end
 
   def cart
-    self.bake_orders.where(complete: false).first
+    self.bake_orders.where(submitted: false).first
   end
 
 end

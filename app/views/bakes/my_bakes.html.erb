@@ -4,4 +4,4 @@
 
 <%= render 'list', bakes: @bakes %>
 
-<%= button_to "Add new Bake", :new_bake, method: :get if @bakes.count > 0 %>
+<%= button_to "Add new Bake", :new_bake, method: :get if @bakes.any? %>

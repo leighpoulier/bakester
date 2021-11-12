@@ -14,4 +14,7 @@
 
 <%= render 'cart', cart: @cart %>
 
-<%= button_to "Checkout", {action: 'checkout', controller: 'bake_orders'}, data: {confirm: "Confirm this order and send to Bakers?"} %>
+<% if @cart.bake_jobs.any? %>
+  <%= button_to "Checkout", :checkout, data: {confirm: "Confirm this order and send to Bakers?"} %>
+  <%= button_to "Empty Cart", :cart, method: :delete, data: {confirm: "Are you sure you want to empty your cart?"} %>
+<% end %>

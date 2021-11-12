@@ -14,16 +14,20 @@ Rails.application.routes.draw do
     get '/users/:id', to: 'users/registrations#show', as: 'user'
     get '/users', to: 'users/registrations#index'
   end
-  get '/mybakes', to: 'bakes#my_bakes', as: 'my_bakes'
+  get '/mybakes', to: 'bakes#my_bakes'
   delete '/bakes_image/:id', to: 'bakes#purge_image', as: 'bakes_image_purge'
   get '/admin', to: 'admin#admin'
   resources :bakes
   resources :categories
   get '/cart', to: 'bake_orders#cart'
-  post '/cart', to: 'bake_orders#add_to_cart'
+  # post '/addtocart', to: 'bake_orders#add_to_cart'
+  post '/cart', to: 'bake_orders#update_cart'
+  delete '/cart', to: 'bake_orders#empty_cart'
   post '/checkout', to: 'bake_orders#checkout'
-  get '/myorders', to: 'bake_orders#my_orders'
+  get '/myorders', to: 'bake_orders#my_bake_orders'
+  get '/mybakejobs', to: 'bake_jobs#my_bake_jobs'
   resources :bake_orders, path: 'orders'
+  resources :bake_jobs
   get '/*page', to: 'bakes#index', page: /(?!bakes|categories|users|orders|admin|rails).*/  
 
 end

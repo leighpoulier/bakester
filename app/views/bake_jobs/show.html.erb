@@ -1,0 +1,69 @@
+<h1>Bake Job</h1>
+
+<table>
+  <tbody>
+    <tr>
+      <th scope="row">Bake Job No</th>
+      <td><%= @bake_job.id %></td>
+    </tr>
+    <tr>
+      <th scope="row">Order No</th>
+      <td>
+        <% if current_user.admin || current_user.id == @bake_job.bake_order.user.id %>
+          <%= link_to @bake_job.bake_order.id, @bake_job.bake_order %>
+        <% else %>
+          <%= @bake_job.bake_order.id %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Customer</th>
+      <td><%= link_to @bake_job.bake_order.user.full_name, @bake_job.bake_order.user %></td>
+    </tr>
+    <tr>
+      <th scope="row">Baker</th>
+      <td><%= link_to @bake_job.baker.full_name, @bake_job.baker %></td>
+    </tr>
+    <tr>
+      <th scope="row">Status</th>
+      <td><%= @bake_job.status %></td>
+    </tr>
+    <% if @bake_job.bake_order.submitted %>
+      <tr>
+        <th scope="row">Submitted</th>
+        <td><%= @bake_job.bake_order.submitted ? @bake_job.bake_order.submitted_at.to_formatted_s(:day_month_year) : "" %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th scope="row">Bake</th>
+      <td><%= link_to @bake_job.bake.name, @bake_job.bake %></td>
+    </tr>
+    <tr>
+      <th scope="row">Quantity</th>
+      <% bake_quantity = @bake_job.quantity %>
+      <td><%= bake_quantity %></td>
+    </tr>
+    <tr>
+      <th scope="row">Price</th>
+      <td>
+        <% if @bake_job.bake_order.submitted %>
+          <% bake_price = @bake_job.price_at_order %>
+          <%= number_to_currency(bake_price / 100.0) %>
+        <% else %>
+          <%= "Job not yet confirmed" %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Total</th>
+      <td>
+        <% if @bake_job.bake_order.submitted %>
+          <%= number_to_currency(bake_quantity * bake_price / 100.0) %>
+        <% else %>
+          <%= "Job not yet confirmed" %>
+        <% end %>
+      </td>
+    </tr>
+
+  </tbody>
+</table>

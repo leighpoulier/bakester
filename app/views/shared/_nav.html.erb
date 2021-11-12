@@ -7,17 +7,20 @@
   </li>
 
   <% if user_signed_in? %>
-
-    <li>
       <% if current_user.baker %>
-          <%= link_to "My Bakes", :my_bakes %>
+
+        <li><%= link_to "My Bakes", :mybakes %></li>
+        <li>
+          <% cart_label = "My Jobs" %>
+          <% cart_label << " (#{current_user.confirmed_bake_jobs.count})" if current_user.confirmed_bake_jobs.any? %>
+          <%= link_to cart_label, :mybakejobs %>
+        </li>
       <% else %>
-          <%= link_to "Become a Baker!", :upgrade_user %>
+        <li><%= link_to "Become a Baker!", :upgrade_user %></li>
       <% end %>
-    </li>
     <li>
       <% cart_label = "Cart" %>
-      <% cart_label << " (#{current_user.cart_size})" if current_user.cart_size %>
+      <% cart_label << " (#{current_user.cart_size})" if current_user.cart_size > 0 %>
       <%= link_to cart_label , :cart %>
     </li>
 

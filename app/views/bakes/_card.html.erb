@@ -4,7 +4,6 @@
   <% end %>
 <% end %>
 <h3><%= link_to bake.name, bake %></h3>
-<p><%= controller_name + "#" + action_name %><p>
 <% unless (controller_name == 'bakes' && action_name == 'my_bakes') || (controller_name == 'registrations' && action_name == 'show') %>
   <p><%= link_to bake.baker.full_name, bake.baker %></p>
 <% end %>
@@ -17,7 +16,7 @@
 <p><%= bake.view_count %> views</p>
 <% if user_signed_in? %>
   <% unless  current_user.id == bake.baker.id %>
-    <%= button_to "Add to Cart", {action: 'cart', controller: 'bake_orders', params: {bake_id: bake.id} } %>
+    <%= button_to "Add to Cart", :cart, {params: {bake_id: bake.id}} %>
   <% end %>
   <% if (bake.baker.id == current_user.id || current_user.admin ) %>
     <%= button_to "Edit", edit_bake_path(bake) ,method: :get %>
