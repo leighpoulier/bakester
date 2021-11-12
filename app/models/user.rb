@@ -30,8 +30,11 @@ class User < ApplicationRecord
   end
 
   def cart_size
-    # returns nil if there is no cart
-    self.bake_orders.where(submitted: false).first&.bake_jobs&.sum(:quantity)
+    if self.bake_orders.where(submitted: false).first
+      return self.bake_orders.where(submitted: false).first&.bake_jobs&.sum(:quantity)
+    else
+      return 0
+    end
   end
 
   def cart
