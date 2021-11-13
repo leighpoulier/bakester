@@ -21,7 +21,7 @@ class BakeJobsController < ApplicationController
   def update
     if params[:bake_job]
       if @bake_job.update(bake_job_params)
-        redirect_to @bake_job and return
+        redirect_to @bake_job.bake_order and return
       else
         render :edit and return
       end
@@ -48,7 +48,16 @@ class BakeJobsController < ApplicationController
   end
 
   def my_bake_jobs
-    @bake_jobs = current_user.bake_jobs.pending
+    filter = params[:filter]
+    case filter
+    
+    when 'pending'
+      @bake_jobs = current_user.bake_jobs.pending
+    when 'complete'
+      @bake_jobs = current_user.bake_jobs.complete
+    else
+      @bake_jobs = current_user.bake_jobs
+    end
   end
 
   private

@@ -1,3 +1,12 @@
+
+<div>
+<%= button_to "All", :mybakejobs, method: :get %>
+<%= button_to "Pending", mybakejobs_path('pending'), method: :get %>
+<%= button_to "Complete", mybakejobs_path('complete'), method: :get %>
+</div>
+<div>
+<p><%= pluralize(@bake_jobs.count, "jobs") %></p>
+</div>
 <% if bake_jobs.any? %>
   <table>
     <thead>

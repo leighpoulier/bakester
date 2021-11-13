@@ -42,12 +42,12 @@
           <tr>
             <td><%= bake_job.status %></td>
             <td><%= link_to bake_job.baker.full_name, bake_job.baker %>
-            <td><%= link_to bake_job.bake.name, bake_job %></td>
+            <td><%= link_to bake_job.bake.name, bake_job.bake %></td>
             <% bake_quantity = bake_job.quantity %>
-            <td><%= link_to bake_quantity, bake_job %></td>
+            <td><%= bake_quantity %></td>
             <% bake_price = bake_job.price_at_order %>
-            <td><%= link_to number_to_currency(bake_price/100.0), bake_job %></td>
-            <td><%= link_to number_to_currency(bake_quantity * bake_price / 100.0), bake_job %></td>
+            <td><%= number_to_currency(bake_price/100.0) %></td>
+            <td><%= number_to_currency(bake_quantity * bake_price / 100.0) %></td>
           </tr>
         <% end %>
         <tfoot>

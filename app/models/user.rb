@@ -7,27 +7,11 @@ class User < ApplicationRecord
 
   has_many :bakes, foreign_key: :baker_id
 
-  # includes all bake_jobs, including incomplete inside "carts"
-  has_many :bake_jobs, through: :bakes
-
-  # excluding those bake_jobs with status :in_cart
-  # has_many :confirmed_bake_jobs, ->{ bake_order.where( 'submitted == ?', true )}, through: :bakes, source: :bake_jobs
-  
-  # including only new bake_jobs with status :submitted
-  # has_many :new_bake_jobs, -> { where('status == ?', 1)  }, through: :bakes, source: :bake_jobs
-
-  # bake jobs confirmed and yet to be shipped
-  # has_many :
-
-
-
-  # includes all orders, inluding the incomplete order "cart"
+  # excluding the incomplete/unsubmitted order "cart"
   has_many :bake_orders, -> {where(submitted: true)}
 
-  # ignoring the "cart" incomplete order
-  # has_many :submitted_bake_orders, -> {where(submitted: true)}, class_name: 'BakeOrder'
-
-  # has_many :incoming_bake_orders, through: :bake_jobs, source: :bake_order
+  # excluding those bake_jobs with where the bake_order is unsubmitted
+  has_many :bake_jobs, ->{ joins(:bake_order).where( bake_order: {submitted: true }) }, through: :bakes
 
   validates :first_name, :last_name, presence: true
 

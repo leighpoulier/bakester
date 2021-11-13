@@ -27,10 +27,11 @@ class BakeJob < ApplicationRecord
   scope :active, -> { where('status > ?', 0) }
   scope :submitted, -> { joins(:bake_order).where({bake_order:{ submitted: true }}) }
   scope :incomplete, -> { where('status < ?', 3)}
+  scope :complete, -> { where('status > ?', 2)}
   scope :pending, ->{ submitted.active.incomplete }
 
   def owners
-    [ self.baker, self.bake_order.user ]
+    [ self.baker ]
   end
 
 end

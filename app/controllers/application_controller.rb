@@ -13,16 +13,20 @@ class ApplicationController < ActionController::Base
     def is_admin?
       puts "IS ADMIN"
       unless user_signed_in? && current_user.admin
+        puts "FAILED"
         redirect_to :root
       end
+      puts "OK"
     end
 
 
     def is_admin_or_owner?(resource)
       puts "IS ADMIN OR OWNER"
       unless resource.owners.include?(current_user) || current_user.admin
+        puts "FAILED"
         redirect_to :root
       end
+      puts "OK"
     end
 
 end
