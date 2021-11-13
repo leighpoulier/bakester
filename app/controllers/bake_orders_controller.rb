@@ -12,7 +12,7 @@ class BakeOrdersController < ApplicationController
   end
 
   def my_bake_orders
-    @bake_orders = current_user.submitted_bake_orders
+    @bake_orders = current_user.bake_orders
   end
 
   def show

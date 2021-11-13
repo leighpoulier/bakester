@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
     def is_admin_or_owner?(resource)
       puts "IS ADMIN OR OWNER"
-      unless current_user.id == resource.owner.id || current_user.admin
+      unless resource.owners.include?(current_user) || current_user.admin
         redirect_to :root
       end
     end

@@ -2,10 +2,11 @@ class BakeJobsController < ApplicationController
 
   before_action :authenticate_user!, except: []
   before_action :is_admin?, only: [:index]
-  before_action :set_bake_job, only: [:show, :update, :destroy]
+  before_action :set_bake_job, except: [:index, :my_bake_jobs, ]
   before_action except: [:index, :my_bake_jobs] do
     is_admin_or_owner?(@bake_job)
   end
+
 
   def index
     @bake_jobs = BakeJob.all
@@ -18,19 +19,27 @@ class BakeJobsController < ApplicationController
   end
 
   def update
-    if params[:increment]
-      if increment = params[:increment].to_i
-        @bake_job.increment!(:quantity, increment)
+    if params[:bake_job]
+      if @bake_job.update(bake_job_params)
+        redirect_to @bake_job and return
+      else
+        render :edit and return
       end
-    elsif params[:decrement]
-      if decrement = params[:decrement].to_i
-        @bake_job.decrement!(:quantity, decrement)
-        if @bake_job.quantity < 1
-          @bake_job.destroy
+    else
+      if params[:increment]
+        if increment = params[:increment].to_i
+          @bake_job.increment!(:quantity, increment)
+        end
+      elsif params[:decrement]
+        if decrement = params[:decrement].to_i
+          @bake_job.decrement!(:quantity, decrement)
+          if @bake_job.quantity < 1
+            @bake_job.destroy
+          end
         end
       end
     end
-    redirect_to :cart
+    redirect_to @bake_job
   end
 
   def destroy
@@ -39,13 +48,17 @@ class BakeJobsController < ApplicationController
   end
 
   def my_bake_jobs
-    @bake_jobs = current_user.confirmed_bake_jobs
+    @bake_jobs = current_user.bake_jobs.pending
   end
 
   private
 
   def set_bake_job
     @bake_job = BakeJob.find(params[:id])
+  end
+
+  def bake_job_params
+    params.require(:bake_job).permit(:status)
   end
 
 end

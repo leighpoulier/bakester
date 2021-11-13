@@ -22,8 +22,8 @@ class BakeOrder < ApplicationRecord
 
   accepts_nested_attributes_for :bake_jobs, reject_if: ->(attributes){ attributes['quantity'] < 0 || attributes['status'] < 0 }, allow_destroy: true
 
-  def owner
-    self.user
+  def owners
+    [ self.user ]
   end
 
 end

@@ -12,7 +12,7 @@
         <li><%= link_to "My Bakes", :mybakes %></li>
         <li>
           <% cart_label = "My Jobs" %>
-          <% cart_label << " (#{current_user.confirmed_bake_jobs.count})" if current_user.confirmed_bake_jobs.any? %>
+          <% cart_label << " (#{current_user.bake_jobs.pending.count})" if current_user.bake_jobs.pending.any? %>
           <%= link_to cart_label, :mybakejobs %>
         </li>
       <% else %>

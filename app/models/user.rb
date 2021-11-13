@@ -11,13 +11,21 @@ class User < ApplicationRecord
   has_many :bake_jobs, through: :bakes
 
   # excluding those bake_jobs with status :in_cart
-  has_many :confirmed_bake_jobs, -> {where('status > ?', 0)}, through: :bakes, source: :bake_jobs
+  # has_many :confirmed_bake_jobs, ->{ bake_order.where( 'submitted == ?', true )}, through: :bakes, source: :bake_jobs
   
+  # including only new bake_jobs with status :submitted
+  # has_many :new_bake_jobs, -> { where('status == ?', 1)  }, through: :bakes, source: :bake_jobs
+
+  # bake jobs confirmed and yet to be shipped
+  # has_many :
+
+
+
   # includes all orders, inluding the incomplete order "cart"
-  has_many :bake_orders
+  has_many :bake_orders, -> {where(submitted: true)}
 
   # ignoring the "cart" incomplete order
-  has_many :submitted_bake_orders, -> {where(submitted: true)}, class_name: 'BakeOrder'
+  # has_many :submitted_bake_orders, -> {where(submitted: true)}, class_name: 'BakeOrder'
 
   # has_many :incoming_bake_orders, through: :bake_jobs, source: :bake_order
 
@@ -29,16 +37,16 @@ class User < ApplicationRecord
     self.first_name + " " + self.last_name
   end
 
+  def cart
+    self.bake_orders.where(submitted: false).first
+  end
+
   def cart_size
-    if self.bake_orders.where(submitted: false).first
-      return self.bake_orders.where(submitted: false).first&.bake_jobs&.sum(:quantity)
+    if self.cart
+      return self.cart&.bake_jobs&.sum(:quantity)
     else
       return 0
     end
-  end
-
-  def cart
-    self.bake_orders.where(submitted: false).first
   end
 
 end

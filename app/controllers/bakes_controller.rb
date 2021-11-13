@@ -1,7 +1,6 @@
 class BakesController < ApplicationController
-  before_action :set_bake, only: %i[ show edit update destroy purge_image ]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :authorise_user, except: [:index, :show, :new, :create, :my_bakes]
+  before_action :set_bake, except: [:index, :my_bakes, :new, :create]
   before_action except: [:index, :show, :my_bakes, :new, :create] do
     is_admin_or_owner?(@bake)
   end
@@ -74,13 +73,6 @@ class BakesController < ApplicationController
 
   def set_bake
     @bake = Bake.find(params[:id])
-  end
-
-  def authorise_user
-    unless current_user.id == @bake.baker.id || current_user.admin
-      # flash.notice = "You're not allowed to do that"
-      redirect_to :root
-    end
   end
 
   def bake_params

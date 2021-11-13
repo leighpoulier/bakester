@@ -29,6 +29,8 @@
     <table>
       <thead>
         <tr>
+          <th scope="column">Status</th>
+          <th scope="column">Baker</th>
           <th scope="column">Bake</th>
           <th scope="column">Qty</th>
           <th scope="column">Unit Price</th>
@@ -38,6 +40,8 @@
       <tbody>
         <% @bake_order.bake_jobs.each do |bake_job| %>
           <tr>
+            <td><%= bake_job.status %></td>
+            <td><%= link_to bake_job.baker.full_name, bake_job.baker %>
             <td><%= link_to bake_job.bake.name, bake_job %></td>
             <% bake_quantity = bake_job.quantity %>
             <td><%= link_to bake_quantity, bake_job %></td>
@@ -48,7 +52,7 @@
         <% end %>
         <tfoot>
           <tr>
-            <th scope="row" colspan ="3">Total</tf>
+            <th scope="row" colspan ="5">Total</tf>
             <td><%= number_to_currency(@bake_order.bake_jobs.sum("quantity * price_at_order") / 100.0) %></td>
           </tr>
         </tfoot>
