@@ -31,7 +31,11 @@ class BakeJob < ApplicationRecord
   scope :pending, ->{ submitted.active.incomplete }
 
   def owners
-    [ self.baker ]
+    if self.bake_order.submitted
+      [ self.baker ]
+    else
+      [  ]
+    end
   end
 
 end
