@@ -10,6 +10,14 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+ 
+// #e47197 candy pink https://www.colorhexa.com/e47197
+// #62310e chocolate https://www.colorhexa.com/62310e
+// #f0b1c6 musk pink https://www.colorhexa.com/f0b1c6
+
+ @import "bootstrap";
+
+ body {
+   background-color: #fcf1f5;
+ }

@@ -1,6 +1,6 @@
 <% if bake.image.attached? %>
   <%= link_to bake do %>
-    <%= image_tag bake.image %>
+    <%= image_tag bake.image, {class: 'img img-responsive img-rounded'} %>
   <% end %>
 <% end %>
 <h3><%= link_to bake.name, bake %></h3>

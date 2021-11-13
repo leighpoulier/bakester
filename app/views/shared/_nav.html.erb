@@ -1,49 +1,53 @@
-<% if user_signed_in? %>
-  <p>Welcome <%= current_user.first_name %></p>
-<% end %>
-<ul>
-  <li>
-    <%= link_to "Home", :root %>
-  </li>
-
-  <% if user_signed_in? %>
-      <% if current_user.baker %>
-
-        <li><%= link_to "My Bakes", :mybakes %></li>
-        <li>
-          <% cart_label = "My Jobs" %>
-          <% cart_label << " (#{current_user.bake_jobs.pending.count})" if current_user.bake_jobs.pending.any? %>
-          <%= link_to cart_label, :mybakejobs %>
-        </li>
-      <% else %>
-        <li><%= link_to "Become a Baker!", :upgrade_user %></li>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <% if user_signed_in? %>
+        <p>Welcome <%= current_user.first_name %></p>
       <% end %>
-    <li>
-      <% cart_label = "Cart" %>
-      <% cart_label << " (#{current_user.cart_size})" if current_user.cart_size > 0 %>
-      <%= link_to cart_label , :cart %>
-    </li>
+    </div>
+    <!-- <div class="collapse navbar-collapse"> -->
+    <div class="">
+    <!--  <ul class="nav navbar-nav"> -->
+      <ul class="">
+        <li><%= link_to "Home", :root %></li>
 
-    <li>
-      <%= link_to "My Account", :myaccount %>
-    </li>
-      <% if current_user.admin %>
-        <li>
-          <%= link_to "Admin", :admin %>
-        </li>
-      <% end %>
-    <li>
-      <%= link_to "Log Out", :logout %>
-    </li>
+        <% if user_signed_in? %>
+            <% if current_user.baker %>
 
-  <% else #no user signed in %>
+              <li><%= link_to "My Bakes", :mybakes %></li>
+              <li>
+                <% cart_label = "My Jobs" %>
+                <% cart_label << " (#{current_user.bake_jobs.pending.count})" if current_user.bake_jobs.pending.any? %>
+                <%= link_to cart_label, :my_bake_jobs %>
+              </li>
+            <% else %>
+              <li><%= link_to "Become a Baker!", :upgrade_user %></li>
+            <% end %>
 
-    <li>
-      <%= link_to "Log In", :login  %>
-    </li>
-    <li>
-      <%= link_to "Sign Up", :signup %>
-    </li>
+          <li>
+            <% cart_label = "Cart" %>
+            <% cart_label << " (#{current_user.cart_size})" if current_user.cart_size > 0 %>
+            <%= link_to cart_label , :cart %>
+          </li>
 
-  <% end %>
-</ul>
+          <li><%= link_to "My Account", :myaccount %></li>
+            <% if current_user.admin %>
+              <li><%= link_to "Admin", :admin %></li>
+            <% end %>
+          <li><%= link_to "Log Out", :logout %></li>
+
+        <% else #no user signed in %>
+
+          <li><%= link_to "Log In", :login  %></li>
+          <li><%= link_to "Sign Up", :signup %></li>
+
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
