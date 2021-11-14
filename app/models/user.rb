@@ -10,6 +10,8 @@ class User < ApplicationRecord
   # excluding the incomplete/unsubmitted order "cart"
   has_many :bake_orders, -> {where(submitted: true)}
 
+  has_many :carts, -> {where(submitted: false)}, class_name: 'BakeOrder'
+
   # excluding those bake_jobs with where the bake_order is unsubmitted
   has_many :bake_jobs, ->{ joins(:bake_order).where( bake_order: {submitted: true }) }, through: :bakes
 
@@ -22,7 +24,7 @@ class User < ApplicationRecord
   end
 
   def cart
-    self.bake_orders.where(submitted: false).first
+    self.carts.first || self.carts.new
   end
 
   def cart_size

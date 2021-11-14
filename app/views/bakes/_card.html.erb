@@ -22,7 +22,7 @@
   <div class="card-footer">
     <% if user_signed_in? %>
       <% unless  current_user.id == bake.baker.id %>
-        <%= button_to "Add to Cart", :cart, {params: {bake_id: bake.id}} %>
+        <%= button_to "Add to Cart", :cart, {params: {bake_id: bake.id, context: :bakes}} %>
       <% end %>
       <% if (bake.baker.id == current_user.id || current_user.admin ) %>
         <%= button_to "Edit", edit_bake_path(bake) ,method: :get %>

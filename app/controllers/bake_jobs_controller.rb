@@ -9,7 +9,7 @@ class BakeJobsController < ApplicationController
 
 
   def index
-    @bake_jobs = BakeJob.all
+    @bake_jobs = BakeJob.all.order(:created_at)
     filter_bake_jobs
   end
 
@@ -20,13 +20,14 @@ class BakeJobsController < ApplicationController
   end
 
   def update
-    if params[:bake_job]
+    if params[:bake_job] #is a normal edit to a bake_job
       if @bake_job.update(bake_job_params)
-        redirect_to @bake_job.bake_order and return
+        redirect_to_context
       else
-        render :edit and return
+        render :edit
       end
-    else
+    else # is an update to cart
+      cart = @bake_job.bake_order
       if params[:increment]
         if increment = params[:increment].to_i
           @bake_job.increment!(:quantity, increment)
@@ -39,17 +40,18 @@ class BakeJobsController < ApplicationController
           end
         end
       end
+      redirect_to_context
     end
-    redirect_to @bake_job
   end
 
   def destroy
     @bake_job.destroy
-    redirect_to :cart
+    redirect_to_context
+
   end
 
   def my_bake_jobs
-    @bake_jobs = current_user.bake_jobs
+    @bake_jobs = current_user.bake_jobs.order(:submitted_at)
     filter_bake_jobs
   end
 
@@ -71,7 +73,26 @@ class BakeJobsController < ApplicationController
       @bake_jobs = @bake_jobs.pending
     when 'complete'
       @bake_jobs = @bake_jobs.complete
+    when 'cancelled'
+      @bake_jobs = @bake_jobs.cancelled
+    when 'in_cart'
+      @bake_jobs = @bake_jobs.in_cart
+      
     end
+  end
+
+  def redirect_to_context    
+    case params[:context]
+    when 'cart'
+      redirect_to :cart
+    when 'index'
+      redirect_to :bake_jobs
+    when 'my_bake_jobs'
+      redirect_to :my_bake_jobs
+    else
+      redirect_to :cart
+    end
+
   end
 
 end

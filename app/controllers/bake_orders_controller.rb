@@ -24,32 +24,44 @@ class BakeOrdersController < ApplicationController
 
   def update_cart
     if params[:bake_order]
-      # params already formed, do what they say
+      # params already formed, do what they say  (direct edit bake_order)
       @cart.update(bake_order_params)
-      render :cart
+      redirect_to :cart
     else
       if params[:bake_id]  # params contains a bake_id, assume it needs adding to cart
-        if @bake_job = @cart.bake_jobs.where(bake_id: params[:bake_id]).first  #already exists in cart
-          @bake_job.increment!(:quantity)
+        if bake_job = @cart.bake_jobs.where(bake_id: params[:bake_id]).first  #already exists in cart
+          bake_job.increment!(:quantity)
         else #add to cart
           unless @cart.save && @cart.bake_jobs.create(bake_id: params[:bake_id])
             flash.alert = "Unable to add to cart ?"
           end
         end
       end
+      redirect_to_context
     end
-    render :cart
   end
 
   def checkout
-    @cart.bake_jobs.each do |bake_job|
-      bake_job.update_attribute(:price_at_order, bake_job.bake.unit_price)
-      bake_job.update_attribute(:status, :confirmed)
-    end
-    if @cart.valid? && @cart.bake_jobs.any?
+    if @cart.bake_jobs.any?
+      
+      @cart.bake_jobs.each do |bake_job|
+        bake_job.update_attribute(:price_at_order, bake_job.bake.unit_price)
+        bake_job.update_attribute(:status, :received)
+      end
       @cart.update_attribute(:submitted_at, DateTime.now)
       @cart.update_attribute(:submitted, true)
-      redirect_to @cart
+      if @cart.save
+        redirect_to @cart
+      else
+        @cart.bake_jobs.each do |bake_job|
+          bake_job.update_attribute(:price_at_order, nil)
+          bake_job.update_attribute(:status, :in_cart)
+        end
+        @cart.update_attribute(:submitted_at, nil)
+        @cart.update_attribute(:submitted, false)
+        render :cart
+      end
+
     else
       render :cart
     end
@@ -64,7 +76,7 @@ class BakeOrdersController < ApplicationController
 
   def set_cart
     puts "SET CART"
-    @cart = current_user.bake_orders.where(submitted: false).first || current_user.bake_orders.new
+    @cart = current_user.cart
     @bake_order = @cart
   end
 
@@ -78,4 +90,13 @@ class BakeOrdersController < ApplicationController
     params.require(:bake_order).permit(:bake_jobs_attributes).permit(:bake_id, :quantity, :status)
   end
 
+
+  def redirect_to_context
+    case params[:context]
+    when 'bakes'
+      redirect_to :bakes
+    else
+      redirect_to :cart
+    end
+  end
 end

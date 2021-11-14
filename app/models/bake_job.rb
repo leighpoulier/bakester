@@ -5,8 +5,8 @@ class BakeJobStatusValidator < ActiveModel::Validator
         bake_job.errors.add :status, "Status must be cancelled, received, processing, shipped, delivered for submitted orders"
       end
     else
-      unless bake_job.status == :in_cart
-        bake_job.errors.add :status, "status must be :in_cart or in cart orders"
+      unless bake_job.status == 'in_cart'
+        bake_job.errors.add :status, "status must be 'in_cart' for in cart orders"
       end
     end
   end
@@ -25,6 +25,7 @@ class BakeJob < ApplicationRecord
 
   scope :in_cart, ->{where(status: 0)}
   scope :active, -> { where('status > ?', 0) }
+  scope :cancelled, -> {where(status: :cancelled)}
   scope :submitted, -> { joins(:bake_order).where({bake_order:{ submitted: true }}) }
   scope :incomplete, -> { where('status < ?', 3)}
   scope :complete, -> { where('status > ?', 2)}
@@ -34,7 +35,7 @@ class BakeJob < ApplicationRecord
     if self.bake_order.submitted
       [ self.baker ]
     else
-      [  ]
+      [ self.bake_order.user ]
     end
   end
 

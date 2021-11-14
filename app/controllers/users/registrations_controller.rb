@@ -40,13 +40,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
 
   def upgrade_to_baker
-    byebug
     if user_signed_in? 
       if !current_user.baker && params[:user][:baker] == "true"
         current_user.baker = true
         current_user.baker_at = DateTime.now
         if current_user.save
-          redirect_to :my_bakes
+          redirect_to :mybakes
         else
           flash.alert "Unable to upgrade to baker for some reason...?"
           redirect_to :root

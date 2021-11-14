@@ -83,6 +83,12 @@
   </tbody>
 </table>
 
+<%= hidden_field_tag :context, params[:return] %>
+
 <%= f.submit %>
   
+<% end %>
+
+<% if current_user.admin %>
+  <%= button_to "Delete Bake Job", @bake_job, method: :delete, params: {context: action_name} %>
 <% end %>

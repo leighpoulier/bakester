@@ -19,6 +19,7 @@ class BakeOrder < ApplicationRecord
   validates :submitted_at, presence: true, if: :submitted
 
   scope :submitted, -> { where(submitted: true) }
+  scope :carts, -> { where(submitted: false)}
 
   accepts_nested_attributes_for :bake_jobs, reject_if: ->(attributes){ attributes['quantity'] < 0 || attributes['status'] < 0 }, allow_destroy: true
 

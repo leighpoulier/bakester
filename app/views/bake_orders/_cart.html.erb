@@ -11,7 +11,7 @@
     </thead>
     <tbody>
       <% running_total = 0 %>
-      <% cart.bake_jobs.each do |bake_job| %>
+      <% cart.bake_jobs.order(:created_at).each do |bake_job| %>
         <tr>
           <td><%= link_to bake_job.bake.name, bake_job.bake %></td>
           <td><%= bake_job.quantity %></td>
@@ -21,9 +21,9 @@
           <% running_total += line_total %>
           <td><%= number_to_currency(line_total / 100.0) %></td>
           <td>
-            <%= button_to "\u2795", bake_job, method: :put, params: {increment: 1} %>
-            <%= button_to "\u2796", bake_job, method: :put, params: {decrement: 1} %>
-            <%= button_to "\u2718", bake_job, method: :delete %>
+            <%= button_to "\u2795", bake_job, method: :put, params: {increment: 1, context: :cart} %>
+            <%= button_to "\u2796", bake_job, method: :put, params: {decrement: 1, context: :cart} %>
+            <%= button_to "\u2718", bake_job, method: :delete, params: {context: :cart} %>
           </td>
         </tr>
       <% end %>

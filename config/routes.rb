@@ -22,13 +22,14 @@ Rails.application.routes.draw do
   get '/cart', to: 'bake_orders#cart'
   # post '/addtocart', to: 'bake_orders#add_to_cart'
   post '/cart', to: 'bake_orders#update_cart'
+  put '/cart', to: 'bake_orders#update_cart'
   delete '/cart', to: 'bake_orders#empty_cart'
   post '/checkout', to: 'bake_orders#checkout'
   get '/myorders', to: 'bake_orders#my_bake_orders'
   get '/mybakejobs/(:filter)', to: 'bake_jobs#my_bake_jobs', as: 'my_bake_jobs'
   resources :bake_orders, path: 'orders'
   get '/bake_jobs/(:filter)', to: 'bake_jobs#index', as: 'bake_jobs'
-  resources :bake_jobs
+  resources :bake_jobs, path: 'bakejobs'
   get '/*page', to: 'bakes#index', page: /(?!bakes|categories|users|orders|admin|rails).*/  
 
 end
