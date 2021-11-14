@@ -10,6 +10,7 @@ class BakeJobsController < ApplicationController
 
   def index
     @bake_jobs = BakeJob.all
+    filter_bake_jobs
   end
 
   def show
@@ -48,16 +49,8 @@ class BakeJobsController < ApplicationController
   end
 
   def my_bake_jobs
-    filter = params[:filter]
-    case filter
-    
-    when 'pending'
-      @bake_jobs = current_user.bake_jobs.pending
-    when 'complete'
-      @bake_jobs = current_user.bake_jobs.complete
-    else
-      @bake_jobs = current_user.bake_jobs
-    end
+    @bake_jobs = current_user.bake_jobs
+    filter_bake_jobs
   end
 
   private
@@ -68,6 +61,17 @@ class BakeJobsController < ApplicationController
 
   def bake_job_params
     params.require(:bake_job).permit(:status)
+  end
+
+  def filter_bake_jobs
+    filter = params[:filter]
+    case filter
+    
+    when 'pending'
+      @bake_jobs = @bake_jobs.pending
+    when 'complete'
+      @bake_jobs = @bake_jobs.complete
+    end
   end
 
 end

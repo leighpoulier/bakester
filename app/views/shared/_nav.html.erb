@@ -29,7 +29,7 @@
                   <li class="nav-item">
                     <% cart_label = "My Jobs" %>
                     <% cart_label << " (#{current_user.bake_jobs.pending.count})" if current_user.bake_jobs.pending.any? %>
-                    <%= link_to cart_label, :mybakejobs, class: "nav-link" %>
+                    <%= link_to cart_label, :my_bake_jobs, class: "nav-link" %>
                   </li>
                 <% else %>
                   <li class="nav-item"><%= link_to "Become a Baker!", :upgrade_user, class: "nav-link" %></li>

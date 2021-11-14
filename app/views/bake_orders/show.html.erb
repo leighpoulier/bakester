@@ -13,10 +13,6 @@
         <th scope="row">User</th>
         <td><%= @bake_order.user.full_name %></td>
       </tr>
-      <tr>
-        <th scope="row">Submitted?</th>
-        <td><%= @bake_order.submitted ? "Y" : "N" %></td>
-      </tr>
       <% if @bake_order.submitted %>
         <tr>
           <th scope="row">Submitted</th>
@@ -40,7 +36,7 @@
       <tbody>
         <% @bake_order.bake_jobs.each do |bake_job| %>
           <tr>
-            <td><%= bake_job.status %></td>
+            <td><%= bake_job.status.titleize %></td>
             <td><%= link_to bake_job.baker.full_name, bake_job.baker %>
             <td><%= link_to bake_job.bake.name, bake_job.bake %></td>
             <% bake_quantity = bake_job.quantity %>

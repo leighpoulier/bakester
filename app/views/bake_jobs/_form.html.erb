@@ -36,8 +36,13 @@
     </tr>
     <tr>
       <th scope="row">Status</th>
-      <td><%= f.select :status, BakeJob.statuses.map {|key,value| [key.titleize, key] if value > 0 }.compact %></td>
-    </tr>
+      <td>
+        <% if current_user.admin %>
+          <%= f.select :status, BakeJob.statuses.map {|key,value| [key.titleize, key] } %>
+        <% else %>
+          <%= f.select :status, BakeJob.statuses.map {|key,value| [key.titleize, key] if value > 0 }.compact %>
+        <% end %>
+      </td>    </tr>
     <% if @bake_job.bake_order.submitted %>
       <tr>
         <th scope="row">Submitted</th>
