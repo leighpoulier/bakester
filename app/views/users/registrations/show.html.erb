@@ -1,9 +1,12 @@
-<h1>User Profile</h1>
+<h1><%= @user.full_name %></h2>
+<h3><%= @user.baker ? "Baker" : "User" %> Profile</h1>
 
-<h2><%= @user.full_name %></h2>
-<p>User since <%= @user.created_at.year %></p>
 <% if @user.baker %>
-  <p>Baker since <%= @user.baker_at.year %>
+  <p>User since <%= "#{@user.created_at.year}, Baker since #{@user.baker_at.year}" %></p>
+<% else %>
+  <p>User since <%= "#{@user.created_at.year}" %></p>
+<% end %>
+<% if @user.baker %>
   <p><%= pluralize(@user.bakes.count, "bake") %></p>
   <%= render 'bakes/list', bakes: @user.bakes %>
 <% end %>

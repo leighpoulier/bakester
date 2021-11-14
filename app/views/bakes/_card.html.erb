@@ -1,24 +1,32 @@
-<% if bake.image.attached? %>
-  <%= link_to bake do %>
-    <%= image_tag bake.image %>
-  <% end %>
-<% end %>
-<h3><%= link_to bake.name, bake %></h3>
-<% unless (controller_name == 'bakes' && action_name == 'my_bakes') || (controller_name == 'registrations' && action_name == 'show') %>
-  <p><%= link_to bake.baker.full_name, bake.baker %></p>
-<% end %>
-<% unless controller_name == 'categories' && action_name == 'show' %>
-  <p><%= link_to bake.category.name, bake.category %></p>
-<% end %>
-<p><%= bake.description %></p>
-<p><%= number_to_currency(bake.unit_price_dollars) %> per <%= bake.unit %></p>
-<p>Delivered in <%= bake.lead_time_days %> days</p>
-<p><%= bake.view_count %> views</p>
-<% if user_signed_in? %>
-  <% unless  current_user.id == bake.baker.id %>
-    <%= button_to "Add to Cart", :cart, {params: {bake_id: bake.id}} %>
-  <% end %>
-  <% if (bake.baker.id == current_user.id || current_user.admin ) %>
-    <%= button_to "Edit", edit_bake_path(bake) ,method: :get %>
-  <% end %>
-<% end %>
+<div class="card">
+    <%= link_to bake do %>
+      <% if bake.image.attached? %>
+        <%= image_tag(bake.image, class: 'card-img card-img-top') %>
+      <% else %>
+        <%= image_tag('no-image', class: 'card-img card-img-top') %>
+      <% end %>
+    <% end %>
+  <div class="card-body">
+    <h5><%= link_to bake.name, bake, class: 'card-title' %></h3>
+    <% unless (controller_name == 'bakes' && action_name == 'my_bakes') || (controller_name == 'registrations' && action_name == 'show') %>
+      <p class='card-text'><%= link_to bake.baker.full_name, bake.baker %></p>
+    <% end %>
+    <% unless controller_name == 'categories' && action_name == 'show' %>
+      <p><%= link_to bake.category.name, bake.category %></p>
+    <% end %>
+    <p class='card-text'><%= bake.description %></p>
+    <p class='card-text'><%= number_to_currency(bake.unit_price_dollars) %> per <%= bake.unit %></p>
+    <p class='card-text'>Delivered in <%= bake.lead_time_days %> days</p>
+    <p class='card-text'><%= bake.view_count %> views</p>
+  </div>
+  <div class="card-footer">
+    <% if user_signed_in? %>
+      <% unless  current_user.id == bake.baker.id %>
+        <%= button_to "Add to Cart", :cart, {params: {bake_id: bake.id}} %>
+      <% end %>
+      <% if (bake.baker.id == current_user.id || current_user.admin ) %>
+        <%= button_to "Edit", edit_bake_path(bake) ,method: :get %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

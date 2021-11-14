@@ -1,0 +1,116 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ $card-height: 100%;
+
+ .card-flex-leigh {
+   display: flex;
+   flex-wrap: wrap;
+   row-gap: 1rem;
+   column-gap: 1rem;
+ }
+
+.card {
+  width: 24rem;
+}
+
+.card-img {
+  width: 100%;
+  height: 18rem;
+  object-fit: cover;
+}
+
+.title-img-and-nav-leigh {
+  position: relative;
+  // display:flex;
+}
+
+.bakester-title-img-leigh-outer {
+  z-index: 10;
+  position: relative;
+}
+
+
+// .bakester-nav-container {
+//   position: absolute;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   width: 100%;
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+// }
+
+.bakester-navbar {
+  width: 100%;
+  background-color: #f8dce5;
+}
+
+.spacer-for-bakester-img-leigh {
+  width: 25vw;
+  display: block
+}
+
+// .bakester-title-img-leigh-inner {
+//   display: none;
+// }
+
+// .bakester-title-img-leigh-outer {
+//   display: block;
+//   width: auto;
+// }
+
+
+.bakester-nav-container {
+  position: relative;
+}
+
+.bakester-title-img-leigh-outer {
+  display: none;
+}
+
+.bakester-title-img-leigh-inner {
+  width: 50vw;
+  display: block;
+}
+
+
+@media screen and (min-width: 992px) {
+
+  .bakester-nav-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .bakester-title-img-leigh-inner {
+    display: none;
+  }
+  
+  .bakester-title-img-leigh-outer {
+    display: block;
+    width: auto;
+  }
+
+}

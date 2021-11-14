@@ -1,49 +1,60 @@
-<% if user_signed_in? %>
-  <p>Welcome <%= current_user.first_name %></p>
-<% end %>
-<ul>
-  <li>
-    <%= link_to "Home", :root %>
-  </li>
 
-  <% if user_signed_in? %>
-      <% if current_user.baker %>
+<div class="title-img-and-nav-leigh">
+    <div>
+      <%= link_to image_tag("bakester_title.svg", class: 'navbar-brand bakester-title-img-leigh bakester-title-img-leigh-outer col-lg-3'), :root  %>
+    </div>
+    <div class='bakester-nav-container'>
+    <nav id="bakester-nav" class="navbar navbar-expand-lg navbar-light bakester-navbar">
+      <div class="container-fluid">
 
-        <li><%= link_to "My Bakes", :mybakes %></li>
-        <li>
-          <% cart_label = "My Jobs" %>
-          <% cart_label << " (#{current_user.bake_jobs.pending.count})" if current_user.bake_jobs.pending.any? %>
-          <%= link_to cart_label, :mybakejobs %>
-        </li>
-      <% else %>
-        <li><%= link_to "Become a Baker!", :upgrade_user %></li>
-      <% end %>
-    <li>
-      <% cart_label = "Cart" %>
-      <% cart_label << " (#{current_user.cart_size})" if current_user.cart_size > 0 %>
-      <%= link_to cart_label , :cart %>
-    </li>
+        <div class="navbar-brand spacer-for-bakester-img-leigh">
+          <%= link_to image_tag("bakester_title.svg", class: 'navbar-brand bakester-title-img-leigh bakester-title-img-leigh-inner col-lg-3'), :root  %>
 
-    <li>
-      <%= link_to "My Account", :myaccount %>
-    </li>
-      <% if current_user.admin %>
-        <li>
-          <%= link_to "Admin", :admin %>
-        </li>
-      <% end %>
-    <li>
-      <%= link_to "Log Out", :logout %>
-    </li>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-  <% else #no user signed in %>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <% if user_signed_in? %>
+            <span class="navbar-brand mb-0">Welcome <%= current_user.first_name %></span>
+          <% end %>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><%= link_to "Home", :root, class: "nav-link"  %></li>
 
-    <li>
-      <%= link_to "Log In", :login  %>
-    </li>
-    <li>
-      <%= link_to "Sign Up", :signup %>
-    </li>
+            <% if user_signed_in? %>
+                <% if current_user.baker %>
 
-  <% end %>
-</ul>
+                  <li class="nav-item"><%= link_to "My Bakes", :mybakes, class: "nav-link" %></li>
+                  <li class="nav-item">
+                    <% cart_label = "My Jobs" %>
+                    <% cart_label << " (#{current_user.bake_jobs.pending.count})" if current_user.bake_jobs.pending.any? %>
+                    <%= link_to cart_label, :mybakejobs, class: "nav-link" %>
+                  </li>
+                <% else %>
+                  <li class="nav-item"><%= link_to "Become a Baker!", :upgrade_user, class: "nav-link" %></li>
+                <% end %>
+              <li class="nav-item">
+                <% cart_label = "Cart" %>
+                <% cart_label << " (#{current_user.cart_size})" if current_user.cart_size > 0 %>
+                <%= link_to cart_label , :cart, class: "nav-link" %>
+              </li>
+
+              <li class="nav-item"><%= link_to "My Account", :myaccount, class: "nav-link" %></li>
+                <% if current_user.admin %>
+                  <li class="nav-item"><%= link_to "Admin", :admin, class: "nav-link" %></li>
+                <% end %>
+              <li class="nav-item"><%= link_to "Log Out", :logout, class: "nav-link" %></li>
+
+            <% else #no user signed in %>
+
+              <li class="nav-item"><%= link_to "Log In", :login, class: "nav-link"  %></li>
+              <li class="nav-item"><%= link_to "Sign Up", :signup, class: "nav-link" %></li>
+
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>

@@ -3,7 +3,7 @@
 <% if !@bake_order.submitted %>
   <%= render 'cart', cart: @bake_order %>
 <% else %>
-  <table>
+  <table class="table table-striped">
     <tbody>
       <tr>
         <th scope="row">Order No</th>
@@ -26,7 +26,7 @@
     </tbody>
   </table>
   <% if @bake_order.bake_jobs.any? %>
-    <table>
+    <table class="table table-striped">
       <thead>
         <tr>
           <th scope="column">Status</th>

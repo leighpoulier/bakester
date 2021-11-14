@@ -11,12 +11,11 @@
   </head>
 
   <body>
-    <div>
-      <%= image_tag "bakester_title.svg"  %>
-    </div>
     <%= render "shared/nav" %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
