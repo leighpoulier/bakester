@@ -49,8 +49,8 @@
         <%= image_tag @bake.image, class: 'form-control rounded' %>
       </div>
       <div class="col-lg-3 form-check">
-        <%= label_tag :bake_remove_image, "Remove Image", class: 'form-label' %>
         <%= check_box_tag :bake_remove_image, class: "form-check-input" %>
+        <%= label_tag :bake_remove_image, "Remove Image", class: 'form-label' %>
       </div>
       <div class="col-lg-3">
         <%= f.label :image, "Replace Image", class: 'form-label' %>

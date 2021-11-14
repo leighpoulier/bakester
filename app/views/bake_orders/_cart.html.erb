@@ -13,7 +13,7 @@
       <% running_total = 0 %>
       <% cart.bake_jobs.order(:created_at).each do |bake_job| %>
         <tr>
-          <td><%= link_to bake_job.bake.name, bake_job.bake %></td>
+          <td><%= link_to "#{bake_job.bake.name} (#{bake_job.bake.unit})", bake_job.bake %></td>
           <td><%= bake_job.quantity %></td>
           <% bake_price = bake_job.bake.unit_price %>
           <td><%= number_to_currency(bake_price/100.0) %></td>
