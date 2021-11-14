@@ -20,9 +20,11 @@
           <% line_total = bake_job.quantity * bake_price %>
           <% running_total += line_total %>
           <td><%= number_to_currency(line_total / 100.0) %></td>
-          <td><%= button_to "\u2795", bake_job, method: :put, params: {increment: 1} %></td>
-          <td><%= button_to "\u2796", bake_job, method: :put, params: {decrement: 1} %></td>
-          <td><%= button_to "\u2718", bake_job, method: :delete %></td>
+          <td>
+            <%= button_to "\u2795", bake_job, method: :put, params: {increment: 1} %>
+            <%= button_to "\u2796", bake_job, method: :put, params: {decrement: 1} %>
+            <%= button_to "\u2718", bake_job, method: :delete %>
+          </td>
         </tr>
       <% end %>
     </tbody>
