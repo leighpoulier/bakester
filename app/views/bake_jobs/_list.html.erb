@@ -1,15 +1,17 @@
 <div>
-  <% if action_name == 'index' %>
-    <%= button_to "All", bake_jobs_path, method: :get, class: 'btn-primary' %>
-    <%= button_to "Pending", bake_jobs_path('pending'), method: :get %>
-    <%= button_to "Complete", bake_jobs_path('complete'), method: :get %>
-    <%= button_to "Cancelled", bake_jobs_path('cancelled'), method: :get %>
-    <%= button_to "In Cart", bake_jobs_path('in_cart'), method: :get %>
-  <% else %>
-    <%= button_to "All", my_bake_jobs_path, method: :get, class: 'btn-primary' %>
-    <%= button_to "Pending", my_bake_jobs_path('pending'), method: :get %>
-    <%= button_to "Complete", my_bake_jobs_path('complete'), method: :get %>
-  <% end %>
+  <div class="row">
+    <% if action_name == 'index' %>
+      <%= button_to "All", bake_jobs_path, method: :get, class: 'btn-primary' %>
+      <%= button_to "Pending", bake_jobs_path('pending'), method: :get %>
+      <%= button_to "Complete", bake_jobs_path('complete'), method: :get %>
+      <%= button_to "Cancelled", bake_jobs_path('cancelled'), method: :get %>
+      <%= button_to "In Cart", bake_jobs_path('in_cart'), method: :get %>
+    <% else %>
+      <%= button_to "All", my_bake_jobs_path, method: :get, class: 'btn-primary' %>
+      <%= button_to "Pending", my_bake_jobs_path('pending'), method: :get %>
+      <%= button_to "Complete", my_bake_jobs_path('complete'), method: :get %>
+    <% end %>
+  </div>
 </div>
 <div>
 <p><%= pluralize(@bake_jobs.count, "jobs") %></p>

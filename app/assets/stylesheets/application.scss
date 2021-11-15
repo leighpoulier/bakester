@@ -76,7 +76,8 @@
 
 
 
-@media screen and (min-width: 576px ) {
+// @media screen and (min-width: 576px ) {
+@include media-breakpoint-up(sm) {
 
   .bakester-title-img-leigh-inner {
     width: 50vw;
@@ -84,7 +85,8 @@
 }
 
 
-@media screen and (min-width: 768px ) {
+// @media screen and (min-width: 768px ) {
+  @include media-breakpoint-up(md) {
 
   .bakester-title-img-leigh-inner {
     width: 40vw;
@@ -92,8 +94,9 @@
 }
 
 
-@media screen and (min-width: 992px) {
-
+// @media screen and (min-width: 992px) {
+@include media-breakpoint-up(lg) { 
+  
   .bakester-nav-container {
     position: absolute;
     display: flex;

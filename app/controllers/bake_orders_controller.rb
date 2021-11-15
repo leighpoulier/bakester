@@ -24,17 +24,18 @@ class BakeOrdersController < ApplicationController
 
   def update_cart
     if params[:bake_order]
-      # params already formed, do what they say  (direct edit bake_order)
+      # params already formed, do what they say (direct edit bake_order)
       @cart.update(bake_order_params)
       redirect_to :cart
     else
       if params[:bake_id]  # params contains a bake_id, assume it needs adding to cart
         if bake_job = @cart.bake_jobs.where(bake_id: params[:bake_id]).first  #already exists in cart
           bake_job.increment!(:quantity)
-        else #add to cart
-          unless @cart.save && @cart.bake_jobs.create(bake_id: params[:bake_id])
-            flash.alert = "Unable to add to cart ?"
-          end
+          flash.notice = "Added #{bake_job.bake.name} to cart"
+        elsif @cart.save && bake_job = @cart.bake_jobs.create(bake_id: params[:bake_id]) #add to cart
+          flash.notice = "Added #{bake_job.bake.name} to cart"
+        else 
+          flash.alert = "Unable to add to cart ?"
         end
       end
       redirect_to_context
@@ -43,25 +44,21 @@ class BakeOrdersController < ApplicationController
 
   def checkout
     if @cart.bake_jobs.any?
-      
-      @cart.bake_jobs.each do |bake_job|
-        bake_job.update_attribute(:price_at_order, bake_job.bake.unit_price)
-        bake_job.update_attribute(:status, :received)
-      end
-      @cart.update_attribute(:submitted_at, DateTime.now)
-      @cart.update_attribute(:submitted, true)
-      if @cart.save
-        redirect_to @cart
-      else
-        @cart.bake_jobs.each do |bake_job|
-          bake_job.update_attribute(:price_at_order, nil)
-          bake_job.update_attribute(:status, :in_cart)
+      begin
+        @cart.transaction do
+          @cart.bake_jobs.each do |bake_job|
+            bake_job.update_attribute(:price_at_order, bake_job.bake.unit_price)
+            bake_job.update_attribute(:status, :received)
+          end
+          @cart.update_attribute(:submitted_at, DateTime.now)
+          @cart.update_attribute(:submitted, true)
+          @cart.save!
         end
-        @cart.update_attribute(:submitted_at, nil)
-        @cart.update_attribute(:submitted, false)
+      rescue
         render :cart
+      else
+        redirect_to @cart
       end
-
     else
       render :cart
     end

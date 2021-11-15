@@ -20,10 +20,10 @@
     <p class='card-text'><%= bake.view_count %> views</p>
   </div>
   <div class="card-footer">
-    <% if user_signed_in? %>
-      <% unless  current_user.id == bake.baker.id %>
+      <% unless user_signed_in? && current_user.id == bake.baker.id %>
         <%= button_to "Add to Cart", :cart, {params: {bake_id: bake.id, context: :bakes}} %>
       <% end %>
+    <% if user_signed_in? %>
       <% if (bake.baker.id == current_user.id || current_user.admin ) %>
         <%= button_to "Edit", edit_bake_path(bake) ,method: :get %>
       <% end %>

@@ -1,12 +1,12 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<!-- <h2>Edit <%= resource_name.to_s.humanize %></h2> -->
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'row' }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <h3>Edit Account Details</h3>
+  <h1 class="py-2">Edit Account Details</h3>
 
 
-  <div class='row'>
+  <div class='py-2 row'>
     <div class="col-md-6">
       <%= f.label :first_name, class: 'form-label' %>
       <%= f.text_field :first_name, class: 'form-control' %>
@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <div class="col-12">
+  <div class="py-2 col-12">
     <%= f.label :email, class: 'form-label' %>
     <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
   </div>
@@ -27,33 +27,33 @@
   <% end %>
 
 
-  <div class="col-12">
+  <div class="py-2 col-12">
     <%= f.label :current_password, class: 'form-label' %>
     <i>(we need your current password to confirm your changes)</i>
     <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control' %>
   </div>
 
-  <div>
+  <div class='py-4'>
     <%= f.submit "Update" %>
   </div>
 
 <% end %>
  
-  <h3>Change Password</h3>
-  <%= link_to "Change Password", :change_password %>
+  <h3 class="py-2">Change Password</h3>
+  <%= link_to "Change Password", :change_password, class: 'px-4' %>
 
-  <h3>My Orders</h3>
-  <%= link_to "View My Orders", :myorders %>
+  <h3 class="py-2">My Orders</h3>
+  <%= link_to "View My Orders", :myorders, class: 'px-4' %>
 
 
 
   <% if current_user.baker %>
-    <h3>My Bakes</h3>
-    <%= link_to "View My Bakes", :mybakes %>
-    <h3>My Bake Jobs</h3>
-    <%= link_to "View My Bake Jobs", :my_bake_jobs %>
+    <h3 class="py-2">My Bakes</h3>
+    <%= link_to "View My Bakes", :mybakes, class: 'px-4' %>
+    <h3 class="py-2">My Bake Jobs</h3>
+    <%= link_to "View My Bake Jobs", :my_bake_jobs, class: 'px-4' %>
   <% else %>
-    <h3>Upgrade to Baker!</h3>
+    <h3 class="py-2">Upgrade to Baker!</h3>
     <p>Upgrade your account to sell your own bakes on Bakester!</p>
     <%= render 'upgrade_form' %>
   <% end %>
