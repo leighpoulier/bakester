@@ -45,7 +45,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         current_user.baker = true
         current_user.baker_at = DateTime.now
         if current_user.save
-          redirect_to :mybakes
+          redirect_to :my_bakes
         else
           flash.alert "Unable to upgrade to baker for some reason...?"
           redirect_to :root

@@ -24,7 +24,7 @@
             <% if user_signed_in? %>
                 <% if current_user.baker %>
 
-                  <li class="nav-item"><%= link_to "My Bakes", :mybakes, class: "nav-link" %></li>
+                  <li class="nav-item"><%= link_to "My Bakes", :my_bakes, class: "nav-link" %></li>
                   <li class="nav-item">
                     <% cart_label = "My Jobs" %>
                     <% cart_label << " (#{current_user.bake_jobs.pending.count})" if current_user.bake_jobs.pending.any? %>

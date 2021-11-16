@@ -1,3 +1,19 @@
+<% if user_signed_in? %>
+  <% if (action_name == 'index' && current_user.admin) || action_name == 'my_bakes' %>
+    <% if action_name == 'index' %>
+      <% path_helper = method(:bakes_path) %>
+    <% elsif action_name == 'my_bakes' %>
+      <% path_helper = method(:my_bakes_path) %>
+    <% end %>
+      <% filter = params[:filter] %>
+      <div class='py-2'>
+        <%= button_to "All", path_helper.call('all'), method: :get, form_class: "inline-button-to", class: filter == 'all' ? 'btn btn-primary' : 'btn btn-outline-primary' %>
+        <%= button_to "Active", path_helper.call, method: :get, form_class: "inline-button-to",  class: filter == nil ? 'btn btn-primary' : 'btn btn-outline-primary' %>
+        <%= button_to "Hidden", path_helper.call('hidden'), method: :get, form_class: "inline-button-to",  class: filter == 'hidden' ? 'btn btn-primary' : 'btn btn-outline-primary' %>
+      </div>
+  <% end %>
+<% end %>
+<p class='py-2'><%= pluralize(@bakes.count, "bake") %></p>
 <div class="card-flex-leigh">
   <% bakes.each do |bake| %>
       <%= render 'bakes/card', bake: bake %>

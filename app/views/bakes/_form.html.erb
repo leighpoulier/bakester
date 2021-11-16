@@ -62,6 +62,21 @@
     </div>
   <div>
 
+  <div class="py-2 row">
+    <div class="custom-control custom-radio custom-control-inline">
+      <%= f.radio_button :active, "true",  class: "custom-control-input" %>
+      <!--<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"> -->
+      <%= f.label :active, "Active", class: "custom-control-label" %>
+      <!--<label class="custom-control-label" for="customRadioInline1">Toggle this custom radio</label> -->
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+      <%= f.radio_button :active, "false",  class: "custom-control-input" %>
+      <!--<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input"> -->
+      <%= f.label :active, "Hidden", class: "custom-control-label" %>
+      <!--<label class="custom-control-label" for="customRadioInline2">Or toggle this other custom radio</label> -->
+    </div>
+  </div>
+
   <div class="py-2">
     <%= f.submit %>
   </div>

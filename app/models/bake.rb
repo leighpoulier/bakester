@@ -26,6 +26,8 @@ class Bake < ApplicationRecord
   validates :unit_price, :lead_time_days, numericality: {only_integer: true}
   validates :image, blob: { content_type: Bake::IMAGE_TYPES, size_range: 0..(Bake::IMAGE_MAX_SIZE) }
 
+  scope :active, -> { where(active: true ) }
+  scope :hidden, -> { where(active: false) }
 
   def unit_price_dollars
     self.unit_price ? self.unit_price / 100.0 : 0

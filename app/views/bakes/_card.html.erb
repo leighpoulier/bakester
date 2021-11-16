@@ -18,6 +18,9 @@
     <p class='card-text'><%= number_to_currency(bake.unit_price_dollars) %> per <%= bake.unit %></p>
     <p class='card-text'>Delivered in <%= bake.lead_time_days %> days</p>
     <p class='card-text'><%= bake.view_count %> views</p>
+    <% if !bake.active %>
+      <p class='card-text alert alert-danger' role="alert">Hidden</p>
+    <% end %>
   </div>
   <div class="card-footer">
       <% unless user_signed_in? && current_user.id == bake.baker.id %>

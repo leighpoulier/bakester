@@ -6,11 +6,31 @@ class BakesController < ApplicationController
   end
 
   def index
-    @bakes = Bake.all
+    filter = params[:filter]
+    if filter
+      if current_user.admin
+        if filter == 'all'
+          @bakes = Bake.all
+        elsif filter == 'hidden'
+          @bakes = Bake.hidden
+        end
+      else
+        redirect_to :bakes
+      end
+    else
+      @bakes = Bake.active
+    end
   end
 
   def my_bakes
-    @bakes = current_user.bakes
+    filter = params[:filter]
+    if filter == 'all'
+      @bakes = current_user.bakes
+    elsif filter == 'hidden'
+      @bakes = current_user.bakes.hidden
+    else
+      @bakes = current_user.bakes.active
+    end
   end
 
   def show
@@ -75,8 +95,9 @@ class BakesController < ApplicationController
     @bake = Bake.find(params[:id])
   end
 
+
   def bake_params
-    params.require(:bake).permit(:name, :description, :unit, :category_id, :lead_time_days, :image)
+    params.require(:bake).permit(:name, :description, :unit, :category_id, :lead_time_days, :image, :active)
   end
 
   def set_unit_price
