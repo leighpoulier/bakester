@@ -8,7 +8,17 @@ class BakeOrdersController < ApplicationController
   end
 
   def index
-    @bake_orders = BakeOrder.all
+    filter = params[:filter]
+    case filter
+    when 'all'
+      @bake_orders = BakeOrder.all
+    when 'submitted'
+      @bake_orders = BakeOrder.submitted
+    when 'in_cart'
+      @bake_orders = BakeOrder.carts
+    else
+      @bake_orders = BakeOrder.all
+    end
   end
 
   def my_bake_orders

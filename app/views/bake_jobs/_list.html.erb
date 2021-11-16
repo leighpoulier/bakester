@@ -14,10 +14,11 @@
     <% end %>
   </div>
 </div>
-<div>
-<p><%= pluralize(@bake_jobs.count, "jobs") %></p>
-</div>
+<% filter_string = params[:filter] ? "#{params[:filter]} " : ""  %>
 <% if bake_jobs.any? %>
+  <div>
+    <p class="py-2"><%= "#{@bake_jobs.count} #{filter_string.humanize.downcase}#{"jobs".pluralize(@bake_jobs.count)}" %></p>
+  </div>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -70,6 +71,5 @@
   </table>
 <% else %>
   <% sentence_start = action_name == 'my_bake_jobs' ? 'You have' : 'There are'  %>
-  <% filter = params[:filter] ? params[:filter] + " " : ""  %>
-  <p><%= "#{sentence_start} no #{filter}bake jobs" %></p>
+  <p class='py-2'><%= "#{sentence_start} no #{filter_string.humanize.downcase}bake jobs" %></p>
 <% end %>

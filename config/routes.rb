@@ -27,8 +27,9 @@ Rails.application.routes.draw do
   delete '/cart', to: 'bake_orders#empty_cart'
   post '/checkout', to: 'bake_orders#checkout'
   get '/myorders', to: 'bake_orders#my_bake_orders'
-  get '/mybakejobs/(:filter)', to: 'bake_jobs#my_bake_jobs', as: 'my_bake_jobs', constraints: {filter: /[a-z_]*/}
+  get '/orders/(:filter)', to: 'bake_orders#index', as: 'orders', constraints: {filter: /[a-z_]*/}
   resources :bake_orders, path: 'orders'
+  get '/mybakejobs/(:filter)', to: 'bake_jobs#my_bake_jobs', as: 'my_bake_jobs', constraints: {filter: /[a-z_]*/}
   get '/bake_jobs/(:filter)', to: 'bake_jobs#index', as: 'bake_jobs', constraints: {filter: /[a-z_]*/}
   resources :bake_jobs, path: 'bakejobs'
   get '/*page', to: 'bakes#index', page: /(?!bakes|categories|users|orders|admin|rails).*/  
