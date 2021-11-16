@@ -47,7 +47,7 @@
             <% end %>
             <% bake_job_count = bake_order.bake_jobs.count %>
             <% if bake_job_count > bake_job_display_limit %>
-              <% links.push("and #{bake_job_count-bake_job_display_limit} more") %>%
+              <% links.push("and #{bake_job_count-bake_job_display_limit} more") %>
             <% end %>
             <% link_text = links.join(", ") %>
             <%= raw link_text %>
