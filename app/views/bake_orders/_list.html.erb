@@ -42,7 +42,7 @@
           <td>
             <% links = []  %>
             <% bake_job_display_limit = 3 %>
-            <% bake_order.bake_jobs.find_each(batch_size: bake_job_display_limit) do |bake_job| %>
+            <% bake_order.bake_jobs.limit(bake_job_display_limit).each do |bake_job| %>
               <% links.push(link_to bake_job.bake.name, bake_job.bake) %>
             <% end %>
             <% bake_job_count = bake_order.bake_jobs.count %>
