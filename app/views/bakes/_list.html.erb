@@ -13,7 +13,6 @@
       </div>
   <% end %>
 <% end %>
-<p class='py-2'><%= pluralize(@bakes.count, "bake") %></p>
 <div class="card-flex-leigh">
   <% bakes.each do |bake| %>
       <%= render 'bakes/card', bake: bake %>

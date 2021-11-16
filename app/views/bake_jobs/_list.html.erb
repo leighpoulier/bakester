@@ -1,5 +1,5 @@
 <div>
-  <div>
+  <div class='py-2'>
     <% filter = params[:filter] %>
     <% if action_name == 'index' %>
       <%= button_to "All", bake_jobs_path, method: :get, form_class: "inline-button-to", class: filter == nil ? 'btn btn-primary' : 'btn btn-outline-primary' %>

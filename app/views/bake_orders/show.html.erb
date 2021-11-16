@@ -9,10 +9,12 @@
         <th scope="row">Order No</th>
         <td><%= @bake_order.id %></td>
       </tr>
-      <tr>
-        <th scope="row">User</th>
-        <td><%= @bake_order.user.full_name %></td>
-      </tr>
+      <% if current_user.admin %>
+        <tr>
+          <th scope="row">User</th>
+          <td><%= link_to @bake_order.user.full_name, @bake_order.user %></td>
+        </tr>
+      <% end %>
       <% if @bake_order.submitted %>
         <tr>
           <th scope="row">Submitted</th>

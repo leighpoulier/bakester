@@ -25,6 +25,7 @@
         <% end %>
         <th>Submitted</th>
         <th>Bakes</th>
+        <th>Includes</th>
         <th>Order Total</th>
       </tr>
     </thead>
@@ -38,6 +39,19 @@
           <% end %>
           <td><%= link_to bake_order.submitted ? bake_order.submitted_at.to_formatted_s(:day_month_year) : "", bake_order %></td>
           <td><%= link_to bake_order.bake_jobs.sum(:quantity), bake_order %></td>
+          <td>
+            <% links = []  %>
+            <% bake_job_display_limit = 3 %>
+            <% bake_order.bake_jobs.find_each(batch_size: bake_job_display_limit) do |bake_job| %>
+              <% links.push(link_to bake_job.bake.name, bake_job.bake) %>
+            <% end %>
+            <% bake_job_count = bake_order.bake_jobs.count %>
+            <% if bake_job_count > bake_job_display_limit %>
+              <% links.push("and #{bake_job_count-bake_job_display_limit} more") %>%
+            <% end %>
+            <% link_text = links.join(", ") %>
+            <%= raw link_text %>
+          </td>
           <td><%= link_to bake_order.submitted ? number_to_currency(bake_order.bake_jobs.sum("quantity * price_at_order") / 100.0) : "", bake_order %></td>
         </tr>
       <% end %>
