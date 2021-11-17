@@ -12,23 +12,7 @@
 
   <body>
     <%= render "shared/nav" %>
-    <button type='button' data-toggle='tooltip' data-placement="bottom" title="This is fancy tooltip if jQuery works">
-      Hover over this button
-    </button>
-    <a href="#" data-toggle='tooltip' title="This is a tooltip">Link to nowhere</a>
-    <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-  Tooltip on top
-</button>
-<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right" title="Tooltip on right">
-  Tooltip on right
-</button>
-<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">
-  Tooltip on bottom
-</button>
-<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left" title="Tooltip on left">
-  Tooltip on left
-</button>
-    <div class="container">
+    <div class="container-md">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
       <%= yield %>
