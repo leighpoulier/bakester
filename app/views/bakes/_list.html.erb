@@ -13,8 +13,10 @@
       </div>
   <% end %>
 <% end %>
-<div class="card-flex-leigh">
-  <% bakes.each do |bake| %>
-      <%= render 'bakes/card', bake: bake %>
-  <% end %>
+<div class="row justify-content-center">
+  <div class="card-flex-leigh">
+    <% bakes.each do |bake| %>
+        <%= render 'bakes/card', bake: bake %>
+    <% end %>
+  </div>
 </div>
