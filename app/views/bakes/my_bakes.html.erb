@@ -4,4 +4,6 @@
 </div>
 <%= render 'list', bakes: @bakes %>
 
-<%= button_to "Add new Bake", :new_bake, method: :get if @bakes.any? %>
+<div class='py-2'>
+  <%= button_to "Add new Bake", :new_bake, method: :get if @bakes.any? %>
+</div>
