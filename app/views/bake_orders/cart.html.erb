@@ -15,6 +15,33 @@
 <%= render 'cart', cart: @cart %>
 
 <% if @cart.bake_jobs.any? %>
-  <%= button_to "Checkout", :checkout, data: {confirm: "Confirm this order and send to Bakers?"} %>
-  <%= button_to "Empty Cart", :cart, method: :delete, data: {confirm: "Are you sure you want to empty your cart?"} %>
+<div class="row">
+  <div class="col-auto mr-auto-leigh">
+    <%= button_to "Empty Cart", :cart, method: :delete, data: {confirm: "Are you sure you want to empty your cart?"}, class: 'btn btn-primary', form_class: "inline-button-to" %>
+  </div>
+  <div class="col-auto">
+    <!--<%= button_to "Checkout", :checkout, data: {confirm: "Confirm this order and send to Bakers?"}, class: 'btn btn-primary', form_class: "inline-button-to"%>-->
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Checkout</button>
+  </div>
+</div>
 <% end %>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">Confirm this order and send to Bakers?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-primary">Pay Now</button>-->
+        <%= button_to "Pay Now", :checkout, class: 'btn btn-primary', form_class: "inline-button-to"%>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,7 +13,6 @@ Turbolinks.start()
 ActiveStorage.start()
 
 import "bootstrap";
-import "../stylesheets/application";
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()

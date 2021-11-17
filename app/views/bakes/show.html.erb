@@ -1,2 +1,49 @@
-<%= render 'card', bake: @bake %>
+<!--<%= render 'card', bake: @bake %>-->
 
+<div class="row mt-4">
+  <div class="row col-6 justify-content-end">
+          <% if @bake.image.attached? %>
+        <%= image_tag(@bake.image) %>
+      <% else %>
+        <%= image_tag('no-image') %>
+      <% end %>
+    <div class="py-2">
+      <% unless user_signed_in? && current_user.id == @bake.baker.id %>
+        <%= button_to "Add to Cart", :cart, params: {bake_id: @bake.id, context: :bakes}, class: 'btn btn-primary', form_class: "inline-button-to" %>
+      <% end %>
+    <% if user_signed_in? %>
+      <% if (@bake.baker.id == current_user.id || current_user.admin ) %>
+        <%= button_to "Edit", edit_bake_path(@bake) ,method: :get, class: 'btn btn-primary', form_class: "inline-button-to" %>
+      <% end %>
+    <% end %>
+    </div>
+  </div>
+
+
+  <div class="row col-6">
+    <!-- Cake / Baker name -->
+    <p class="h2"><%= @bake.name %></p>
+    <div class="col-6">
+      <p><%= raw "Baked by " + (link_to @bake.baker.full_name, @bake.baker) %></p>
+    </div>
+    <div class="col-6"
+      <p><%= pluralize(@bake.view_count, "view") %>
+    </div>
+
+    <!-- Price / Lead time -->
+    <div class="mt-5">
+      <div class="h1 mb-0"><%= "#{number_to_currency(@bake.unit_price_dollars)}"%></div>
+    </div>
+    <div class="col-6">
+      <p class=><%= "Per #{@bake.unit}" %></p>
+    </div>
+    <div class="col-6">
+      <p><%= "Delivered in #{@bake.lead_time_days} days" %>
+    </div>
+
+  <!-- Description -->
+    <div class="mt-5">
+      <p><%= @bake.description %></p>
+    </div>
+
+</div>
