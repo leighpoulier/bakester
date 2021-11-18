@@ -63,7 +63,7 @@ $bakester-logo-brown: #4c260bff;
   // position: relative;
   // display:flex;
 
-  background-image: linear-gradient(to bottom, rgba(255,255,255,1), 95%, rgba(255,255,255,0) );
+  background-image: linear-gradient(to bottom, rgba(255,255,255,1), 85%, rgba(255,255,255,0) );
 }
 
 .bakester-navbar {
@@ -194,10 +194,50 @@ $bakester-logo-brown: #4c260bff;
 // ------------------------- MAIN ------------------------
 
 .main-bakester {
-  padding-top: 150px;
+  
+  padding-top: 160px;
 }
 
 
+@include media-breakpoint-up(sm) { 
+
+  .main-bakester {
+    padding-top: 180px;
+  }
+
+}
+
+@include media-breakpoint-up(md) { 
+
+  .main-bakester {
+    padding-top: 120px;
+  }
+
+}
+
+@include media-breakpoint-up(lg) { 
+
+  .main-bakester {
+    padding-top: 150px;
+  }
+
+}
+
+@include media-breakpoint-up(xl) { 
+
+  .main-bakester {
+    padding-top: 165px;
+  }
+
+}
+
+@include media-breakpoint-up(xxl) { 
+
+  .main-bakester {
+    padding-top: 180px;
+  }
+
+}
 
 // --------------------------- CARDS ------------------------------
 

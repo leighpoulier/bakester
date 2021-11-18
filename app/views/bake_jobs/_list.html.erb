@@ -10,7 +10,12 @@
 
     <div class='py-2'>
       <% @filter_list.each do |filt| %>
-        <%= button_to filt.humanize.titleize, path_helper, method: :get, params: {filter: filt}, form_class: "inline-button-to", class: params[:filter] == (filt == "" || filt == "all" ? nil : filt) ? 'btn btn-primary' : 'btn btn-outline-primary' %>
+        <% if params[:filter] %>
+          <% btn_class = ( params[:filter] == filt ? 'btn btn-primary' : 'btn btn-outline-primary' ) %>
+        <% else %>
+          <% btn_class = ( filt == "all" ? 'btn btn-primary' : 'btn btn-outline-primary' ) %>        
+        <% end %>
+        <%= button_to filt.humanize.titleize, path_helper, method: :get, params: {filter: filt}, form_class: "inline-button-to", class: btn_class %>
       <% end %>
     </div>
 
