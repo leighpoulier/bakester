@@ -16,7 +16,7 @@
 
 <% if @cart.bake_jobs.any? %>
 <div class="row">
-  <div class="col-auto mr-auto-leigh">
+  <div class="col-auto mr-auto-bakester">
     <%= button_to "Empty Cart", :cart, method: :delete, data: {confirm: "Are you sure you want to empty your cart?"}, class: 'btn btn-primary', form_class: "inline-button-to" %>
   </div>
   <div class="col-auto">

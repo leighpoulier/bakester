@@ -1,5 +1,6 @@
 class BakesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_filter_list, only: [:index, :my_bakes]
   before_action :set_bake, except: [:index, :my_bakes, :new, :create]
   before_action except: [:index, :show, :my_bakes, :new, :create] do
     is_admin_or_owner?(@bake)
@@ -9,10 +10,13 @@ class BakesController < ApplicationController
     filter = params[:filter]
     if filter
       if current_user.admin
-        if filter == 'all'
+        case filter
+        when 'all'
           @bakes = Bake.all
-        elsif filter == 'hidden'
+        when 'hidden'
           @bakes = Bake.hidden
+        when 'active'
+          @bakes = Bake.active
         end
       else
         redirect_to :bakes
@@ -120,6 +124,10 @@ class BakesController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
 
+  end
+
+  def set_filter_list
+    @filter_list = ["all", "active", "hidden"]
   end
 
 

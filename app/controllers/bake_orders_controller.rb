@@ -1,6 +1,7 @@
 class BakeOrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :is_admin?, only: [:index]
+  before_action :set_filter_list, only: [:index]
   before_action :set_order, only: [:show]
   before_action :set_cart, only: [:cart, :checkout, :empty_cart, :update_cart, :add_to_cart]
   before_action except: [:index, :my_bake_orders] do
@@ -105,5 +106,9 @@ class BakeOrdersController < ApplicationController
     else
       redirect_to :cart
     end
+  end
+
+  def set_filter_list
+    @filter_list = ["all", "submitted", "in_cart"]
   end
 end

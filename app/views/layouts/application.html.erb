@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
   <head>
     <title>Bakester</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -10,12 +10,17 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= render "shared/nav" %>
-    <div class="container-md">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <%= yield %>
-    </div>
+  <body class="d-flex flex-column h-100">
+    <header>
+      <%= render "shared/nav" %>
+    </header>
+    <main class="flex-shrink-0">
+      <div class="main-bakester container-md mb-5">
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+        <%= yield %>
+      </div>
+    </main>
+    <%= render "shared/footer" %>
   </body>
 </html>

@@ -1,23 +1,31 @@
 <div>
   <div class='py-2'>
+
     <% filter = params[:filter] %>
     <% if action_name == 'index' %>
-      <%= button_to "All", bake_jobs_path, method: :get, form_class: "inline-button-to", class: filter == nil ? 'btn btn-primary' : 'btn btn-outline-primary' %>
-      <%= button_to "Pending", bake_jobs_path('pending'), method: :get, form_class: "inline-button-to", class: filter == 'pending' ? 'btn btn-primary' : 'btn btn-outline-primary' %>
-      <%= button_to "Complete", bake_jobs_path('complete'), method: :get, form_class: "inline-button-to", class: filter == 'complete' ? 'btn btn-primary' : 'btn btn-outline-primary' %>
-      <%= button_to "Cancelled", bake_jobs_path('cancelled'), method: :get, form_class: "inline-button-to", class: filter == 'cancelled' ? 'btn btn-primary' : 'btn btn-outline-primary' %>
-      <%= button_to "In Cart", bake_jobs_path('in_cart'), method: :get, form_class: "inline-button-to", class: filter == 'in_cart' ? 'btn btn-primary' : 'btn btn-outline-primary' %>
+      <% path_helper = bake_jobs_path %>
     <% else %>
-      <%= button_to "All", my_bake_jobs_path, method: :get, form_class: "inline-button-to", class: filter == nil ? 'btn btn-primary' : 'btn btn-outline-primary' %>
-      <%= button_to "Pending", my_bake_jobs_path('pending'), method: :get, form_class: "inline-button-to", class: filter == 'pending' ? 'btn btn-primary' : 'btn btn-outline-primary' %>
-      <%= button_to "Complete", my_bake_jobs_path('complete'), method: :get, form_class: "inline-button-to", class: filter == 'complete' ? 'btn btn-primary' : 'btn btn-outline-primary' %>
+      <% path_helper = my_bake_jobs_path %>
     <% end %>
+
+    <div class='py-2'>
+      <% @filter_list.each do |filt| %>
+        <%= button_to filt.humanize.titleize, path_helper, method: :get, params: {filter: filt}, form_class: "inline-button-to", class: params[:filter] == (filt == "" || filt == "all" ? nil : filt) ? 'btn btn-primary' : 'btn btn-outline-primary' %>
+      <% end %>
+    </div>
+
   </div>
 </div>
-<% filter_string = params[:filter] ? "#{params[:filter]} " : ""  %>
+
+<% if !params[:filter] || params[:filter] == "all" %>
+  <% filter_string = "" %>
+<% else %>
+  <% filter_string = " #{params[:filter]}" %>
+<% end %>
+
 <% if bake_jobs.any? %>
   <div>
-    <p class="py-2"><%= "#{@bake_jobs.count} #{filter_string.humanize.downcase}#{"jobs".pluralize(@bake_jobs.count)}" %></p>
+    <p class="py-2"><%= "#{@bake_jobs.count}#{filter_string.humanize.downcase} #{"job".pluralize(@bake_jobs.count)}" %></p>
   </div>
   <table class="table table-striped">
     <thead>
@@ -44,7 +52,7 @@
           <% unless controller_name == 'bake_jobs' && action_name == 'my_bake_jobs' %>
             <td><%= link_to bake_job.baker.full_name, bake_job.baker %></td>
           <% end %>
-          <td><%= bake_job.status %></td>
+          <td><%= bake_job.status.humanize.titleize %></td>
           <td><%= bake_job.bake_order.submitted ? bake_job.bake_order.submitted_at.to_formatted_s(:hour_minute_day_month_year) : "" %></td>
           <td><%= link_to bake_job.bake.name, bake_job.bake %></td>
           <td>
@@ -71,5 +79,5 @@
   </table>
 <% else %>
   <% sentence_start = action_name == 'my_bake_jobs' ? 'You have' : 'There are'  %>
-  <p class='py-2'><%= "#{sentence_start} no #{filter_string.humanize.downcase}bake jobs" %></p>
+  <p class='py-2'><%= "#{sentence_start} no#{filter_string.humanize.downcase} bake jobs" %></p>
 <% end %>

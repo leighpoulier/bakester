@@ -1,19 +1,22 @@
 
 <% if action_name == 'index' && current_user.admin %>
-  <% filter = params[:filter] %>
+  <% #filter = params[:filter] %>
   <div class='py-2'>
-    <% ["all", "submitted", "in_cart"].each do |filt| %>
-      <%= button_to filt.humanize.titleize, orders_path(filt == "all" ? nil : filt), method: :get, form_class: "inline-button-to", class: filter == (filt == "" || filt == "all" ? nil : filt) ? 'btn btn-primary' : 'btn btn-outline-primary' %>
+    <% @filter_list.each do |filt| %>
+      <%= button_to filt.humanize.titleize, bake_orders_path, method: :get, params: {filter: filt}, form_class: "inline-button-to", class: params[:filter] == (filt == "" || filt == "all" ? nil : filt) ? 'btn btn-primary' : 'btn btn-outline-primary' %>
     <% end %>
-    <!--<%= button_to "All", orders_path, method: :get, form_class: "inline-button-to", class: filter == nil ? 'btn btn-primary' : 'btn btn-outline-primary' %>
-    <%= button_to "Submitted", orders_path('submitted'), method: :get, form_class: "inline-button-to",  class: filter == 'submitted' ? 'btn btn-primary' : 'btn btn-outline-primary' %>
-    <%= button_to "In Cart", orders_path('in_cart'), method: :get, form_class: "inline-button-to",  class: filter == 'in_cart' ? 'btn btn-primary' : 'btn btn-outline-primary' %> -->
   </div>
 <% end %>
-<% filter_string = params[:filter] ? "#{params[:filter]} " : ""  %>
+
+<% if !params[:filter] || params[:filter] == "all" %>
+  <% filter_string = "" %>
+<% else %>
+  <% filter_string = " #{params[:filter]}" %>
+<% end %>
+
 <% if bake_orders.any? %>
   <div>
-    <p class="py-2"><%= "#{bake_orders.count} #{filter_string.humanize.downcase}#{"orders".pluralize(bake_orders.count)}" %></p>
+    <p class="py-2"><%= "#{bake_orders.count}#{filter_string.humanize.downcase} #{"order".pluralize(bake_orders.count)}" %></p>
   </div>
   <table class="table table-striped">
     <thead>
@@ -58,5 +61,5 @@
     </tbody>
   </table>
 <% else %>
-  <p class='py-2'><%= "There are no #{filter_string.humanize.downcase}orders" %></p>
+  <p class='py-2'><%= "There are no#{filter_string.humanize.downcase} orders" %></p>
 <% end %>

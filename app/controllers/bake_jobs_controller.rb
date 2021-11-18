@@ -2,7 +2,8 @@ class BakeJobsController < ApplicationController
 
   before_action :authenticate_user!, except: []
   before_action :is_admin?, only: [:index]
-  before_action :set_bake_job, except: [:index, :my_bake_jobs, ]
+  before_action :set_bake_job, except: [:index, :my_bake_jobs ]
+  before_action :set_filter_list, only: [:index, :my_bake_jobs ]
   before_action except: [:index, :my_bake_jobs] do
     is_admin_or_owner?(@bake_job)
   end
@@ -93,6 +94,13 @@ class BakeJobsController < ApplicationController
       redirect_to :cart
     end
 
+  end
+
+  def set_filter_list
+    @filter_list = ["all", "pending", "complete"]
+    if current_user.admin
+      @filter_list.push("cancelled", "in_cart")
+    end
   end
 
 end
