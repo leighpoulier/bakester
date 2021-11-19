@@ -114,18 +114,18 @@ class Bake < ApplicationRecord
       if params[:sort_by].nil? || params[:sort_by].empty?
         if params[:sort_dir].nil? || params[:sort_dir].empty?
           puts "ORDER: DEFAULT COLUMN AND DEFAULT ORDER"
-          relation.order(name: :asc)
+          relation = relation.order(name: :asc)
         else
           puts "ORDER: DEFAULT COLUMN"
-          relation.order(name: params[:sort_dir])
+          relation = relation.order(name: params[:sort_dir])
         end
       else
         if params[:sort_by].nil? || params[:sort_by].empty?
           puts "ORDER: DEFAULT ORDER"
-          relation.order(params[:sort_by] => :asc)
+          relation = relation.order(params[:sort_by] => :asc)
         else
           puts "ORDER: AS SPEC"
-          relation.order(params[:sort_by] => params[:sort_dir])
+          relation = relation.order(params[:sort_by] => params[:sort_dir])
         end
       end
     else
