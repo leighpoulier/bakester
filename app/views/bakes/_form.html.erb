@@ -30,17 +30,19 @@
     <%= f.text_area :description, class: 'form-control', rows: 6  %>
   </div>
 
-  <div class="py-2 row">
-    <div class="col">
-      <%= label_tag :unit_price_dollars, "Unit Price", class: 'form-label' %>
-      <%= number_field_tag :unit_price_dollars, @bake.unit_price_dollars, step: 0.05, min: 0.05, class: 'form-control' %>
+    <div class="col-3">
+      <%= label_tag :price_dollars, "Price", class: 'form-label' %>
+      <%= number_field_tag :price_dollars, @bake.price_dollars, step: 0.05, min: 0.05, class: 'form-control' %>
     </div>
-    <span class="col-1"> per </span>
-    <div class="col">
-      <%= f.label :unit, class: 'form-label' %>
+    <span class="col-1">per</span>
+    <div class="col-3">
+      <%= f.label :unit_count, "Count", class: 'form-label' %>
+      <%= f.number_field :unit_count, step: 1, min: 0, class: 'form-control' %>
+    </div>
+    <div class="col-5">
+      <%= f.label :unit, "Unit(s)", class: 'form-label' %>
       <%= f.text_field :unit, class: 'form-control' %>
     </div>
-  </div>
 
   <div class="py-2 row">
     <% if (action_name == "edit" || action_name == "update")  && @bake.image.attached? && @bake.errors[:image].count == 0  %>
@@ -65,15 +67,11 @@
   <div class="py-2 row">
     <div class="custom-control custom-radio custom-control-inline">
       <%= f.radio_button :active, "true",  class: "custom-control-input" %>
-      <!--<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"> -->
       <%= f.label :active, "Active", class: "custom-control-label" %>
-      <!--<label class="custom-control-label" for="customRadioInline1">Toggle this custom radio</label> -->
     </div>
     <div class="custom-control custom-radio custom-control-inline">
       <%= f.radio_button :active, "false",  class: "custom-control-input" %>
-      <!--<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input"> -->
       <%= f.label :active, "Hidden", class: "custom-control-label" %>
-      <!--<label class="custom-control-label" for="customRadioInline2">Or toggle this other custom radio</label> -->
     </div>
   </div>
 

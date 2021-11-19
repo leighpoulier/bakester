@@ -8,7 +8,7 @@
     <% end %>
   <div class="card-body">
     <h5><%= link_to bake.name, bake, class: 'card-title' %></h3>
-    <p class='card-text'><%= number_to_currency(bake.unit_price_dollars) %> per <%= bake.unit %></p>
+    <p class='card-text'><%= number_to_currency(bake.price_dollars) %> per <%= "#{bake.unit_count > 1 ? "#{bake.unit_count} " : ""}#{bake.unit}" %><%= " - #{number_to_currency(bake.unit_price_dollars)} each" if bake.unit_count > 1 %></p>
     <% unless (controller_name == 'bakes' && action_name == 'my_bakes') || (controller_name == 'registrations' && action_name == 'show') %>
       <p class='card-text'><%= link_to bake.baker.full_name, bake.baker %></p>
     <% end %>

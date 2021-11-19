@@ -31,8 +31,11 @@
 
     <!-- Price / Lead time -->
     <div class="">
-      <span class="h1 mb-0 inline-bakester"><%= "#{number_to_currency(@bake.unit_price_dollars)}"%></span>
-      <span class="inline-bakester"><%= "per #{@bake.unit}" %></span>
+      <span class="h1 mb-0 inline-bakester"><%= "#{number_to_currency(@bake.price_dollars)}"%></span>
+      <span class="inline-bakester"><%= "per #{@bake.unit_count} #{@bake.unit}" %></span>
+      <% if @bake.unit_count > 1 %>
+        <span class="inline-bakester"><%= " - #{number_to_currency(@bake.unit_price_dollars)} each" %></span>
+      <% end %>
     </div>
     <div>
       <% unless user_signed_in? && current_user.id == @bake.baker.id %>

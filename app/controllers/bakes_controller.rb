@@ -52,7 +52,7 @@ class BakesController < ApplicationController
     end
     @bake = current_user.bakes.new(bake_params)
     
-    set_unit_price
+    set_price
 
     if @bake.save
       redirect_to @bake, notice: "Bake was successfully created."
@@ -73,7 +73,7 @@ class BakesController < ApplicationController
       resize_image
     end
 
-    set_unit_price
+    set_price
 
     if @bake.update(bake_params)
       redirect_to @bake, notice: "Bake was successfully updated."
@@ -101,12 +101,12 @@ class BakesController < ApplicationController
 
 
   def bake_params
-    params.require(:bake).permit(:name, :description, :unit, :category_id, :lead_time_days, :image, :active)
+    params.require(:bake).permit(:name, :description, :unit, :unit_count, :category_id, :lead_time_days, :image, :active)
   end
 
-  def set_unit_price
-    if params[:unit_price_dollars]
-      @bake.update_attribute(:unit_price, (params[:unit_price_dollars].to_f * 100).to_i)
+  def set_price
+    if params[:price_dollars]
+      @bake.update_attribute(:price, (params[:price_dollars].to_f * 100).to_i)
     end
   end
 

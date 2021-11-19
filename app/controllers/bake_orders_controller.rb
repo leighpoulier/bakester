@@ -58,7 +58,7 @@ class BakeOrdersController < ApplicationController
       begin
         @cart.transaction do
           @cart.bake_jobs.each do |bake_job|
-            bake_job.update_attribute(:price_at_order, bake_job.bake.unit_price)
+            bake_job.update_attribute(:price_at_order, bake_job.bake.price)
             bake_job.update_attribute(:status, :received)
           end
           @cart.update_attribute(:submitted_at, DateTime.now)

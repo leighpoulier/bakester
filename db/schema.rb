@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_16_093117) do
+ActiveRecord::Schema.define(version: 2021_11_19_053323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,16 +66,17 @@ ActiveRecord::Schema.define(version: 2021_11_16_093117) do
 
   create_table "bakes", force: :cascade do |t|
     t.bigint "baker_id", null: false
-    t.string "name"
-    t.text "description"
-    t.integer "unit_price"
-    t.string "unit"
+    t.string "name", null: false
+    t.text "description", null: false
+    t.integer "price", null: false
+    t.string "unit", null: false
     t.bigint "category_id", null: false
     t.integer "view_count", default: 0
-    t.integer "lead_time_days"
+    t.integer "lead_time_days", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "active", default: true, null: false
+    t.integer "unit_count", default: 1, null: false
     t.index ["baker_id"], name: "index_bakes_on_baker_id"
     t.index ["category_id"], name: "index_bakes_on_category_id"
   end

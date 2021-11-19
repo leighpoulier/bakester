@@ -15,7 +15,7 @@
         <tr>
           <td><%= link_to "#{bake_job.bake.name} (#{bake_job.bake.unit})", bake_job.bake %></td>
           <td><%= bake_job.quantity %></td>
-          <% bake_price = bake_job.bake.unit_price %>
+          <% bake_price = bake_job.bake.price %>
           <td><%= number_to_currency(bake_price/100.0) %></td>
           <% line_total = bake_job.quantity * bake_price %>
           <% running_total += line_total %>
