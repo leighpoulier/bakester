@@ -130,7 +130,7 @@ class BakesController < ApplicationController
 
   def set_price
     if params[:price_dollars]
-      @bake.update_attribute(:price, (params[:price_dollars].to_f * 100).to_i)
+      @bake.price = (params[:price_dollars].to_f * 100).to_i
     end
   end
 
