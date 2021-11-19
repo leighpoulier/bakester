@@ -151,7 +151,7 @@ class Bake < ApplicationRecord
   end
 
   def unit_price_dollars
-    price / 100.0 / self.unit_count
+    price / 100.0 / unit_count
   end
 
   def unit_price

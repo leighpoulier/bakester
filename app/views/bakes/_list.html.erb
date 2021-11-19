@@ -44,7 +44,7 @@
 
         <div id="bakester-bake-search-options" class="row bakester-flex-width-100">
         <!-- Search in -->
-          <% if (action_name == 'index' && current_user.admin) || action_name == 'my_bakes' %>
+          <% if (action_name == 'index' && user_signed_in? && current_user.admin) || action_name == 'my_bakes' %>
             <div class="py-2 col-sm-6 bakester-flex bakester-flex-gap-1"> 
           <% else %>
             <div class="py-2 col-lg-12 bakester-flex bakester-flex-gap-1"> 
