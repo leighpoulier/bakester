@@ -63,7 +63,7 @@ class Bake < ApplicationRecord
         relation = active
       end
 
-      unless params[:catgeory].nil? || params[:category].empty?
+      unless params[:category].nil? || params[:category].empty?
         puts "FILTERED ON CATEGORY"
         relation = relation.filter_category(params[:category])
       end
