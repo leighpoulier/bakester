@@ -7,34 +7,58 @@ class BakesController < ApplicationController
   end
 
   def index
-    filter = params[:filter]
-    if filter
-      if current_user.admin
-        case filter
-        when 'all'
-          @bakes = Bake.all
-        when 'hidden'
-          @bakes = Bake.hidden
-        when 'active'
-          @bakes = Bake.active
-        end
-      else
-        redirect_to :bakes
+    # filter = params[:filter]
+    # if filter
+    #   if current_user.admin
+    #     case filter
+    #     when 'all'
+    #       @bakes = Bake.all
+    #     when 'hidden'
+    #       @bakes = Bake.hidden
+    #     when 'active'
+    #       @bakes = Bake.active
+    #     end
+    #   else
+    #     redirect_to :bakes
+    #   end
+    # else
+    #   @bakes = Bake.active
+    # end
+    @bakes = Bake.search_form(search_params)
+
+    # Default to searching by name, for the search form.
+    unless params[:search_name] || params[:search_description]
+      params[:search_name] = true
+    end
+    if user_signed_in? && current_user.admin
+      unless params[:active] || params[:hidden]
+        params[:active] = true
       end
-    else
-      @bakes = Bake.active
     end
   end
 
   def my_bakes
-    filter = params[:filter]
-    if filter == 'all'
-      @bakes = current_user.bakes
-    elsif filter == 'hidden'
-      @bakes = current_user.bakes.hidden
-    else
-      @bakes = current_user.bakes.active
+    # filter = params[:filter]
+    # if filter == 'all'
+    #   @bakes = current_user.bakes
+    # elsif filter == 'hidden'
+    #   @bakes = current_user.bakes.hidden
+    # else
+    #   @bakes = current_user.bakes.active
+    # end
+    @bakes = current_user.bakes.search_form(search_params)
+
+    # Default to searching by name, for the search form.
+    unless params[:search_name] || params[:search_description]
+      params[:search_name] = true
     end
+
+    # Default to filtering to active bakes.
+    unless params[:active] || params[:hidden]
+      params[:active] = true
+    end
+
+
   end
 
   def show
@@ -130,6 +154,14 @@ class BakesController < ApplicationController
     @filter_list = ["all", "active", "hidden"]
   end
 
+  def search_params
+    puts "SEARCH PARAMS"
+    if user_signed_in? && (current_user.admin || action_name == 'my_bakes')
+      return params.permit(:active, :hidden, :search_text, :search_name, :search_description, :category, :sort_by, :sort_dir, :price_min, :price_max, :unit_price_min, :unit_price_max, :lead_time_min, :lead_time_max  )
+    else
+      return params.permit(:search_text, :search_name, :search_description, :category, :sort_by, :sort_dir, :price_min, :price_max, :unit_price_min, :unit_price_max, :lead_time_min, :lead_time_max  )
+    end
+  end
 
 
 

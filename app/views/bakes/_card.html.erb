@@ -8,9 +8,12 @@
     <% end %>
   <div class="card-body">
     <h5><%= link_to bake.name, bake, class: 'card-title' %></h3>
-    <p class='card-text'><%= number_to_currency(bake.price_dollars) %> per <%= "#{bake.unit_count > 1 ? "#{bake.unit_count} " : ""}#{bake.unit.pluralize(bake.unit_count)}" %><%= " - #{number_to_currency(bake.unit_price_dollars)} each" if bake.unit_count > 1 %></p>
-    <% unless (controller_name == 'bakes' && action_name == 'my_bakes') || (controller_name == 'registrations' && action_name == 'show') %>
-      <p class='card-text'><%= link_to bake.baker.full_name, bake.baker %></p>
+    <div class="h1 mb-0"><%= "#{number_to_currency(bake.price_dollars)}"%></div>
+    <% if bake.unit_count > 1 %>
+      <span class="bakester-inline"><%= "#{bake.unit_count > 1 ? "#{bake.unit_count} " : ""}#{bake.unit.pluralize(bake.unit_count)}" %></span>
+      <span class="bakester-inline"><%= " - #{number_to_currency(bake.unit_price_dollars)} each" %></span>
+    <% end %>    <% unless (controller_name == 'bakes' && action_name == 'my_bakes') || (controller_name == 'registrations' && action_name == 'show') %>
+    <p class='card-text mt-2'><%= raw "By #{link_to bake.baker.full_name, bake.baker}" %></p>
     <% end %>
     <% unless controller_name == 'categories' && action_name == 'show' %>
       <p><%= link_to bake.category.name, bake.category %></p>

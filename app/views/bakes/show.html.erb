@@ -1,16 +1,16 @@
 <!--<%= render 'card', bake: @bake %>-->
 
-<div class="mt-4 p-3 show-bake-bakester shadow">
-  <div class="show-bake-panel-bakester">
+<div class="mt-4 p-3 bakester-show-bake shadow">
+  <div class="bakester-show-bake-panel">
           <% if @bake.image.attached? %>
-        <%= image_tag @bake.image, class: 'show-bake-image-bakester' %>
+        <%= image_tag @bake.image, class: 'bakester-show-bake-image' %>
       <% else %>
-        <%= image_tag 'no-image' , class: 'show-bake-image-bakester' %>
+        <%= image_tag 'no-image' , class: 'bakester-show-bake-image' %>
       <% end %>
   </div>
 
 
-  <div class="show-bake-panel-bakester">
+  <div class="bakester-show-bake-panel">
     <!-- Cake / Baker name -->
     <div class="show-bake-panel-bake-name-and-edit-button">
       <div>
@@ -31,10 +31,10 @@
 
     <!-- Price / Lead time -->
     <div class="">
-      <span class="h1 mb-0 inline-bakester"><%= "#{number_to_currency(@bake.price_dollars)}"%></span>
-      <span class="inline-bakester"><%= "per #{@bake.unit_count > 1 ? "#{@bake.unit_count} " : ""}#{@bake.unit.pluralize(@bake.unit_count)}" %></span>
+      <div class="h1 mb-0"><%= "#{number_to_currency(@bake.price_dollars)}"%></div>
+      <span class="bakester-inline"><%= "#{@bake.unit_count} #{@bake.unit.pluralize(@bake.unit_count)}" %></span>
       <% if @bake.unit_count > 1 %>
-        <span class="inline-bakester"><%= " - #{number_to_currency(@bake.unit_price_dollars)} each" %></span>
+        <span class="bakester-inline"><%= " - #{number_to_currency(@bake.unit_price_dollars)} each" %></span>
       <% end %>
     </div>
     <div>

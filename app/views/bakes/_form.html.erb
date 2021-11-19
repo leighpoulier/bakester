@@ -34,7 +34,9 @@
       <%= label_tag :price_dollars, "Price", class: 'form-label' %>
       <%= number_field_tag :price_dollars, @bake.price_dollars, step: 0.05, min: 0.05, class: 'form-control' %>
     </div>
-    <span class="col-1">per</span>
+    <div class="col-1 d-flex flex-column justify-content-end align-items-center">
+      <span class="">per</span>
+    </div>
     <div class="col-3">
       <%= f.label :unit_count, "Count", class: 'form-label' %>
       <%= f.number_field :unit_count, step: 1, min: 0, class: 'form-control' %>

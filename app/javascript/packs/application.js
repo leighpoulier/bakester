@@ -17,3 +17,11 @@ import "bootstrap";
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+// $(document).ready(function() {
+$(document).on('turbolinks:load', function() {
+  $('#bakester-search-form-activate').click(function() {
+      $('#bakester-search-form').toggleClass('open');
+      $(this).toggleClass('up');
+  });
+});
