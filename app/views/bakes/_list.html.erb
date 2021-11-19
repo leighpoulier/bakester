@@ -182,7 +182,8 @@
 <% end %>
 -->
 <% if @bakes.any? %>
-  <% bakes_count = @bakes.count %>
+  <% @bakes.load %>
+  <% bakes_count = @bakes.length %>
   <div>
     <p class="py-2"><%= "#{bakes_count}#{filter_string.humanize.downcase} #{"bake".pluralize(bakes_count)}" %></p>
   </div>

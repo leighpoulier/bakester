@@ -26,8 +26,9 @@ class Bake < ApplicationRecord
   validates :price, :lead_time_days, numericality: {only_integer: true}
   validates :image, blob: { content_type: Bake::IMAGE_TYPES, size_range: 0..(Bake::IMAGE_MAX_SIZE) }
 
-  scope :active, -> { where(active: true ) }
-  scope :hidden, -> { where(active: false) }
+  scope :with_unit_price, -> { select('*, (price/unit_count) AS unit_price')}
+  scope :active, -> { where(active: true).with_unit_price }
+  scope :hidden, -> { where(active: false).with_unit_price }
 
   scope :search_text, ->(field_name, search_string) { where( "#{field_name} ILIKE ?", "%#{search_string}%" ) }
   scope :search_text_split, ->(field_name, search_string) {
@@ -99,6 +100,7 @@ class Bake < ApplicationRecord
 
       unless params[:unit_price_min].nil? || params[:unit_price_min].empty? || params[:unit_price_max].nil? || params[:unit_price_max].empty?
         puts "UNIT PRICE"
+        relation = relation.with_unit_price
         unit_price_min = (params[:unit_price_min].to_f * 100).to_i
         unit_price_max = (params[:unit_price_max].to_f * 100).to_i
         relation = relation.filter_unit_price_range(unit_price_min, unit_price_max)
