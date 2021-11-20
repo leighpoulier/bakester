@@ -181,9 +181,8 @@
   <% filter_string = " #{params[:filter]}" %>
 <% end %>
 -->
-<% if @bakes.any? %>
-  <% @bakes.load %>
-  <% bakes_count = @bakes.length %>
+<% if bakes.any? %>
+  <% bakes_count = bakes.except(:select).count %>
   <div>
     <p class="py-2"><%= "#{bakes_count}#{filter_string.humanize.downcase} #{"bake".pluralize(bakes_count)}" %></p>
   </div>

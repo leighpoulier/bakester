@@ -1,4 +1,4 @@
-<!--<%= render 'card', bake: @bake %>-->
+
 
 <div class="mt-4 p-3 bakester-show-bake shadow">
   <div class="bakester-show-bake-panel">
@@ -14,7 +14,16 @@
     <!-- Cake / Baker name -->
     <div class="show-bake-panel-bake-name-and-edit-button">
       <div>
-        <span class="h2"><%= @bake.name %></span>
+        <div>
+          <span class="h2"><%= @bake.name %></span>
+        </div>
+        <div>
+            <% if action_name == 'my_bakes' %>
+              <span><%= link_to @bake.category.name, my_bakes_path(params: {category: @bake.category.id}) %></span>
+            <% else %>
+              <span><%= link_to @bake.category.name, bakes_path(params: {category: @bake.category.id}) %></span>
+            <% end %>
+        </div>
       </div>
       <!-- Edit Button -->
       <% if user_signed_in? %>

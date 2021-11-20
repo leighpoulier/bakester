@@ -16,7 +16,13 @@
     <p class='card-text mt-2'><%= raw "By #{link_to bake.baker.full_name, bake.baker}" %></p>
     <% end %>
     <% unless controller_name == 'categories' && action_name == 'show' %>
-      <p><%= link_to bake.category.name, bake.category %></p>
+      <!--<p><%= link_to bake.category.name, bake.category %></p>-->
+    <% if action_name == 'my_bakes' %>
+      <p><%= link_to bake.category.name, my_bakes_path(params: {category: bake.category.id}) %></p>
+    <% else %>
+      <p><%= link_to bake.category.name, bakes_path(params: {category: bake.category.id}) %></p>
+    <% end %>
+
     <% end %>
     <p class='card-text'><%= bake.description %></p>
     <p class='card-text'>Delivered in <%= bake.lead_time_days %> days</p>
