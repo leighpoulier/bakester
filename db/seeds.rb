@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 if Category.count == 0
-  categories = %w[Cakes Cupcakes Biscuits Pies\ &\ Tarts Slices]
+  categories = %w[Biscuits Breads Cakes Cupcakes Pastries Pies\ &\ Tarts Slices]
   categories.each do |category|
     Category.create(name: category)
     puts "Created category: #{category}"

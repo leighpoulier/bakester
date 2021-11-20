@@ -46,10 +46,6 @@ class Bake < ApplicationRecord
 
   scope :search_form, ->(params) {
     pp params
-    pp params[:hidden]
-    pp params[:hidden] == true
-    pp params[:hidden] == 1
-    pp params[:hidden] == "1"
     if params
       if params[:hidden] && params[:hidden] == "1"
         if params[:active] && params[:active] == "1"
@@ -149,11 +145,15 @@ class Bake < ApplicationRecord
 
 
   def price_dollars
-    price ? price / 100.0 : 0.0
+    price ? price / 100.0 : nil
   end
 
   def unit_price_dollars
-    price / 100.0 / unit_count
+    if unit_price
+      unit_price / 100.0
+    else
+      price / 100.0 / unit_count
+    end
   end
 
   def unit_price

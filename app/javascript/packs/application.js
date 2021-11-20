@@ -14,9 +14,11 @@ ActiveStorage.start()
 
 import "bootstrap";
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+$(document).on('turbolinks:load', function() {
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  });
+});
 
 // $(document).ready(function() {
 $(document).on('turbolinks:load', function() {
