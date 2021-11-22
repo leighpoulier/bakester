@@ -12,18 +12,18 @@ class BakeOrdersController < ApplicationController
     filter = params[:filter]
     case filter
     when 'all'
-      @bake_orders = BakeOrder.all
+      @bake_orders = BakeOrder.eager_loading.all
     when 'submitted'
-      @bake_orders = BakeOrder.submitted
+      @bake_orders = BakeOrder.eager_loading.submitted
     when 'in_cart'
-      @bake_orders = BakeOrder.carts
+      @bake_orders = BakeOrder.eager_loading.carts
     else
-      @bake_orders = BakeOrder.all
+      @bake_orders = BakeOrder.eager_loading.all
     end
   end
 
   def my_bake_orders
-    @bake_orders = current_user.bake_orders
+    @bake_orders = current_user.bake_orders.eager_loading
   end
 
   def show

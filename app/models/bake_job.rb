@@ -23,6 +23,9 @@ class BakeJob < ApplicationRecord
   validates :price_at_order, presence: true, if: -> { self.bake_order.submitted }
   validates_with BakeJobStatusValidator
 
+  scope :eager_loading, -> { includes(:bake_order, bake: [:baker]) }
+  # scope :with_job_total, -> { select('(bake_jobs.quantity * bake_jobs.price_at_order) AS job_total')}
+
   scope :in_cart, ->{where(status: 0)}
   scope :active, -> { where('status > ?', 0) }
   scope :cancelled, -> {where(status: :cancelled)}

@@ -32,7 +32,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def show
     id = params[:id]
-    @user = User.find(id)
+    @user = User.eager_loading.find(id)
   end
 
   def upgrade

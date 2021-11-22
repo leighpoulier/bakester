@@ -195,17 +195,17 @@
   </div>
 <% else %>
   <!--<p class='py-2'><%= "You have no#{filter_string.humanize.downcase} bakes" %></p>-->
-  <% if action_name = 'my_bakes' %>
+  <% if action_name == 'my_bakes' %>
     <% no_bakes_message_intro = "You have" %>
   <% else %>
     <% no_bakes_message_intro = "There are" %>
   <% end %>
   <p class='py-2'><%= "#{no_bakes_message_intro} no bakes to display" %></p>
   <% if action_name == 'my_bakes' %>
-    <% unless (params[:active] && params[:active] = "1") %>
+    <% unless (params[:active] && params[:active] == "1") %>
       <% try_enabling_active = "active" %>
     <% end %>
-    <% unless (params[:hidden] && params[:hidden] = "1") %>
+    <% unless (params[:hidden] && params[:hidden] == "1") %>
       <% try_enabling_hidden = "hidden" %>
     <% end %>
     <% if try_enabling_active %>

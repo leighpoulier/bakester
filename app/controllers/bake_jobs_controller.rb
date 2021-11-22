@@ -10,7 +10,7 @@ class BakeJobsController < ApplicationController
 
 
   def index
-    @bake_jobs = BakeJob.all.order(:created_at)
+    @bake_jobs = BakeJob.eager_loading.with_job_total.order(:created_at)
     filter_bake_jobs
   end
 
@@ -52,14 +52,14 @@ class BakeJobsController < ApplicationController
   end
 
   def my_bake_jobs
-    @bake_jobs = current_user.bake_jobs.order(:submitted_at)
+    @bake_jobs = current_user.bake_jobs.eager_loading.order(:submitted_at)
     filter_bake_jobs
   end
 
   private
 
   def set_bake_job
-    @bake_job = BakeJob.find(params[:id])
+    @bake_job = BakeJob.eager_loading.with_job_total.find(params[:id])
   end
 
   def bake_job_params

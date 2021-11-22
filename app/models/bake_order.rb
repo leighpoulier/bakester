@@ -18,6 +18,10 @@ class BakeOrder < ApplicationRecord
   # validates_with BakeOrderValidator
   validates :submitted_at, presence: true, if: :submitted
 
+  # scope :with_bake_order_total, -> { joins(:bake_jobs).sum('bake_jobs.quantity * bake_jobs.price_at_order') }
+  # scope :with_bake_order_bakes, -> { joins(:bake_jobs).group('bake_jobs.bake_order_id').sum('bake_jobs.quantity')}
+  scope :eager_loading, -> { includes(:user, :bakers, bake_jobs: [:bake]) }
+
   scope :submitted, -> { where(submitted: true) }
   scope :carts, -> { where(submitted: false)}
 

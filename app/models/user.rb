@@ -18,6 +18,7 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true
 
   scope :bakers, ->  {where(baker: true) }
+  scope :eager_loading, -> { includes(bakes: [:category, image_attachment: [:blob]]) }
 
   def full_name
     self.first_name + " " + self.last_name

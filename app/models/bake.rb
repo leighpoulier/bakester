@@ -30,6 +30,8 @@ class Bake < ApplicationRecord
   scope :active, -> { where(active: true).with_unit_price }
   scope :hidden, -> { where(active: false).with_unit_price }
 
+  scope :eager_loading, -> { includes(:baker, :category, image_attachment: [:blob]) }
+
   scope :search_text, ->(field_name, search_string) { where( "#{field_name} ILIKE ?", "%#{search_string}%" ) }
   scope :search_text_split, ->(field_name, search_string) {
     search_term_array = search_string.split(" ")

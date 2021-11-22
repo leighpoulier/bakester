@@ -24,7 +24,7 @@ class BakesController < ApplicationController
     # else
     #   @bakes = Bake.active
     # end
-    @bakes = Bake.search_form(search_params)
+    @bakes = Bake.eager_loading.search_form(search_params)
 
     # Default to searching by name, for the search form.
     unless params[:search_name] || params[:search_description]
@@ -46,14 +46,14 @@ class BakesController < ApplicationController
     # else
     #   @bakes = current_user.bakes.active
     # end
-    @bakes = current_user.bakes.search_form(search_params)
+    @bakes = current_user.bakes.eager_loading.search_form(search_params)
 
     # Default to searching by name, for the search form.
     unless params[:search_name] || params[:search_description]
       params[:search_name] = true
     end
 
-    # Default to filtering to active bakes.
+    # Default filtering to active bakes.
     unless params[:active] || params[:hidden]
       params[:active] = true
     end
@@ -120,7 +120,7 @@ class BakesController < ApplicationController
   private
 
   def set_bake
-    @bake = Bake.find(params[:id])
+    @bake = Bake.eager_loading.find(params[:id])
   end
 
 
