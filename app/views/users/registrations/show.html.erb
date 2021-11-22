@@ -7,6 +7,6 @@
   <p>User since <%= "#{@user.created_at.year}" %></p>
 <% end %>
 <% if @user.baker %>
-  <p><%= pluralize(@user.bakes.count, "bake") %></p>
+  <p><%= "#{@user.first_name}'s' bakes" %></p>
   <%= render 'bakes/list', bakes: @user.bakes %>
 <% end %>

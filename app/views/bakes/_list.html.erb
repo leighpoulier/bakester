@@ -22,157 +22,158 @@
   <% end %>
 <% end %>
 -->
+<% if controller_name == 'bakes' %>
+  <div id="bakester-search-form-wrapper" class="bakester-search-form-wrapper">
+    <span id="bakester-search-form-activate" class="bakester-down-arrow">Search</span>
+    <div id="bakester-search-form" class="bakester-search-form hidden">
 
-<div id="bakester-search-form-wrapper" class="bakester-search-form-wrapper">
-  <span id="bakester-search-form-activate" class="bakester-down-arrow">Search</span>
-  <div id="bakester-search-form" class="bakester-search-form hidden">
-
-    <% if action_name == 'my_bakes' %>
-      <% path_helper = my_bakes_path %>
-    <% else %>
-      <% path_helper = bakes_path %>
-    <% end %>
-
-    <%= form_with url: path_helper, method: :get, class: 'row' do |f| %>
-
-      <div id="bakester-bake-search-reordering">
-    <!-- Name -->
-        <div id="bakester-bake-search-text" class="py-2 col-lg-6">
-          <%= f.label :search_text, "Search Text", class: 'form-label' %>
-          <%= f.text_field :search_text, class: 'form-control' %>
-        </div>
-
-        <div id="bakester-bake-search-options" class="row bakester-flex-width-100">
-        <!-- Search in -->
-          <% if (action_name == 'index' && user_signed_in? && current_user.admin) || action_name == 'my_bakes' %>
-            <div class="py-2 col-sm-6 bakester-flex bakester-flex-gap-1"> 
-          <% else %>
-            <div class="py-2 col-lg-12 bakester-flex bakester-flex-gap-1"> 
-          <% end %>
-            <div>
-              <%= f.label "Search in:", class: 'form-label' %>
-            </div>
-            <div>
-              <%= check_box_tag :search_name,1,params[:search_name] %>
-              <%= f.label :search_name, "Name", class: 'form-label' %>
-            </div>
-            <div>
-              <%= check_box_tag :search_description,1,params[:search_description] %>
-              <%= f.label :search_description, "Description", class: 'form-label' %>
-            </div>
-          </div>
-
-        <!-- Show -->
-          <% if user_signed_in? %>
-            <% if (action_name == 'index' && current_user.admin) || action_name == 'my_bakes' %>
-              <div class="py-2 col-sm-6 bakester-flex bakester-flex-gap-1"> 
-                <div>
-                  <%= f.label "Show:", class: 'form-label' %>
-                </div>
-                <div>
-                  <%= check_box_tag :active,1,params[:active] %>
-                  <%= f.label :active, "Active", class: 'form-label' %>
-                </div>
-                <div>
-                  <%= check_box_tag :hidden,1,params[:hidden] %>
-                  <%= f.label :hidden, "Hidden", class: 'form-label' %>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-
-      <!-- Category -->
-        <div id="bakester-bake-search-category-and-sort" class="row col-lg-6 gx-2">
-          <div class="py-2 col-sm-6">
-            <%= f.label :category, class: 'form-label' %>
-            <%= f.select :category, options_for_select(Category.filter_options, selected: params[:category]), {}, {class: "form-select"} %>
-          </div>
-
-        <!-- Sort -->
-          <div class="py-2 col-sm-6">
-            <%= f.label :sort_by, class: 'form-label' %>
-            <div class="row bakester-flex-gap-v-0-5 gx-2">
-              <div class="col-6">
-              <%= f.select :sort_by, options_for_select(Bake.sort_options, selected: params[:sort_by]), {}, {class: "form-select"} %>
-              </div>
-              <div class="col-6">
-              <%= f.select :sort_dir, options_for_select({"Ascending" => "asc", "Descending" => "desc"}, selected: params[:sort_dir]), {}, {class: "form-select"} %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    <!-- Price -->
-      <% if user_signed_in? && current_user.admin %>
-        <% max_price = Bake.maximum('price') / 100.0 %>
-        <% max_unit_price = Bake.maximum('price / unit_count') / 100.0 %>
-        <% max_lead_time = Bake.maximum('lead_time_days') %>
+      <% if action_name == 'my_bakes' %>
+        <% path_helper = my_bakes_path %>
       <% else %>
-        <% max_price = Bake.active.maximum('price') / 100.0 %>
-        <% max_unit_price = Bake.active.maximum('price / unit_count') / 100.0 %>
-        <% max_lead_time = Bake.active.maximum('lead_time_days') %>
+        <% path_helper = bakes_path %>
       <% end %>
 
-      <div class="py-2 col-lg-4 bakester-flex bakester-flex-column">
-        <div>
-          <%= f.label "Price", class: 'form-label' %>
-        </div>
-        <div class="bakester-flex bakester-flex-gap-0-5">
-          <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
-            <%= f.label :price_min, "Min:", class: 'form-label' %>
-            <%= number_field_tag :price_min, params[:price_min] ? params[:price_min] : 0, step:0.05,min:0, max:max_price, class: 'bakester-form-number-control-narrow' %>
-          </div>
-          <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
-            <%= f.label :price_max, "Max:", class: 'form-label' %>
-            <%= number_field_tag :price_max, params[:price_max] ? params[:price_max] : max_price, step:0.05,min:0, max:max_price, class: 'bakester-form-number-control-narrow' %>
-          </div>
-        </div>
-      </div>
+      <%= form_with url: path_helper, method: :get, class: 'row' do |f| %>
 
-    <!-- Unit Price -->
-      <div class="py-2 col-lg-4 bakester-flex bakester-flex-column">
-        <div>
-         <%= f.label "Unit Price", class: 'form-label' %>
-        </div>
-        <div class="bakester-flex bakester-flex-gap-0-5">
-          <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
-            <%= f.label :unit_price_min, "Min:", class: 'form-label' %>
-            <%= number_field_tag :unit_price_min, params[:unit_price_min] ? params[:unit_price_min] : 0, step:0.05,min:0, max: max_unit_price, class: 'bakester-form-number-control-narrow' %>
+        <div id="bakester-bake-search-reordering">
+      <!-- Name -->
+          <div id="bakester-bake-search-text" class="py-2 col-lg-6">
+            <%= f.label :search_text, "Search Text", class: 'form-label' %>
+            <%= f.text_field :search_text, class: 'form-control' %>
           </div>
-          <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
-            <%= f.label :unit_price_max, "Max:", class: 'form-label' %>
-            <%= number_field_tag :unit_price_max, params[:unit_price_max] ? params[:unit_price_max] : max_unit_price, step:0.05,min:0, max: max_unit_price, class: 'bakester-form-number-control-narrow' %>
-          </div>
-        </div>
-      </div>
 
-    <!-- Lead Time -->
-      <div class="py-2 col-lg-4 bakester-flex bakester-flex-column">
-        <div>
-          <%= f.label "Lead Time (days)", class: 'form-label' %>
-        </div>
-        <div class="bakester-flex bakester-flex-gap-0-5">
-          <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
-            <%= f.label :lead_time_min, "Min:", class: 'form-label' %>
-            <%= number_field_tag :lead_time_min, params[:lead_time_min] ? params[:lead_time_min] : 0, step:1, min:0, max: max_lead_time, class: 'bakester-form-number-control-narrow' %>
+          <div id="bakester-bake-search-options" class="row bakester-flex-width-100">
+          <!-- Search in -->
+            <% if (action_name == 'index' && user_signed_in? && current_user.admin) || action_name == 'my_bakes' %>
+              <div class="py-2 col-sm-6 bakester-flex bakester-flex-gap-1"> 
+            <% else %>
+              <div class="py-2 col-lg-12 bakester-flex bakester-flex-gap-1"> 
+            <% end %>
+              <div>
+                <%= f.label "Search in:", class: 'form-label' %>
+              </div>
+              <div>
+                <%= check_box_tag :search_name,1,params[:search_name] %>
+                <%= f.label :search_name, "Name", class: 'form-label' %>
+              </div>
+              <div>
+                <%= check_box_tag :search_description,1,params[:search_description] %>
+                <%= f.label :search_description, "Description", class: 'form-label' %>
+              </div>
             </div>
-          <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
-            <%= f.label :lead_time_max, "Max:", class: 'form-label' %>
-            <%= number_field_tag :lead_time_max, params[:lead_time_max] ? params[:lead_time_max] : max_lead_time, step:1, min:0, max: max_lead_time, class: 'bakester-form-number-control-narrow' %>
+
+          <!-- Show -->
+            <% if user_signed_in? %>
+              <% if (action_name == 'index' && current_user.admin) || action_name == 'my_bakes' %>
+                <div class="py-2 col-sm-6 bakester-flex bakester-flex-gap-1"> 
+                  <div>
+                    <%= f.label "Show:", class: 'form-label' %>
+                  </div>
+                  <div>
+                    <%= check_box_tag :active,1,params[:active] %>
+                    <%= f.label :active, "Active", class: 'form-label' %>
+                  </div>
+                  <div>
+                    <%= check_box_tag :hidden,1,params[:hidden] %>
+                    <%= f.label :hidden, "Hidden", class: 'form-label' %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+
+        <!-- Category -->
+          <div id="bakester-bake-search-category-and-sort" class="row col-lg-6 gx-2">
+            <div class="py-2 col-sm-6">
+              <%= f.label :category, class: 'form-label' %>
+              <%= f.select :category, options_for_select(Category.filter_options, selected: params[:category]), {}, {class: "form-select"} %>
+            </div>
+
+          <!-- Sort -->
+            <div class="py-2 col-sm-6">
+              <%= f.label :sort_by, class: 'form-label' %>
+              <div class="row bakester-flex-gap-v-0-5 gx-2">
+                <div class="col-6">
+                <%= f.select :sort_by, options_for_select(Bake.sort_options, selected: params[:sort_by]), {}, {class: "form-select"} %>
+                </div>
+                <div class="col-6">
+                <%= f.select :sort_dir, options_for_select({"Ascending" => "asc", "Descending" => "desc"}, selected: params[:sort_dir]), {}, {class: "form-select"} %>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-    <!-- Buttons -->
-      <div class="py-2">
-        <%= f.submit "Search", name: nil, class: "btn btn-primary"  %>
-        <%= f.button "Reset", type:"reset", class: "btn btn-secondary" %>
-      </div>
-    <% end %>
+      <!-- Price -->
+        <% if user_signed_in? && current_user.admin %>
+          <% max_price = Bake.maximum('price') / 100.0 %>
+          <% max_unit_price = Bake.maximum('price / unit_count') / 100.0 %>
+          <% max_lead_time = Bake.maximum('lead_time_days') %>
+        <% else %>
+          <% max_price = Bake.active.maximum('price') / 100.0 %>
+          <% max_unit_price = Bake.active.maximum('price / unit_count') / 100.0 %>
+          <% max_lead_time = Bake.active.maximum('lead_time_days') %>
+        <% end %>
+
+        <div class="py-2 col-lg-4 bakester-flex bakester-flex-column">
+          <div>
+            <%= f.label "Price", class: 'form-label' %>
+          </div>
+          <div class="bakester-flex bakester-flex-gap-0-5">
+            <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
+              <%= f.label :price_min, "Min:", class: 'form-label' %>
+              <%= number_field_tag :price_min, params[:price_min] ? params[:price_min] : 0, step:0.05,min:0, max:max_price, class: 'bakester-form-number-control-narrow' %>
+            </div>
+            <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
+              <%= f.label :price_max, "Max:", class: 'form-label' %>
+              <%= number_field_tag :price_max, params[:price_max] ? params[:price_max] : max_price, step:0.05,min:0, max:max_price, class: 'bakester-form-number-control-narrow' %>
+            </div>
+          </div>
+        </div>
+
+      <!-- Unit Price -->
+        <div class="py-2 col-lg-4 bakester-flex bakester-flex-column">
+          <div>
+          <%= f.label "Unit Price", class: 'form-label' %>
+          </div>
+          <div class="bakester-flex bakester-flex-gap-0-5">
+            <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
+              <%= f.label :unit_price_min, "Min:", class: 'form-label' %>
+              <%= number_field_tag :unit_price_min, params[:unit_price_min] ? params[:unit_price_min] : 0, step:0.05,min:0, max: max_unit_price, class: 'bakester-form-number-control-narrow' %>
+            </div>
+            <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
+              <%= f.label :unit_price_max, "Max:", class: 'form-label' %>
+              <%= number_field_tag :unit_price_max, params[:unit_price_max] ? params[:unit_price_max] : max_unit_price, step:0.05,min:0, max: max_unit_price, class: 'bakester-form-number-control-narrow' %>
+            </div>
+          </div>
+        </div>
+
+      <!-- Lead Time -->
+        <div class="py-2 col-lg-4 bakester-flex bakester-flex-column">
+          <div>
+            <%= f.label "Lead Time (days)", class: 'form-label' %>
+          </div>
+          <div class="bakester-flex bakester-flex-gap-0-5">
+            <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
+              <%= f.label :lead_time_min, "Min:", class: 'form-label' %>
+              <%= number_field_tag :lead_time_min, params[:lead_time_min] ? params[:lead_time_min] : 0, step:1, min:0, max: max_lead_time, class: 'bakester-form-number-control-narrow' %>
+              </div>
+            <div class="bakester-flex bakester-flex-width-45 bakester-flex-gap-0-5">
+              <%= f.label :lead_time_max, "Max:", class: 'form-label' %>
+              <%= number_field_tag :lead_time_max, params[:lead_time_max] ? params[:lead_time_max] : max_lead_time, step:1, min:0, max: max_lead_time, class: 'bakester-form-number-control-narrow' %>
+            </div>
+          </div>
+        </div>
+
+      <!-- Buttons -->
+        <div class="py-2">
+          <%= f.submit "Search", name: nil, class: "btn btn-primary"  %>
+          <%= f.button "Reset", type:"reset", class: "btn btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <!--
 <% if !params[:filter] || params[:filter] == "all" %>
@@ -184,7 +185,7 @@
 <% if bakes.any? %>
   <% bakes_count = bakes.except(:select).count %>
   <div>
-    <p class="py-2"><%= "#{bakes_count}#{filter_string.humanize.downcase} #{"bake".pluralize(bakes_count)}" %></p>
+    <!--<p class="py-2"><%#= "#{bakes_count}#{filter_string.humanize.downcase} #{"bake".pluralize(bakes_count)}" %></p>-->
   </div>
 
  
