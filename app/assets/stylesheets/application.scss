@@ -530,6 +530,12 @@ $card-height: 100%;
 }
 
 
+.bakester-btn-end-rounded {
+  // border-top-right-radius: 5px !important;
+  // border-bottom-right-radius: 5px !important;
+}
+
+
 
 #bakester-search-form-activate {
   font-size: 1.2rem;
@@ -556,31 +562,35 @@ $card-height: 100%;
 }
 
 .hidden.open {
-  height: 370px;
+  height: 340px;
   // display:block;
 
 }
 
+.hidden.open.admin {
+  height: 370px;
+}
+
 @media screen and (min-width: 320px) {
-  .hidden.open {
+  .hidden.open, .hidden.open.admin {
     // height: 672px;
   }
 }
 
 @include media-breakpoint-up(sm) {
-  .hidden.open {
+  .hidden.open, .hidden.open.admin {
     height: 300px;
   }
 }
 
 @include media-breakpoint-up(md) {
-  .hidden.open {
+  .hidden.open, .hidden.open.admin {
     height: 160px;
   }
 }
 
 @include media-breakpoint-up(lg) {
-  .hidden.open {
+  .hidden.open, .hidden.open.admin {
     // height: 279px;
   }
 }
