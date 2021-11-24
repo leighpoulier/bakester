@@ -1,4 +1,4 @@
-<% if cart.bake_jobs.any? %>
+<% if user_signed_in? && cart.bake_jobs.any? || @session_cart && @session_cart_size > 0 %>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -11,27 +11,53 @@
     </thead>
     <tbody>
       <% running_total = 0 %>
-      <% cart.bake_jobs.order(:created_at).each do |bake_job| %>
-        <tr>
-          <td><%= link_to "#{bake_job.bake.name} (#{pluralize(bake_job.bake.unit_count, bake_job.bake.unit)})", bake_job.bake %></td>
-          <td class="text-center"><%= bake_job.quantity %></td>
-          <% bake_price = bake_job.bake.price %>
-          <td class="bakester-text-end"><%= number_to_currency(bake_price/100.0) %></td>
-          <% line_total = bake_job.quantity * bake_price %>
-          <% running_total += line_total %>
-          <td class="bakester-text-end"><%= number_to_currency(line_total / 100.0) %></td>
-          <td class="text-center">
-            <%= button_to bake_job, method: :put, params: {increment: 1, context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
-              &#xFF0B;
-            <% end %>
-            <%= button_to bake_job, method: :put, params: {decrement: 1, context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
-              &#xFF0D;
-            <% end %>
-            <%= button_to bake_job, method: :delete, params: {context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
-              &#x2A2F;
-            <% end %>
-          </td>
-        </tr>
+      <% if user_signed_in? %>
+        <% cart.bake_jobs.order(:created_at).each do |bake_job| %>
+          <tr>
+            <td><%= link_to "#{bake_job.bake.name} (#{pluralize(bake_job.bake.unit_count, bake_job.bake.unit)})", bake_job.bake %></td>
+            <td class="text-center"><%= bake_job.quantity %></td>
+            <% bake_price = bake_job.bake.price %>
+            <td class="bakester-text-end"><%= number_to_currency(bake_price/100.0) %></td>
+            <% line_total = bake_job.quantity * bake_price %>
+            <% running_total += line_total %>
+            <td class="bakester-text-end"><%= number_to_currency(line_total / 100.0) %></td>
+            <td class="text-center">
+              <%= button_to bake_job, method: :put, params: {increment: 1, context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
+                &#xFF0B;
+              <% end %>
+              <%= button_to bake_job, method: :put, params: {decrement: 1, context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
+                &#xFF0D;
+              <% end %>
+              <%= button_to bake_job, method: :delete, params: {context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
+                &#x2A2F;
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <% @session_cart.each do |bake_id, quantity| %>
+          <tr>
+            <% bake = Bake.find(bake_id) %>
+            <td><%= link_to "#{bake.name} (#{pluralize(bake.unit_count, bake.unit)})", bake %></td>
+            <td class="text-center"><%= quantity %></td>
+            <% bake_price = bake.price %>
+            <td class="bakester-text-end"><%= number_to_currency(bake_price/100.0) %></td>
+            <% line_total = quantity * bake_price %>
+            <% running_total += line_total %>
+            <td class="bakester-text-end"><%= number_to_currency(line_total / 100.0) %></td>
+            <td class="text-center">
+              <%= button_to cart_path, params: {bake_id: bake_id, quantity: 1, context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
+                &#xFF0B;
+              <% end %>
+              <%= button_to cart_path, params: {bake_id: bake_id, quantity: -1, context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
+                &#xFF0D;
+              <% end %>
+              <%= button_to cart_path, params: {bake_id: bake_id, delete: 'delete', context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
+                &#x2A2F;
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
     <tfoot>

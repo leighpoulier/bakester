@@ -1,0 +1,7 @@
+<h1><%= "Orders for #{@user.full_name}" %></h1>
+
+<%= render 'list', bake_orders: @bake_orders %>
+
+<div class="mt-5">
+  <%= button_to "Back to Users", :users, method: :get, class: 'btn btn-secondary shadow', form_class: "inline-button-to" %>
+</div>

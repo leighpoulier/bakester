@@ -1,0 +1,31 @@
+<!-- <h2>Edit <%= resource_name.to_s.humanize %></h2> -->
+
+<%= form_with model: @user, html: { method: :put, class: 'row' } do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+
+  <h1 class="py-2">Edit Account Details</h3>
+
+
+  <div class='py-2 row'>
+    <div class="col-md-6">
+      <%= f.label :first_name, class: 'form-label' %>
+      <%= f.text_field :first_name, class: 'form-control' %>
+    </div>
+    <div class="col-md-6">
+      <%= f.label :last_name, class: 'form-label' %>
+      <%= f.text_field :last_name, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="py-2 col-12">
+    <%= f.label :email, class: 'form-label' %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+  </div>
+
+
+  <div class='py-4'>
+    <%= f.submit "Update", class: 'btn btn-secondary shadow' %>
+    <%= button_tag "Cancel", method: :get, url: users_path, class: 'btn btn-primary shadow' %>
+  </div>
+
+<% end %>

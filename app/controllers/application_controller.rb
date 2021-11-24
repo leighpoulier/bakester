@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-
+  before_action :set_session_cart_size
   protected
 
   def configure_permitted_parameters
@@ -28,6 +28,12 @@ class ApplicationController < ActionController::Base
         redirect_to :root
       end
       puts "OK"
+    end
+
+    def set_session_cart_size
+      puts "SESSION"
+      pp session[:cart]
+      @session_cart_size = session[:cart] ? session[:cart].values.sum : 0
     end
 
 end

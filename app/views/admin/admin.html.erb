@@ -1,19 +1,19 @@
 <h1>Admin</h1>
 
-<div>
-<%= link_to "Categories", :categories %>
+<div class="py-2">
+  <%= link_to "Categories", :categories, class: "h3" %>
 </div>
-<div>
-<%= link_to "Users", :users %>
+<div class="py-2">
+  <%= link_to "Users", :users, class: "h3" %>
 </div>
-<div>
-<%= link_to "Bakes", bakes_path('all') %>
+<div class="py-2">
+  <%= link_to "Bakes", bakes_path('all'), class: "h3" %>
 </div>
-<div>
-<%= link_to "Orders", :bake_orders %>
+<div class="py-2">
+  <%= link_to "Orders", :bake_orders, class: "h3" %>
 </div>
-<div>
-<%= link_to "Bake Jobs", :bake_jobs %>
+<div class="py-2">
+  <%= link_to "Bake Jobs", :bake_jobs, class: "h3" %>
 </div>
 
 <!-- Button trigger modal -->

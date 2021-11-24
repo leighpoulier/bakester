@@ -16,14 +16,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    #super
+    @user = User.find(params[:id])
+    render "edit_any"
+  end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    # super
+     @user = User.find(params[:id])
+     if @user.update(user_params)
+       redirect_to users_path
+     else
+       render 'edit'
+     end
+  end
 
   # DELETE /resource
   # def destroy
@@ -117,4 +125,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
+
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email)
+  end
+
 end

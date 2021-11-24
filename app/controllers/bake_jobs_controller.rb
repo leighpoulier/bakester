@@ -1,10 +1,10 @@
 class BakeJobsController < ApplicationController
 
   before_action :authenticate_user!, except: []
-  before_action :is_admin?, only: [:index]
-  before_action :set_bake_job, except: [:index, :my_bake_jobs ]
-  before_action :set_filter_list, only: [:index, :my_bake_jobs ]
-  before_action except: [:index, :my_bake_jobs] do
+  before_action :is_admin?, only: [:index, :users_bake_jobs]
+  before_action :set_bake_job, except: [:index, :my_bake_jobs, :users_bake_jobs ]
+  before_action :set_filter_list, only: [:index, :my_bake_jobs, :users_bake_jobs ]
+  before_action except: [:index, :my_bake_jobs, :users_bake_jobs] do
     is_admin_or_owner?(@bake_job)
   end
 
@@ -53,6 +53,12 @@ class BakeJobsController < ApplicationController
 
   def my_bake_jobs
     @bake_jobs = current_user.bake_jobs.eager_loading.order(:submitted_at)
+    filter_bake_jobs
+  end
+
+  def users_bake_jobs
+    @user = User.find(params[:user_id])
+    @bake_jobs = @user.bake_jobs.eager_loading.order(:submitted_at)
     filter_bake_jobs
   end
 

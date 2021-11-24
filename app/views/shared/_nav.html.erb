@@ -84,11 +84,15 @@
                     <!--<%= link_to "Become a Baker!", :upgrade_user, class: "nav-link", title: "Become a Baker!", data: {toggle: "tooltip", placement: "bottom"} %>-->
                   </li>
                 <% end %>
-
+            <% end %>
           <!-- Cart -->
               <li class="nav-item">
                 <% cart_label = "Cart" %>
-                <% cart_label_size = current_user.cart_size %>
+                <% if user_signed_in? %>
+                  <% cart_label_size = current_user.cart_size %>
+                <% else #no user signed in %>
+                  <% cart_label_size = @session_cart_size %>
+                <% end %>
                 <% cart_label_append_size = cart_label_size > 0 ? " (#{cart_label_size})" : "" %>
                 <%= link_to :cart, class: "nav-link", title: "#{cart_label}#{cart_label_append_size}", data: {toggle: "tooltip", placement: "bottom"} do %>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bakester-nav-item-icon bi bi-cart" viewBox="0 0 16 16">
@@ -103,7 +107,7 @@
                 <% end %>
                 <!--<%= link_to cart_label , :cart, class: "nav-link", title: cart_label, data: {toggle: "tooltip", placement: "bottom"} %>-->
               </li>
-
+            <% if user_signed_in? %>
           <!-- My Account -->
               <li class="nav-item">
                 <%= link_to :myaccount, class: "nav-link", title: "My Account", data: {toggle: "tooltip", placement: "bottom"} do %>

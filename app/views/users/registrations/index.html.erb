@@ -12,8 +12,10 @@
       <tr>
         <td><%= user.full_name %></td>
         <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_registration_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_user_reg_path(user) %></td>
+        <td><%= link_to 'Orders', users_bake_orders_path(user) %></td>
+        <td><%= link_to 'Bake Jobs', users_bake_jobs_path(user) %></td>
+        <td><%#= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

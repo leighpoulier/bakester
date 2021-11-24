@@ -6,7 +6,17 @@
 <% else %>
   <p>User since <%= "#{@user.created_at.year}" %></p>
 <% end %>
+
+<% if user_signed_in? && current_user.admin %>
+  <div class="py-2">
+    <%= button_to "#{@user.first_name}'s Orders", users_bake_orders_path(@user.id), method: :get, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
+    <%= button_to "#{@user.first_name}'s Bake Jobs", users_bake_jobs_path(@user.id), method: :get, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
+  </div>
+<% end %>
+
 <% if @user.baker %>
-  <p><%= "#{@user.first_name}'s' bakes" %></p>
+  <div class="py-2">
+    <p><%= "#{@user.first_name}'s' bakes" %></p>
+  </div>
   <%= render 'bakes/list', bakes: @user.bakes %>
 <% end %>

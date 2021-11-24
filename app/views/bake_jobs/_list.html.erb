@@ -4,6 +4,8 @@
     <% filter = params[:filter] %>
     <% if action_name == 'index' %>
       <% path_helper = bake_jobs_path %>
+    <% elsif action_name == 'users_bake_jobs' %>
+      <% path_helper = users_bake_jobs_path %>
     <% else %>
       <% path_helper = my_bake_jobs_path %>
     <% end %>
