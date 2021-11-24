@@ -37,10 +37,10 @@ class BakesController < ApplicationController
     end
 
     unless params[:sort_by] || params[:sort_dir]
-      params[:sort_by] = "updated_at"
-      params[:sort_dir] = "desc"
+      params[:sort_by] = Bake::DEFAULT_SORT_COLUMN
+      params[:sort_dir] = Bake::DEFAULT_SORT_DIRECTION
     end
-    
+
   end
 
   def my_bakes
@@ -64,9 +64,10 @@ class BakesController < ApplicationController
       params[:active] = true
     end
 
+
     unless params[:sort_by] || params[:sort_dir]
-      params[:sort_by] = "updated_at"
-      params[:sort_dir] = "desc"
+      params[:sort_by] = Bake::DEFAULT_SORT_COLUMN
+      params[:sort_dir] = Bake::DEFAULT_SORT_DIRECTION
     end
 
 

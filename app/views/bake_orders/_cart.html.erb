@@ -3,9 +3,9 @@
     <thead>
       <tr>
         <th>Bake</th>
-        <th>Qty</th>
-        <th>Unit Price</th>
-        <th>Line Total</th>
+        <th class="text-center">Qty</th>
+        <th class="bakester-text-end">Unit Price</th>
+        <th class="bakester-text-end">Line Total</th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -13,22 +13,22 @@
       <% running_total = 0 %>
       <% cart.bake_jobs.order(:created_at).each do |bake_job| %>
         <tr>
-          <td><%= link_to "#{bake_job.bake.name} (#{bake_job.bake.unit})", bake_job.bake %></td>
-          <td><%= bake_job.quantity %></td>
+          <td><%= link_to "#{bake_job.bake.name} (#{pluralize(bake_job.bake.unit_count, bake_job.bake.unit)})", bake_job.bake %></td>
+          <td class="text-center"><%= bake_job.quantity %></td>
           <% bake_price = bake_job.bake.price %>
-          <td><%= number_to_currency(bake_price/100.0) %></td>
+          <td class="bakester-text-end"><%= number_to_currency(bake_price/100.0) %></td>
           <% line_total = bake_job.quantity * bake_price %>
           <% running_total += line_total %>
-          <td><%= number_to_currency(line_total / 100.0) %></td>
+          <td class="bakester-text-end"><%= number_to_currency(line_total / 100.0) %></td>
           <td class="text-center">
             <%= button_to bake_job, method: :put, params: {increment: 1, context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
-              &#x1F7A4;
+              &#xFF0B;
             <% end %>
             <%= button_to bake_job, method: :put, params: {decrement: 1, context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
               &#xFF0D;
             <% end %>
             <%= button_to bake_job, method: :delete, params: {context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
-              &#x1F7AB;
+              &#x2A2F;
             <% end %>
           </td>
         </tr>
@@ -36,8 +36,8 @@
     </tbody>
     <tfoot>
       <tr>
-        <th scope="row" colspan ="3">Total</tf>
-        <td><%= number_to_currency(running_total / 100.0) %></td>
+        <th class="bakester-text-end" scope="row" colspan ="3">Total</tf>
+        <td class="bakester-text-end"><%= number_to_currency(running_total / 100.0) %></td>
         <td colspan="3"></td>
       </tr>
     </tfoot>

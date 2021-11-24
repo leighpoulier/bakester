@@ -96,6 +96,11 @@ a:hover {
   flex-shrink: 0;
 }
 
+.bakester-max-w-5 {
+  max-width: 5rem;
+}
+
+
 
 // ------------------------ NAV -----------------------------
 
@@ -308,11 +313,9 @@ $card-height: 100%;
 
 .bakester-card-flex {
   display: flex;
-  // justify-content: center;
   flex-wrap: wrap;
-  // row-gap: 1rem;
-  // column-gap: 1rem;
   gap: 1rem;
+  margin-top: 1rem;
 }
 
 .card {

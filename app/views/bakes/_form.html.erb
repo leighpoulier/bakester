@@ -22,7 +22,7 @@
   
   <div class="py-2 col-md-3">
     <%= f.label :lead_time_days,"Lead Time (days)", class: 'form-label' %>
-    <%= f.number_field :lead_time_days, class: 'form-control' %>
+    <%= f.number_field :lead_time_days, step: 1, min: 1,  class: 'form-control' %>
   </div>
 
   <div class="py-2 col-12">
@@ -39,7 +39,7 @@
     </div>
     <div class="col-3">
       <%= f.label :unit_count, "Count", class: 'form-label' %>
-      <%= f.number_field :unit_count, step: 1, min: 0, class: 'form-control' %>
+      <%= f.number_field :unit_count, step: 1, min: 1, class: 'form-control' %>
     </div>
     <div class="col-5">
       <%= f.label :unit, "Singular Item (eg: cake, cookie)", class: 'form-label' %>

@@ -1,6 +1,6 @@
 
 
-<div class="mt-4 p-3 bakester-show-bake shadow">
+<div class="mt-4 p-3 bakester-show-bake shadow rounded">
   <div class="bakester-show-bake-panel">
           <% if @bake.image.attached? %>
         <%= image_tag @bake.image, class: 'bakester-show-bake-image' %>
@@ -46,9 +46,18 @@
         <span class="bakester-inline"><%= " - #{number_to_currency(@bake.unit_price_dollars)} each" %></span>
       <% end %>
     </div>
-    <div>
+    <div class="">
       <% unless user_signed_in? && current_user.id == @bake.baker.id %>
-        <%= button_to "Add to Cart", :cart, params: {bake_id: @bake.id, context: :bakes}, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
+        <%= form_with url: cart_path, class: "row row-cols-1g-auto g-3 align-items-start"  do |f| %>
+        <div class="input-group">
+          <%= f.hidden_field :bake_id, value: @bake.id %>
+          <%= f.hidden_field :context, value: 'bakes' %>
+          <%#= f.label :unit, "Qty", class: 'form-label' %>
+          <%= f.number_field :quantity, value: 1, step: 1, min: 1, class: 'form-control bakester-max-w-5 border-secondary rounded' %>
+          <%= f.submit "Add to Cart", class: 'btn btn-secondary shadow' %>
+        </div>
+        <% end %>
+        <%#= button_to "Add to Cart", :cart, params: {bake_id: @bake.id, context: :bakes}, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
       <% end %>
     </div>
     <div>
@@ -62,5 +71,5 @@
     <div>
       <span><%= pluralize(@bake.view_count, "view") %></span>
     </div>
-
+  </div>
 </div>
