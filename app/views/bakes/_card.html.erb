@@ -31,9 +31,11 @@
       <p class='card-text alert alert-danger' role="alert">Hidden</p>
     <% end %>
   </div>
-  <div class="card-footer">
+
+  <!-- Footer -->
+  <div class="card-footer bg-bakester-light-pink">
       <% unless user_signed_in? && current_user.id == bake.baker.id %>
-        <%= button_to "Add to Cart", :cart, params: {bake_id: bake.id, context: :bakes}, class: 'btn btn-primary', form_class: "inline-button-to" %>
+        <%= button_to "Add to Cart", :cart, params: {bake_id: bake.id, context: :bakes}, class: 'btn btn-secondary', form_class: "inline-button-to" %>
       <% end %>
     <% if user_signed_in? %>
       <% if (bake.baker.id == current_user.id || current_user.admin ) %>

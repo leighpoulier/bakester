@@ -22,7 +22,7 @@
   <div class="col-auto">
     <!--<%= button_to "Checkout", :checkout, data: {confirm: "Confirm this order and send to Bakers?"}, class: 'btn btn-primary', form_class: "inline-button-to"%>-->
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Checkout</button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Checkout</button>
   </div>
 </div>
 <% end %>
@@ -38,7 +38,6 @@
       <div class="modal-body">Confirm this order and send to Bakers?</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <!--<button type="button" class="btn btn-primary">Pay Now</button>-->
         <%= button_to "Pay Now", :checkout, class: 'btn btn-primary', form_class: "inline-button-to"%>
 
       </div>

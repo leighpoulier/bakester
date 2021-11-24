@@ -10,7 +10,7 @@ class User < ApplicationRecord
   # excluding the incomplete/unsubmitted order "cart"
   has_many :bake_orders, -> {where(submitted: true)}
 
-  has_many :carts, -> {where(submitted: false)}, class_name: 'BakeOrder'
+  has_many :carts, -> {where(submitted: false).includes(bake_jobs: [:bake])}, class_name: 'BakeOrder'
 
   # excluding those bake_jobs with where the bake_order is unsubmitted
   has_many :bake_jobs, ->{ joins(:bake_order).where( bake_order: {submitted: true }) }, through: :bakes

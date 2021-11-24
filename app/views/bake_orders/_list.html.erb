@@ -26,27 +26,27 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Order No</th>
+        <th class="bakester-text-end">Order No</th>
         <% if controller_name == 'bake_orders' && action_name == 'index' %>
           <th>User</th>
-          <th>Submitted?</th>
+          <th class="text-center">Submitted?</th>
         <% end %>
-        <th>Submitted</th>
-        <th>Bakes</th>
+        <th class="text-center">Submitted</th>
+        <th class="text-center">Bakes</th>
         <th>Includes</th>
-        <th>Order Total</th>
+        <th class="bakester-text-end">Order Total</th>
       </tr>
     </thead>
     <tbody>
       <% bake_orders.each do |bake_order| %>
         <tr>
-          <td><%= link_to bake_order.id, bake_order %></td>
+          <td class="bakester-text-end"><%= link_to bake_order.id, bake_order %></td>
           <% if controller_name == 'bake_orders' && action_name == 'index' %>
-            <td><%= link_to bake_order.user.full_name, bake_order %></td>
-            <td><%= link_to bake_order.submitted ? "Y" : "N", bake_order %></td>
+            <td><%= bake_order.user.full_name %></td>
+            <td class="text-center"><%= bake_order.submitted ? "Y" : "N" %></td>
           <% end %>
-          <td><%= link_to bake_order.submitted ? bake_order.submitted_at.to_formatted_s(:day_month_year) : "", bake_order %></td>
-          <td><%= link_to bake_order.bake_jobs.sum(:quantity), bake_order %></td>
+          <td class="text-center"><%= bake_order.submitted ? bake_order.submitted_at.to_formatted_s(:day_month_year) : "" %></td>
+          <td class="text-center"><%= bake_order.bake_jobs.sum(:quantity) %></td>
           <td>
             <% links = []  %>
             <% bake_job_display_limit = 3 %>
@@ -60,7 +60,7 @@
             <% link_text = links.join(", ") %>
             <%= raw link_text %>
           </td>
-          <td><%= link_to bake_order.submitted ? number_to_currency(bake_order.bake_jobs.sum("quantity * price_at_order") / 100.0) : "", bake_order %></td>
+          <td class="bakester-text-end"><%= link_to bake_order.submitted ? number_to_currency(bake_order.bake_jobs.sum("quantity * price_at_order") / 100.0) : "", bake_order %></td>
         </tr>
       <% end %>
     </tbody>

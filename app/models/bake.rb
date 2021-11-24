@@ -69,10 +69,10 @@ class Bake < ApplicationRecord
 
       unless params[:search_text].nil? || params[:search_text].empty?
         puts "FILTERED ON SEARCH TEXT"
-        if params[:search_description] && params[:search_description] == true
+        if params[:search_description] && params[:search_description] == "1"
           description_search = search_text_split('description',params[:search_text])
         end
-        if params[:search_description].nil? || params[:search_description] == false || (params[:search_name] && params[:search_name] == true)
+        if params[:search_description].nil? || params[:search_description] == "0" || (params[:search_name] && params[:search_name] == "1")
           name_search = search_text_split('name', params[:search_text])
         end
         if description_search

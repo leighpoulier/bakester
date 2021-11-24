@@ -23,34 +23,61 @@
 // xxl ≥1400px
 
 
-// pinks
-// $primary: #e47197ff;
-// $primary: #e05c87ff;
-// $primary: #dc4678ff;
-// $primary: #d83168ff;
+// logo colours:
+$bakester-logo-pink-d3: #d83168ff;
+$bakester-logo-pink-d2: #dc4678ff;
+$bakester-logo-pink-d1: #e05c87ff;
+$bakester-logo-pink: #e47197ff;
+$bakester-logo-pink-l1: #e886a7ff;
+$bakester-logo-pink-l2: #ec9cb6ff;
+$bakester-logo-pink-l3: #f0b1c6ff;
+$bakester-logo-pink-l4: #f4c6d6ff;
+$bakester-logo-pink-l5: #f8dce5ff;
+$bakester-logo-pink-l6: #fcf1f5ff;
+
+
 
 // browns 
-// $primary: #793c11ff;
-// $primary: #62310eff;
-// $primary: #4c260bff
+$bakester-logo-brown-d3: #090501ff;
+$bakester-logo-brown-d2: #1f1005ff;
+$bakester-logo-brown-d1: #361b08ff;
+$bakester-logo-brown: #4c260bff;
+$bakester-logo-brown-l1: #62310eff;
+$bakester-logo-brown-l2: #793c11ff;
+$bakester-logo-brown-l3: #8f4715ff;
+$bakester-logo-brown-l4: #a55218ff;
+$bakester-logo-brown-l5: #bb5d1cff;
+$bakester-logo-brown-l6: #d2681fff;
+$bakester-logo-brown-l7: #e0752bff;
+$bakester-logo-brown-l8: #e38341ff;
+$bakester-logo-brown-l9: #e69257ff;
+$bakester-logo-brown-l10: #e9a06dff;
+$bakester-logo-brown-l11: #edaf83ff;
+$bakester-logo-brown-l12: #f0bd9aff;
+$bakester-logo-brown-l13: #f3ccb0ff;
+$bakester-logo-brown-l14: #f7dac6ff;
+$bakester-logo-brown-l15: #fae9ddff;
 
-$primary: #793c11ff;
-$secondary: #d83168ff;
+$primary: $bakester-logo-brown-l2;
+$secondary: $bakester-logo-pink-d3;
 
 // $enable-shadows: true;
 
 
 @import "bootstrap/scss/bootstrap.scss";
 
-$bakester-light-pink: #f8dce5ff;
-$bakester-logo-pink: #e47197ff;
-$bakester-pink: #dc4678ff;
 
-$bakester-logo-brown: #4c260bff;
+// $bakester-light-pink: #f8dce5ff;
+$bakester-light-pink: $bakester-logo-pink-l5;
+$bakester-light-brown: $bakester-logo-brown-l14;
 
 
 .bg-bakester-light-pink {
   background-color: $bakester-light-pink;
+}
+
+.bg-bakester-light-brown {
+  background-color: $bakester-light-brown;
 }
 
 a {
@@ -61,47 +88,9 @@ a:hover {
   text-decoration: underline;
 }
 
-.bakester-space-or-new-line-lg:after {
-  content: "\a";
-  white-space: pre;
+.bakester-text-bold {
+  font-weight: bold;
 }
-
-@include media-breakpoint-up(lg) {
-  .bakester-space-or-new-line-lg:after {
-    content: " ";
-  }
-}
-
-.bakester-table-cell-show-lg {
-  display: none;
-}
-
-@include media-breakpoint-up(lg) {
-  .bakester-table-cell-show-lg {
-    display: table-cell;
-  }
-}
-
-.bakester-table-cell-show-md {
-  display: none;
-}
-
-@include media-breakpoint-up(md) {
-  .bakester-table-cell-show-md {
-    display: table-cell;
-  }
-}
-
-.bakester-table-cell-show-sm {
-  display: none;
-}
-
-@include media-breakpoint-up(sm) {
-  .bakester-table-cell-show-sm {
-    display: table-cell;
-  }
-}
-
 
 
 // ------------------------ NAV -----------------------------
@@ -140,8 +129,6 @@ a:hover {
 
 .bakester-navbar {
   width: 100%;
-  background-color: $bakester-light-pink;
-  // background-image: linear-gradient(to bottom, $bakester-light-pink, 80%, #f8dce500 );
 }
 
 .bakester-spacer-for-bakester-img {
@@ -192,7 +179,7 @@ a:hover {
 
   font-size: .8rem;
   font-weight: bold;
-  background: $bakester-pink;
+  background: $bakester-logo-pink-d2;
   color: #fff;
   text-align: center;
   white-space: nowrap;
@@ -335,18 +322,6 @@ $card-height: 100%;
  object-fit: cover;
 }
 
-
-// @include media-breakpoint-up(xs) { 
-
-//   .card {
-//     width: 16rem;
-//   }
-
-//   .card-img {
-//     height: 12rem;
-//   }
-
-// }
 
 
 @include media-breakpoint-up(sm) { 
@@ -611,3 +586,46 @@ $card-height: 100%;
   padding-right: 1rem !important;
 
 }
+
+
+.bakester-space-or-new-line-lg:after {
+  content: "\a";
+  white-space: pre;
+}
+
+@include media-breakpoint-up(lg) {
+  .bakester-space-or-new-line-lg:after {
+    content: " ";
+  }
+}
+
+.bakester-table-cell-show-lg {
+  display: none;
+}
+
+@include media-breakpoint-up(lg) {
+  .bakester-table-cell-show-lg {
+    display: table-cell;
+  }
+}
+
+.bakester-table-cell-show-md {
+  display: none;
+}
+
+@include media-breakpoint-up(md) {
+  .bakester-table-cell-show-md {
+    display: table-cell;
+  }
+}
+
+.bakester-table-cell-show-sm {
+  display: none;
+}
+
+@include media-breakpoint-up(sm) {
+  .bakester-table-cell-show-sm {
+    display: table-cell;
+  }
+}
+
