@@ -3,7 +3,7 @@
       <% if bake.image.attached? %>
         <%= image_tag(bake.image, class: 'card-img card-img-top') %>
       <% else %>
-        <%= image_tag(image_path('no-image'), class: 'card-img card-img-top') %>
+        <%= image_tag 'no-image.svg', class: 'card-img card-img-top') %>
       <% end %>
     <% end %>
   <div class="card-body">
