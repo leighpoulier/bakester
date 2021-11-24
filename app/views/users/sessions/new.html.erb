@@ -2,7 +2,9 @@
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), params: {return: params[:return]}) do |f| %>
 
-  <%= hidden_field_tag :return, params[:return]  %>
+  <% if params[:return] && params[:return] != "" %>
+    <%= hidden_field_tag :return, params[:return]  %>
+  <% end %>
 
   <div class="py-2">
     <%= f.label :email, class: 'form-label' %><br />

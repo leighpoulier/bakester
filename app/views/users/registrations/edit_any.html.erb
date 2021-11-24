@@ -22,6 +22,13 @@
     <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
   </div>
 
+  <div class="py-2 col-12">
+    <div class="col-lg-3 form-check py-2">
+      <%= f.check_box :baker, class: "form-check-input" %>
+      <%= f.label :baker, "Baker?", class: 'form-label' %>
+    </div>
+  </div>
+
 
   <div class='py-4'>
     <%= f.submit "Update", class: 'btn btn-secondary shadow' %>

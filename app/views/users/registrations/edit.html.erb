@@ -3,7 +3,7 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'row' }) do |f| %>
   <%= render "users/shared/error_messages", resource: resource %>
 
-  <h1 class="py-2">Edit Account Details</h3>
+  <h1 class="py-2">My Account</h3>
 
 
   <div class='py-2 row'>
@@ -54,8 +54,10 @@
     <%= link_to "View My Bake Jobs", :my_bake_jobs, class: 'px-4' %>
   <% else %>
     <h3 class="py-2">Upgrade to Baker!</h3>
-    <p>Upgrade your account to sell your own bakes on Bakester!</p>
-    <%= render 'upgrade_form' %>
+    <p class="px-4">Upgrade your account to sell your own bakes on Bakester!</p>
+    <div class="px-4">
+      <%= render 'upgrade_form' %>
+    </div>
   <% end %>
 <!--
 <h3>Cancel my account</h3>
