@@ -1,10 +1,12 @@
 <h1>My Bakes</h1>
-<div class='py-2'>
-  <%= button_to "Add new Bake", :new_bake, method: :get %>
-</div>
+<!-- <div class='py-2'> -->
+  <%#= button_to "Add new Bake", :new_bake, method: :get %>
+<!-- </div> -->
 
 <%= render 'list', bakes: @bakes %>
 
-<div class='py-4'>
-  <%= button_to "Add new Bake", :new_bake, method: :get if @bakes.any? %>
-</div>
+<% if @bakes.any? %>
+  <div class='py-4'>
+    <%= button_to "Add new Bake", :new_bake, method: :get, class: 'btn btn-secondary shadow' %>
+  </div>
+<% end %>

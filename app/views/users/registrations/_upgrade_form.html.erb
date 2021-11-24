@@ -1,5 +1,5 @@
 
 <%= form_with scope: :user, url: :upgrade_user_to_baker  do |f| %>
   <%= f.hidden_field :baker, value: true %>
-  <%= f.submit "Become a Baker!" %>
+  <%= f.submit "Become a Baker!", class: 'btn btn-primary shadow' %>
 <% end %>

@@ -21,13 +21,13 @@
           <% running_total += line_total %>
           <td><%= number_to_currency(line_total / 100.0) %></td>
           <td class="text-center">
-            <%= button_to bake_job, method: :put, params: {increment: 1, context: :cart}, class: 'btn btn-primary bakester-text-bold', form_class: "inline-button-to" do %>
+            <%= button_to bake_job, method: :put, params: {increment: 1, context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
               &#x1F7A4;
             <% end %>
-            <%= button_to bake_job, method: :put, params: {decrement: 1, context: :cart}, class: 'btn btn-primary bakester-text-bold', form_class: "inline-button-to" do %>
+            <%= button_to bake_job, method: :put, params: {decrement: 1, context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
               &#xFF0D;
             <% end %>
-            <%= button_to bake_job, method: :delete, params: {context: :cart}, class: 'btn btn-primary bakester-text-bold', form_class: "inline-button-to" do %>
+            <%= button_to bake_job, method: :delete, params: {context: :cart}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
               &#x1F7AB;
             <% end %>
           </td>

@@ -17,12 +17,12 @@
 <% if @cart.bake_jobs.any? %>
 <div class="row">
   <div class="col-auto bakester-mr-auto">
-    <%= button_to "Empty Cart", :cart, method: :delete, data: {confirm: "Are you sure you want to empty your cart?"}, class: 'btn btn-primary', form_class: "inline-button-to" %>
+    <%= button_to "Empty Cart", :cart, method: :delete, data: {confirm: "Are you sure you want to empty your cart?"}, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
   </div>
   <div class="col-auto">
     <!--<%= button_to "Checkout", :checkout, data: {confirm: "Confirm this order and send to Bakers?"}, class: 'btn btn-primary', form_class: "inline-button-to"%>-->
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Checkout</button>
+    <button type="button" class="btn btn-secondary shadow" data-bs-toggle="modal" data-bs-target="#exampleModal">Checkout</button>
   </div>
 </div>
 <% end %>
@@ -33,12 +33,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close shadow" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">Confirm this order and send to Bakers?</div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <%= button_to "Pay Now", :checkout, class: 'btn btn-primary', form_class: "inline-button-to"%>
+        <button type="button" class="btn btn-secondary shadow" data-bs-dismiss="modal">Close</button>
+        <%= button_to "Pay Now", :checkout, class: 'btn btn-primary shadow', form_class: "inline-button-to"%>
 
       </div>
     </div>

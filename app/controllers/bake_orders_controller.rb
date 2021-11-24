@@ -42,11 +42,11 @@ class BakeOrdersController < ApplicationController
       if params[:bake_id]  # params contains a bake_id, assume it needs adding to cart
         if bake_job = @cart.bake_jobs.where(bake_id: params[:bake_id]).first  #already exists in cart
           bake_job.increment!(:quantity)
-          flash.notice = "Added #{bake_job.bake.name} to cart"
+          flash.notice = "#{bake_job.bake.name} added to cart"
         elsif @cart.save && bake_job = @cart.bake_jobs.create(bake_id: params[:bake_id]) #add to cart
-          flash.notice = "Added #{bake_job.bake.name} to cart"
+          flash.notice = "#{bake_job.bake.name} added to cart"
         else 
-          flash.alert = "Unable to add to cart ?"
+          flash.alert = "Unable to add #{Bake.find(params[:bake_id]).name} to cart ?"
         end
       end
       redirect_to_context

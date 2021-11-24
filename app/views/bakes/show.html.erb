@@ -29,7 +29,7 @@
       <% if user_signed_in? %>
         <% if (@bake.baker.id == current_user.id || current_user.admin ) %>
           <div class="show-bake_panel-edit-button">
-            <%= button_to "Edit", edit_bake_path(@bake) ,method: :get, class: 'btn btn-primary', form_class: "inline-button-to" %>
+            <%= button_to "Edit", edit_bake_path(@bake) ,method: :get, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
           </div>
         <% end %>
       <% end %>
@@ -48,7 +48,7 @@
     </div>
     <div>
       <% unless user_signed_in? && current_user.id == @bake.baker.id %>
-        <%= button_to "Add to Cart", :cart, params: {bake_id: @bake.id, context: :bakes}, class: 'btn btn-primary', form_class: "inline-button-to" %>
+        <%= button_to "Add to Cart", :cart, params: {bake_id: @bake.id, context: :bakes}, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
       <% end %>
     </div>
     <div>
