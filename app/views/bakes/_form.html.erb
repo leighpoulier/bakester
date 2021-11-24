@@ -22,7 +22,7 @@
   
   <div class="py-2 col-md-3">
     <%= f.label :lead_time_days,"Lead Time (days)", class: 'form-label' %>
-    <%= f.number_field :lead_time_days, step: 1, min: 1,  class: 'form-control' %>
+    <%= f.number_field :lead_time_days, step: 1, min: 1,  class: 'form-control', title: "How many days do you need to recieve, bake and deliver the order?", data: {toggle: "tooltip", placement: "bottom"} %>
   </div>
 
   <div class="py-2 col-12">
@@ -32,18 +32,18 @@
 
     <div class="col-3">
       <%= label_tag :price_dollars, "Price", class: 'form-label' %>
-      <%= number_field_tag :price_dollars, @bake.price_dollars, step: 0.05, min: 0.05, class: 'form-control' %>
+      <%= number_field_tag :price_dollars, @bake.price_dollars, step: 0.05, min: 0.05, class: 'form-control', title: "What is the total price for one order", data: {toggle: "tooltip", placement: "bottom"} %>
     </div>
     <div class="col-1 d-flex flex-column justify-content-end align-items-center">
       <span class="">per</span>
     </div>
     <div class="col-3">
       <%= f.label :unit_count, "Count", class: 'form-label' %>
-      <%= f.number_field :unit_count, step: 1, min: 1, class: 'form-control' %>
+      <%= f.number_field :unit_count, step: 1, min: 1, class: 'form-control', title: "How many items are included in one order?", data: {toggle: "tooltip", placement: "bottom"} %>
     </div>
     <div class="col-5">
       <%= f.label :unit, "Singular Item (eg: cake, cookie)", class: 'form-label' %>
-      <%= f.text_field :unit, class: 'form-control' %>
+      <%= f.text_field :unit, class: 'form-control', title: "What is a single item called? eg: cake, cookie, cupcake", data: {toggle: "tooltip", placement: "bottom"} %>
     </div>
 
   <div class="py-2 row">
