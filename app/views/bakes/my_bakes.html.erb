@@ -5,8 +5,6 @@
 
 <%= render 'list', bakes: @bakes %>
 
-<% if @bakes.any? %>
-  <div class='py-4'>
-    <%= button_to "Add new Bake", :new_bake, method: :get, class: 'btn btn-secondary shadow' %>
-  </div>
-<% end %>
+<div class='py-4'>
+  <%= button_to "Add new Bake", :new_bake, method: :get, class: 'btn btn-secondary shadow' %>
+</div>
