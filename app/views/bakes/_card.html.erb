@@ -33,7 +33,7 @@
   </div>
 
   <!-- Footer -->
-  <div class="card-footer bg-bakester-light-pink">
+  <div class="card-footer bakester-bg-light-pink">
       <% unless user_signed_in? && current_user.id == bake.baker.id %>
         <%= button_to "Add to Cart", :cart, params: {bake_id: bake.id, context: :bakes}, class: 'btn btn-secondary shadow', form_class: "inline-button-to" %>
       <% end %>
