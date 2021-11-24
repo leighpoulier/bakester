@@ -35,6 +35,12 @@ class BakesController < ApplicationController
         params[:active] = true
       end
     end
+
+    unless params[:sort_by] || params[:sort_dir]
+      params[:sort_by] = "updated_at"
+      params[:sort_dir] = "desc"
+    end
+    
   end
 
   def my_bakes
@@ -56,6 +62,11 @@ class BakesController < ApplicationController
     # Default filtering to active bakes.
     unless params[:active] || params[:hidden]
       params[:active] = true
+    end
+
+    unless params[:sort_by] || params[:sort_dir]
+      params[:sort_by] = "updated_at"
+      params[:sort_dir] = "desc"
     end
 
 
