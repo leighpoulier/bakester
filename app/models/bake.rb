@@ -114,7 +114,7 @@ class Bake < ApplicationRecord
       if params[:sort_by].nil? || params[:sort_by].empty?
         if params[:sort_dir].nil? || params[:sort_dir].empty?
           puts "ORDER: DEFAULT COLUMN AND DEFAULT ORDER"
-          relation = relation.order(name: :asc)
+          relation = relation.order(updated_at: :desc)
         else
           puts "ORDER: DEFAULT COLUMN"
           relation = relation.order(name: params[:sort_dir])
@@ -167,7 +167,7 @@ class Bake < ApplicationRecord
   end
 
   def self.sort_options
-    {"Name" => "name", "Price" => "price", "Unit Price" => "unit_price", "Lead Time" => "lead_time_days", "View Count" => "view_count" }
+    {"Name" => "name", "Price" => "price", "Unit Price" => "unit_price", "Date Added" => "created_at", "Date Updated" => "updated_at",  "Lead Time" => "lead_time_days", "View Count" => "view_count" }
   end
 
 end
