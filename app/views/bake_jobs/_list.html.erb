@@ -40,12 +40,12 @@
         <% unless controller_name == 'bake_jobs' && action_name == 'my_bake_jobs' %>
           <th>Baker</th>
         <% end %>
+        <th class="bakester-table-cell-show-lg">Submitted</th>
+        <th class="bakester-table-cell-show-sm">Bake</th>
+        <th class="bakester-table-cell-show-md bakester-text-end">Unit Price</th>
+        <th class="bakester-table-cell-show-md text-center">Quantity</th>
+        <th class="bakester-text-end">Payment</th>
         <th>Status</th>
-        <th>Submitted</th>
-        <th>Bake</th>
-        <th>Unit Price</th>
-        <th>Quantity</th>
-        <th>Payment</th>
         <th></th>
       </tr>
     </thead>
@@ -57,10 +57,15 @@
           <% unless controller_name == 'bake_jobs' && action_name == 'my_bake_jobs' %>
             <td><%= link_to bake_job.baker.full_name, bake_job.baker %></td>
           <% end %>
-          <td><%= bake_job.status.humanize.titleize %></td>
-          <td><%= bake_job.bake_order.submitted ? bake_job.bake_order.submitted_at.to_formatted_s(:hour_minute_day_month_year) : "" %></td>
-          <td><%= link_to bake_job.bake.name, bake_job.bake %></td>
-          <td>
+          <td class="bakester-table-cell-show-lg">
+            <% if bake_job.bake_order.submitted %>
+              <%= bake_job.bake_order.submitted_at.to_formatted_s(:day_month_year)%><span class="bakester-space-or-new-line-lg"></span><%= bake_job.bake_order.submitted_at.to_formatted_s(:hour_minute) %>
+            <% else %>
+              <%= "" %>
+            <% end %>
+          </td>
+          <td class="bakester-table-cell-show-sm"><%= link_to bake_job.bake.name, bake_job.bake %></td>
+          <td class="bakester-table-cell-show-md bakester-text-end">
             <% if bake_job.bake_order.submitted %>
               <% bake_price = bake_job.price_at_order %>
               <%= number_to_currency(bake_price / 100.0) %>
@@ -69,14 +74,15 @@
             <% end %>
           </td>
           <% bake_quantity = bake_job.quantity %>
-          <td><%= bake_job.quantity %></td>
-          <td>
+          <td class="bakester-table-cell-show-md text-center"><%= bake_job.quantity %></td>
+          <td class="bakester-text-end">
             <% if bake_job.bake_order.submitted %>
               <%= number_to_currency(bake_quantity * bake_price / 100.0) %>
             <% else %>
               <%= "" %>
             <% end %>          
           </td>
+          <td><%= bake_job.status.humanize.titleize %></td>
           <td><%= link_to "edit", edit_bake_job_url(bake_job.id, return: action_name) %></td>
         </tr>
       <% end %>

@@ -16,8 +16,16 @@
     </header>
     <main class="flex-shrink-0">
       <div class="bakester-main container-md mb-5">
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
+      <% if notice %>
+        <div class="alert alert-success">
+          <p><%= notice %></p>
+        </div>
+      <% end %>
+      <% if alert %>
+        <div class="alert alert-secondary">
+          <p><%= alert %></p>
+        </div>
+      <% end %>
         <%= yield %>
       </div>
     </main>

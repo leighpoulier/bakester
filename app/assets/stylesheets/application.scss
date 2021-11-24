@@ -53,6 +53,57 @@ $bakester-logo-brown: #4c260bff;
   background-color: $bakester-light-pink;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.bakester-space-or-new-line-lg:after {
+  content: "\a";
+  white-space: pre;
+}
+
+@include media-breakpoint-up(lg) {
+  .bakester-space-or-new-line-lg:after {
+    content: " ";
+  }
+}
+
+.bakester-table-cell-show-lg {
+  display: none;
+}
+
+@include media-breakpoint-up(lg) {
+  .bakester-table-cell-show-lg {
+    display: table-cell;
+  }
+}
+
+.bakester-table-cell-show-md {
+  display: none;
+}
+
+@include media-breakpoint-up(md) {
+  .bakester-table-cell-show-md {
+    display: table-cell;
+  }
+}
+
+.bakester-table-cell-show-sm {
+  display: none;
+}
+
+@include media-breakpoint-up(sm) {
+  .bakester-table-cell-show-sm {
+    display: table-cell;
+  }
+}
+
+
+
 // ------------------------ NAV -----------------------------
 
 .navbar-collapse {
@@ -550,5 +601,13 @@ $card-height: 100%;
     flex-direction: row;
     flex-wrap: wrap;
   }
+
+}
+
+// --------------------- TABLE ------------------------
+
+.bakester-text-end {
+  text-align: end;
+  padding-right: 1rem !important;
 
 }
