@@ -5,7 +5,7 @@
           <% if @bake.image.attached? %>
         <%= image_tag @bake.image, class: 'bakester-show-bake-image' %>
       <% else %>
-        <%= image_tag 'no-image' , class: 'bakester-show-bake-image' %>
+        <%= image_tag image_path('no-image') , class: 'bakester-show-bake-image' %>
       <% end %>
   </div>
 
