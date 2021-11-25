@@ -112,7 +112,6 @@ class BakesController < ApplicationController
 
   def search_params
     puts "SEARCH PARAMS"
-    byebug
     # There are two separate category selects on the view, because of layout issues.  They have two different parameters.
     if params[:category_narrow] && !params[:category_narrow].empty? && (!params.include?(:category) || params[:category].empty? )
       params[:category] = params[:category_narrow]

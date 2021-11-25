@@ -11,7 +11,6 @@ class BakeOrdersController < ApplicationController
   before_action :set_return_instance, only: [:show, :edit, :update_cart]
 
   def index
-    byebug
     filter = params[:filter]
     case filter
     when 'all'
