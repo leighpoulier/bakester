@@ -23,7 +23,7 @@ class Users::SessionsController < Devise::SessionsController
   def after_sign_in_path_for(resource)
     stored_location_for(resource) ||
       if params[:return] && params[:return] != ""
-        "/#{params[:return]}"
+        "#{params[:return]}"
       elsif resource.is_a?(User) && resource.baker
         my_bakes_path
       else

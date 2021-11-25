@@ -17,7 +17,7 @@ class Bake < ApplicationRecord
   IMAGE_UPLOAD_MAX_HEIGHT = 500
 
   SORT_OPTIONS = {"Name" => "name", "Price" => "price", "Unit Price" => "unit_price", "Date Added" => "created_at", "Date Updated" => "updated_at",  "Lead Time" => "lead_time_days", "View Count" => "view_count" }
-  DEFAULT_SORT_COLUMN = "updated_at"
+  DEFAULT_SORT_COLUMN = "created_at"
   DEFAULT_SORT_DIRECTION = "desc"
 
   belongs_to :baker, class_name: "User"

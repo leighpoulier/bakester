@@ -7,7 +7,8 @@ class BakeJobsController < ApplicationController
   before_action except: [:index, :my_bake_jobs, :users_bake_jobs] do
     is_admin_or_owner?(@bake_job)
   end
-
+  after_action :set_return, only: [:index, :my_bake_jobs, :users_bake_jobs]
+  before_action :set_return_instance, only: [:show, :edit]
 
   def index
     @bake_jobs = BakeJob.eager_loading.order(:created_at)
@@ -88,25 +89,12 @@ class BakeJobsController < ApplicationController
     end
   end
 
-  def redirect_to_context    
-    case params[:context]
-    when 'cart'
-      redirect_to :cart
-    when 'index'
-      redirect_to :bake_jobs
-    when 'my_bake_jobs'
-      redirect_to :my_bake_jobs
-    else
-      redirect_to :cart
-    end
-
-  end
-
   def set_filter_list
     @filter_list = ["all", "pending", "complete"]
     if current_user.admin
       @filter_list.push("cancelled", "in_cart")
     end
   end
+
 
 end

@@ -7,6 +7,8 @@ class BakeOrdersController < ApplicationController
   before_action except: [:index, :my_bake_orders, :cart, :update_cart, :empty_cart, :users_bake_orders] do
     is_admin_or_owner?(@bake_order)
   end
+  after_action :set_return, only: [:index, :my_bake_orders, :users_bake_orders, :cart]
+  before_action :set_return_instance, only: [:show, :edit, :update_cart]
 
   def index
     filter = params[:filter]
@@ -68,12 +70,12 @@ class BakeOrdersController < ApplicationController
         else
           if session[:cart][bake_id]  #  if it already exists
             session[:cart][bake_id] += quantity  #increment by quantity
-            unless params[:context] == 'cart'
+            unless @return && @return == '/cart'
               flash.notice = "#{quantity && quantity > 1 ? "#{quantity} " : "" }#{Bake.find(bake_id).name} added to cart"
             end
           else  # if it doesn't exist
             session[:cart][bake_id] = quantity  # add the quantity to cart
-            unless params[:context] == 'cart'
+            unless @return && @return == '/cart'
               flash.notice = "#{quantity && quantity > 1 ? "#{quantity} " : "" }#{Bake.find(bake_id).name} added to cart"
             end
           end
@@ -141,16 +143,6 @@ class BakeOrdersController < ApplicationController
 
   def bake_order_params
     params.require(:bake_order).permit(:bake_jobs_attributes).permit(:bake_id, :quantity, :status)
-  end
-
-
-  def redirect_to_context
-    case params[:context]
-    when 'bakes'
-      redirect_to :bakes
-    else
-      redirect_to :cart
-    end
   end
 
   def set_filter_list

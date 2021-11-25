@@ -51,7 +51,7 @@
         <%= form_with url: cart_path, class: "row row-cols-1g-auto g-3 align-items-start"  do |f| %>
         <div class="input-group">
           <%= f.hidden_field :bake_id, value: @bake.id %>
-          <%= f.hidden_field :context, value: 'bakes' %>
+          <%#= f.hidden_field :context, value: 'bakes' %>
           <%#= f.label :unit, "Qty", class: 'form-label' %>
           <%= f.number_field :quantity, value: 1, step: 1, min: 1, class: 'form-control bakester-max-w-5 border-secondary rounded' %>
           <%= f.submit "Add to Cart", class: 'btn btn-secondary shadow' %>

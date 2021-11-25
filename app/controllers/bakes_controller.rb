@@ -5,72 +5,16 @@ class BakesController < ApplicationController
   before_action except: [:index, :show, :my_bakes, :new, :create] do
     is_admin_or_owner?(@bake)
   end
+  before_action :set_search_params, only: [:index, :my_bakes]
+  after_action :set_return, only: [:index, :my_bakes, :users_bakes]
+
 
   def index
-    # filter = params[:filter]
-    # if filter
-    #   if current_user.admin
-    #     case filter
-    #     when 'all'
-    #       @bakes = Bake.all
-    #     when 'hidden'
-    #       @bakes = Bake.hidden
-    #     when 'active'
-    #       @bakes = Bake.active
-    #     end
-    #   else
-    #     redirect_to :bakes
-    #   end
-    # else
-    #   @bakes = Bake.active
-    # end
     @bakes = Bake.eager_loading.search_form(search_params)
-
-    # Default to searching by name, for the search form.
-    unless params[:search_name] || params[:search_description]
-      params[:search_name] = true
-    end
-    if user_signed_in? && current_user.admin
-      unless params[:active] || params[:hidden]
-        params[:active] = true
-      end
-    end
-
-    unless params[:sort_by] || params[:sort_dir]
-      params[:sort_by] = Bake::DEFAULT_SORT_COLUMN
-      params[:sort_dir] = Bake::DEFAULT_SORT_DIRECTION
-    end
-
   end
 
   def my_bakes
-    # filter = params[:filter]
-    # if filter == 'all'
-    #   @bakes = current_user.bakes
-    # elsif filter == 'hidden'
-    #   @bakes = current_user.bakes.hidden
-    # else
-    #   @bakes = current_user.bakes.active
-    # end
     @bakes = current_user.bakes.eager_loading.search_form(search_params)
-
-    # Default to searching by name, for the search form.
-    unless params[:search_name] || params[:search_description]
-      params[:search_name] = true
-    end
-
-    # Default filtering to active bakes.
-    unless params[:active] || params[:hidden]
-      params[:active] = true
-    end
-
-
-    unless params[:sort_by] || params[:sort_dir]
-      params[:sort_by] = Bake::DEFAULT_SORT_COLUMN
-      params[:sort_dir] = Bake::DEFAULT_SORT_DIRECTION
-    end
-
-
   end
 
   def show
@@ -173,6 +117,28 @@ class BakesController < ApplicationController
     else
       return params.permit(:search_text, :search_name, :search_description, :category, :sort_by, :sort_dir, :price_min, :price_max, :unit_price_min, :unit_price_max, :lead_time_min, :lead_time_max  )
     end
+  end
+
+  def set_search_params
+
+    # Default to searching by name, for the search form.
+    unless params[:search_name] || params[:search_description]
+      params[:search_name] = true
+    end
+
+    # Default filtering to active bakes.
+    if action_name = 'my_bakes' || (action_name = 'index' && user_signed_in? && current_user.admin)
+      unless params[:active] || params[:hidden]
+        params[:active] = true
+      end
+    end
+
+    # Default sort
+    unless params[:sort_by] || params[:sort_dir]
+      params[:sort_by] = Bake::DEFAULT_SORT_COLUMN
+      params[:sort_dir] = Bake::DEFAULT_SORT_DIRECTION
+    end
+
   end
 
 
