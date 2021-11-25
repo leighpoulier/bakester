@@ -21,6 +21,14 @@ amazon_production:
   region: us-east-2
   bucket: bakester-image-upload-production
 
+amazon_seeds_testing:
+  service: S3
+  access_key_id: <%= Rails.application.credentials.dig(:aws_seeds_testing, :access_key_id) %>
+  secret_access_key: <%= Rails.application.credentials.dig(:aws_seeds_testing, :secret_access_key) %>
+  region: us-east-2
+  bucket: bakester-image-upload-seeds-testing
+
+
 # Remember not to checkin your GCS keyfile to a repository
 # google:
 #   service: GCS

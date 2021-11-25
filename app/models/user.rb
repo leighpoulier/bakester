@@ -12,10 +12,12 @@ class User < ApplicationRecord
 
   has_many :carts, -> {where(submitted: false).includes(bake_jobs: [:bake])}, class_name: 'BakeOrder'
 
-  # excluding those bake_jobs with where the bake_order is unsubmitted
+  # excluding those bake_jobs with where the bake_order is not submitted (carts)
   has_many :bake_jobs, ->{ joins(:bake_order).where( bake_order: {submitted: true }) }, through: :bakes
 
   validates :first_name, :last_name, presence: true
+  validates :email, uniqueness: true, format: /@/
+  validates_uniqueness_of :email
 
   scope :bakers, ->  {where(baker: true) }
   scope :eager_loading, -> { includes(bakes: [:category, image_attachment: [:blob]]) }

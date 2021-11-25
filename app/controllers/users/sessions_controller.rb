@@ -24,6 +24,8 @@ class Users::SessionsController < Devise::SessionsController
     stored_location_for(resource) ||
       if params[:return] && params[:return] != ""
         "#{params[:return]}"
+      elsif resource.is_a?(User) && resource.admin
+        admin_path
       elsif resource.is_a?(User) && resource.baker
         my_bakes_path
       else

@@ -23,7 +23,8 @@ default: &default
 
 development:
   <<: *default
-  database: Bakester_development
+  #database: Bakester_development
+  database: Bakester_seeds_testing
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
