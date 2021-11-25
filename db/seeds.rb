@@ -44,7 +44,7 @@ resources.each { |model, plural|
       model_object = Object.const_get(model).find(resource[:id])
 
       if model == 'Bake'
-        unless bake.image.attached?
+        unless model_object.image.attached?
           file_matches = Dir[Rails.root.join('db', 'seed_data', 'images', "bake_#{model_object.id}.*")]
           if file_matches.length == 1
             image_path = file_matches[0]
