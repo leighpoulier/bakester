@@ -342,13 +342,11 @@ $card-height: 100%;
 .bakester-card-flex {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  column-gap: 2%;
+  row-gap: 1rem;
   margin-top: 1rem;
 }
 
-.card {
- width: 100%;
-}
 
 .card-img {
  width: 100%;
@@ -397,80 +395,93 @@ $card-height: 100%;
   }
 }
 
-
-
+.card {
+  width: 100%;
+ }
 @include media-breakpoint-up(sm) { 
-
   .card {
-    // width: 16rem;
-    width: 48%
-  }
-
-  .card-img {
-    // height: 12rem;
-  }
-
+    width: 49%;
+   }
 }
-
-@include media-breakpoint-up(md) { 
-
-  .card {
-    width: 20rem;
-  }
-
-  .card-img {
-    height: 15rem;
-  }
-
-}
-
 @include media-breakpoint-up(lg) { 
-
   .card {
-    width: 28rem;
-  }
-
-  .card-img {
-    height: 21rem;
-  }
-
-  .bakester-card-flex {
-    gap: 1rem;
-  }
-
-}
-
-@include media-breakpoint-up(xl) { 
-
-  .card {
-    width: 22rem;
-  }
-
-  .card-img {
-    height: 16.5rem;
-  }
-
-  .bakester-card-flex {
-    gap: 1.5rem;
-  }
-
+    width: 32%;
+   }
 }
 
 
-@include media-breakpoint-up(xxl) { 
+// @include media-breakpoint-up(sm) { 
 
-  .card {
-    width: 24rem;
-  }
+//   .card {
+//     // width: 16rem;
+//     width: 48%
+//   }
 
-  .card-img {
-    height: 18rem;
-  }
+//   .card-img {
+//     // height: 12rem;
+//   }
 
-  .bakester-card-flex {
-    gap: 2rem;
-  }
-}
+// }
+
+// @include media-breakpoint-up(md) { 
+
+//   .card {
+//     width: 20rem;
+//   }
+
+//   .card-img {
+//     height: 15rem;
+//   }
+
+// }
+
+// @include media-breakpoint-up(lg) { 
+
+//   .card {
+//     width: 28rem;
+//   }
+
+//   .card-img {
+//     height: 21rem;
+//   }
+
+//   .bakester-card-flex {
+//     gap: 1rem;
+//   }
+
+// }
+
+// @include media-breakpoint-up(xl) { 
+
+//   .card {
+//     width: 22rem;
+//   }
+
+//   .card-img {
+//     height: 16.5rem;
+//   }
+
+//   .bakester-card-flex {
+//     gap: 1.5rem;
+//   }
+
+// }
+
+
+// @include media-breakpoint-up(xxl) { 
+
+//   .card {
+//     width: 24rem;
+//   }
+
+//   .card-img {
+//     height: 18rem;
+//   }
+
+//   .bakester-card-flex {
+//     gap: 2rem;
+//   }
+// }
 
 
 // -------------- BUTTONS -----------------
