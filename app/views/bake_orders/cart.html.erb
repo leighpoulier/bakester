@@ -29,7 +29,7 @@
       <!-- Button trigger modal -->
       <button type="button" class="btn btn-secondary shadow" data-bs-toggle="modal" data-bs-target="#checkoutModal">Checkout</button>
     <% else %>
-      <%= button_to "Checkout", login_path, method: :get,params: {return: 'cart'}, class: "btn btn-secondary shadow"  %>
+      <%= button_to "Checkout", login_path, method: :get,params: {return: '/cart'}, class: "btn btn-secondary shadow"  %>
     <% end %>
   </div>
 </div>
