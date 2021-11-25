@@ -112,6 +112,12 @@ class BakesController < ApplicationController
 
   def search_params
     puts "SEARCH PARAMS"
+    byebug
+    # There are two separate category selects on the view, because of layout issues.  They have two different parameters.
+    if params[:category_narrow] && !params[:category_narrow].empty? && (!params.include?(:category) || params[:category].empty? )
+      params[:category] = params[:category_narrow]
+      params.delete(:category_narrow)
+    end
     if user_signed_in? && (current_user.admin || action_name == 'my_bakes')
       return params.permit(:active, :hidden, :search_text, :search_name, :search_description, :category, :sort_by, :sort_dir, :price_min, :price_max, :unit_price_min, :unit_price_max, :lead_time_min, :lead_time_max  )
     else
@@ -127,7 +133,7 @@ class BakesController < ApplicationController
     end
 
     # Default filtering to active bakes.
-    if action_name = 'my_bakes' || (action_name = 'index' && user_signed_in? && current_user.admin)
+    if action_name == 'my_bakes' || (action_name == 'index' && user_signed_in? && current_user.admin)
       unless params[:active] || params[:hidden]
         params[:active] = true
       end

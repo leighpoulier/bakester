@@ -24,7 +24,7 @@
       
       <div class="input-group py-2 bakester-width-100 bakester-display-flex-none-sm">
         <span class="input-group-text bakester-bg-light-pink">Category:</span>
-        <%= f.select :category, options_for_select(Category.filter_options, selected: params[:category]), {}, {class: "form-select"} %>
+        <%= f.select :category_narrow, options_for_select(Category.filter_options, selected: params[:category]), {}, {class: "form-select"} %>
       </div>
 
       <div class="input-group bakester-search-form-search-spacing">
@@ -34,10 +34,11 @@
           <!--<label for="floatingSearchInput">Search</label>-->
           <%= f.label :search_text, "Search", class: 'form-label', for: "floatingSearchInput" %>
         </div>
-
+        
         <span class="input-group-text bakester-bg-light-pink bakester-display-flex-sm">Category:</span>
         <%= f.select :category, options_for_select(Category.filter_options, selected: params[:category]), {}, {class: "form-select bakester-max-w-10 bakester-display-flex-sm"} %>
-        <%= f.submit "Search", class: "btn btn-secondary shadow bakester-btn-end-rounded"  %>
+        
+        <%= f.submit "Search", name: nil, class: "btn btn-secondary shadow bakester-btn-end-rounded"  %>
       </div>
 
       <div class="d-flex py-2 bakester-flex-row-sm">
