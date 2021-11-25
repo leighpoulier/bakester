@@ -71,7 +71,6 @@ class BakeOrdersController < ApplicationController
         else
           quantity = 1
         end
-        byebug
         if user_signed_in?
           if bake_job = @cart.bake_jobs.where(bake_id: bake_id).first  #already exists in cart
             bake_job.increment!(:quantity, quantity )

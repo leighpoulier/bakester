@@ -38,7 +38,6 @@ resources.each { |model, plural|
 
     resources_array.each { |resource|
 
-
       resource.delete(:id)
 
       case model
@@ -59,24 +58,6 @@ resources.each { |model, plural|
         resource.delete(:bake_order_created_at)
       end
       model_object_id = Object.const_get(model).insert!(resource).first.values[0]
-
-      # if model == 'Bake'
-      #   bake = Bake.find(model_object_id)
-      #   unless bake.image.attached?
-      #     pp bake.created_at
-      #     file_matches = Dir[Rails.root.join('db', 'seed_data', 'images', "bake_#{bake.created_at}.*")]
-      #     if file_matches.length == 1
-      #       image_path = file_matches[0]
-      #       image_file = File.basename(image_path)
-      #       bake.image.attach(io: File.open(image_path), filename: image_file)
-      #       puts "Attached image for #{bake.name}"
-      #     else
-      #       puts "Unable to find matching image for id: #{bake.id}"
-      #     end
-      #   end
-      # end
-
-
 
       model_object = Object.const_get(model).find(model_object_id)
 
