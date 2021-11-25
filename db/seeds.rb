@@ -37,26 +37,48 @@ resources.each { |model, plural|
     puts "Creating #{plural}"
 
     resources_array.each { |resource|
-      begin
-        existing_model_object = Object.const_get(model).find(resource[:id])
-      rescue
-        Object.const_get(model).insert!(resource)
-      end
-      model_object = Object.const_get(model).find(resource[:id])
 
-      if model == 'Bake'
-        unless model_object.image.attached?
-          file_matches = Dir[Rails.root.join('db', 'seed_data', 'images', "bake_#{model_object.id}.*")]
-          if file_matches.length == 1
-            image_path = file_matches[0]
-            image_file = File.basename(image_path)
-            model_object.image.attach(io: File.open(image_path), filename: image_file)
-            puts "Attached image for #{model_object.name}"
-          else
-            puts "Unable to find matching image for id: #{model_object.id}"
-          end
-        end
+
+      resource.delete(:id)
+
+      case model
+      when 'Bake'
+        resource[:baker_id] = User.find_by(email: resource[:user_email]).id
+        resource.delete(:user_email)
+        resource[:category_id] = Category.find_by(name: resource[:category_name]).id
+        resource.delete(:category_name)
+
+      when 'BakeOrder'
+        resource[:user_id] = User.find_by(email: resource[:user_email]).id
+        resource.delete(:user_email)
+
+      when 'BakeJob'
+        resource[:bake_id] = Bake.find_by(created_at: resource[:bake_created_at]).id
+        resource.delete(:bake_created_at)
+        resource[:bake_order_id] = BakeOrder.find_by(created_at: resource[:bake_order_created_at]).id
+        resource.delete(:bake_order_created_at)
       end
+      model_object_id = Object.const_get(model).insert!(resource).first.values[0]
+
+      # if model == 'Bake'
+      #   bake = Bake.find(model_object_id)
+      #   unless bake.image.attached?
+      #     pp bake.created_at
+      #     file_matches = Dir[Rails.root.join('db', 'seed_data', 'images', "bake_#{bake.created_at}.*")]
+      #     if file_matches.length == 1
+      #       image_path = file_matches[0]
+      #       image_file = File.basename(image_path)
+      #       bake.image.attach(io: File.open(image_path), filename: image_file)
+      #       puts "Attached image for #{bake.name}"
+      #     else
+      #       puts "Unable to find matching image for id: #{bake.id}"
+      #     end
+      #   end
+      # end
+
+
+
+      model_object = Object.const_get(model).find(model_object_id)
 
       if model_object.respond_to?(:name)
         puts "Created #{model} : #{model_object.name}"
@@ -68,9 +90,37 @@ resources.each { |model, plural|
     }
 
     puts "Created #{Object.const_get(model).count} #{plural}"
-    
+
   end
 }
+
+
+images = Dir[Rails.root.join('db','seed_data','images','bake_*.*')]
+puts "Found #{images.length} images"
+
+
+images.each do |image|
+
+  basename = File.basename(image)
+
+  regex = /bake_(?<bake_created_at>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}\:\d{2}\.\d{1,6})\.(?<image_extension>[a-z]{1,4})/
+
+  matches = basename.match(regex)
+  bake_created_at = matches[:bake_created_at]
+  image_extension = matches[:image_extension]
+
+  bake = Bake.find_by(created_at: bake_created_at)
+
+  if bake
+  
+    bake.image.attach(io: File.open(image), filename: basename)
+    puts "Attached image for #{bake.name}"
+
+  else
+    puts "Unable to find matching image for id: #{bake.id}"
+  end
+
+end
 
 
 
