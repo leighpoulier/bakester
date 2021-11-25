@@ -1,5 +1,7 @@
 <h1>Order</h1>
 
+<% admin = current_user.admin %>
+
 <% if !@bake_order.submitted %>
   <%= render 'cart', cart: @bake_order %>
 <% else %>
@@ -9,7 +11,7 @@
         <th scope="row">Order No</th>
         <td><%= @bake_order.id %></td>
       </tr>
-      <% if current_user.admin %>
+      <% if admin %>
         <tr>
           <th scope="row">User</th>
           <td><%= link_to @bake_order.user.full_name, @bake_order.user %></td>
@@ -27,6 +29,9 @@
     <table class="table table-striped">
       <thead>
         <tr>
+          <% if admin %>
+            <th scope="column">Bake Job</th>
+          <% end %>
           <th scope="column">Status</th>
           <th scope="column">Baker</th>
           <th scope="column">Bake</th>
@@ -38,6 +43,9 @@
       <tbody>
         <% @bake_order.bake_jobs.each do |bake_job| %>
           <tr>
+            <% if admin %>
+              <td><%= link_to bake_job.id, bake_job %></th>
+            <% end %>
             <td><%= bake_job.status.titleize %></td>
             <td><%= link_to bake_job.baker.full_name, bake_job.baker %>
             <td><%= link_to bake_job.bake.name, bake_job.bake %></td>
@@ -56,11 +64,36 @@
         </tfoot>
       </tbody>
     </table>
+    <div class="py-2">
+      <%= button_to "Back", @return, method: :get, class: "btn btn-secondary shadow", form_class: "inline-button-to"  %>
+    </div>
   <% else %>
     <p>Order is empty!</p>
-  <% end %>
+    <div class="py-2">
+      <% if admin %>
+          <button type="button" class="btn btn-primary shadow" data-bs-toggle="modal" data-bs-target="#deleteBakeOrderModal">Delete Order</button>
+      <% end %>
+      <%= button_to "Back", @return, method: :get, class: "btn btn-secondary shadow", form_class: "inline-button-to"  %>
+    </div>
 
+
+    <% if admin %>
+      <div class="modal fade" id="deleteBakeOrderModal" tabindex="-1" role="dialog" aria-labelledby="deleteBakeOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteBakeOrderModalLabel">Delete Order</h5>
+              <button type="button" class="btn-close shadow" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">Are you sure you want to delete this order?</div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary shadow" data-bs-dismiss="modal">Close</button>
+              <%= button_to "Delete Order", @bake_order, method: :delete, class: "btn btn-primary shadow", form_class: "inline-button-to" %>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 <% end %>
-<div class="py-2">
-  <%= button_to "Back", @return, method: :get, class: "btn btn-secondary shadow", form_class: "inline-button-to"  %>
-</div>

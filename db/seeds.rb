@@ -45,8 +45,6 @@ resources.each { |model, plural|
         if file_matches.length == 1
           image_path = file_matches[0]
           image_file = File.basename(image_path)
-
-          puts "Image file: #{image_file}"
           model_object.image.attach(io: File.open(image_path), filename: image_file)
           puts "Attached image for #{model_object.name}"
         else
