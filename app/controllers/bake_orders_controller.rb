@@ -1,10 +1,10 @@
 class BakeOrdersController < ApplicationController
   before_action :authenticate_user!, except: [:cart, :update_cart, :empty_cart]
-  before_action :is_admin?, only: [:index, :users_bake_orders]
+  before_action :is_admin?, only: [:index, :users_bake_orders, :users_cart]
   before_action :set_filter_list, only: [:index]
   before_action :set_order, only: [:show, :destroy]
   before_action :set_cart, only: [:cart, :checkout, :empty_cart, :update_cart, :add_to_cart]
-  before_action except: [:index, :my_bake_orders, :cart, :update_cart, :empty_cart, :users_bake_orders] do
+  before_action except: [:index, :my_bake_orders, :cart, :update_cart, :empty_cart, :users_bake_orders, :users_cart] do
     is_admin_or_owner?(@bake_order)
   end
   after_action :set_return, only: [:index, :my_bake_orders, :users_bake_orders, :cart]
@@ -46,6 +46,12 @@ class BakeOrdersController < ApplicationController
   def cart
   end
 
+  def users_cart
+    @user = User.find(params[:user_id])
+    @cart = @user.cart
+    @bake_order = @cart
+  end
+
 
   def update_cart
     if params[:bake_order]
@@ -65,6 +71,7 @@ class BakeOrdersController < ApplicationController
         else
           quantity = 1
         end
+        byebug
         if user_signed_in?
           if bake_job = @cart.bake_jobs.where(bake_id: bake_id).first  #already exists in cart
             bake_job.increment!(:quantity, quantity )

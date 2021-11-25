@@ -3,7 +3,11 @@
 <% admin = current_user.admin %>
 
 <% if !@bake_order.submitted %>
-  <%= render 'cart', cart: @bake_order %>
+  <% if @bake_order.user.id == current_user.id %>
+    <%= render 'cart', cart: @bake_order %>
+  <% elsif admin %>
+    <%= render 'users_cart', cart: @bake_order %>
+  <% end %>
 <% else %>
   <table class="table table-striped">
     <tbody>

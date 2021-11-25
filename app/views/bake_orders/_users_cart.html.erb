@@ -1,0 +1,42 @@
+<h1><%= @user.first_name %>'s Cart</h1>
+
+<% if cart.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(cart.errors.count, "error") %> prohibited checkout:</h2>
+
+    <ul>
+      <% cart.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= render 'cart', cart: cart %>
+
+<% if (user_signed_in? && cart.bake_jobs.any?) || @session_cart_size > 0 %>
+<div class="row">
+  <div class="col-auto bakester-mr-auto">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary shadow" data-bs-toggle="modal" data-bs-target="#emptyCartModal">Empty Cart</button>
+    <%#= button_to "Empty Cart", :cart, method: :delete, data: {confirm: "Are you sure you want to empty your cart?"}, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
+  </div>
+</div>
+<% end %>
+
+<div class="modal fade" id="emptyCartModal" tabindex="-1" role="dialog" aria-labelledby="emptyCartModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="emptyCartModalLabel">Empty Cart</h5>
+        <button type="button" class="btn-close shadow" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">Are you sure you want to empty your cart?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary shadow" data-bs-dismiss="modal">Close</button>
+        <%= button_to "Empty Cart", :cart, method: :delete, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
+
+      </div>
+    </div>
+  </div>
+</div>

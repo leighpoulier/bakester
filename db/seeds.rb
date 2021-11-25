@@ -37,18 +37,23 @@ resources.each { |model, plural|
     puts "Creating #{plural}"
 
     resources_array.each { |resource| 
-      Object.const_get(model).insert!(resource)
+      existing_model_object = Object.const_get(model).find(resource[:id])
+      unless existing_model_object
+        Object.const_get(model).insert!(resource)
+      end
       model_object = Object.const_get(model).find(resource[:id])
 
       if model == 'Bake'
-        file_matches = Dir[Rails.root.join('db', 'seed_data', 'images', "bake_#{model_object.id}.*")]
-        if file_matches.length == 1
-          image_path = file_matches[0]
-          image_file = File.basename(image_path)
-          model_object.image.attach(io: File.open(image_path), filename: image_file)
-          puts "Attached image for #{model_object.name}"
-        else
-          puts "Unable to find matching image for id: #{model_object.id}"
+        unless bake.image.attached?
+          file_matches = Dir[Rails.root.join('db', 'seed_data', 'images', "bake_#{model_object.id}.*")]
+          if file_matches.length == 1
+            image_path = file_matches[0]
+            image_file = File.basename(image_path)
+            model_object.image.attach(io: File.open(image_path), filename: image_file)
+            puts "Attached image for #{model_object.name}"
+          else
+            puts "Unable to find matching image for id: #{model_object.id}"
+          end
         end
       end
 

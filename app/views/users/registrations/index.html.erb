@@ -13,6 +13,7 @@
         <td><%= user.full_name %></td>
         <td><%= link_to 'Profile', user %></td>
         <td><%= link_to 'Edit', edit_user_reg_path(user) %></td>
+        <td><%= link_to 'Cart', users_cart_path(user)  %></td>
         <td><%= link_to 'Orders', users_bake_orders_path(user) %></td>
         <td><%= link_to 'Bake Jobs', users_bake_jobs_path(user) %></td>
         <td>

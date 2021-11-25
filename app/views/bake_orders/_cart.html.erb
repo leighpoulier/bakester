@@ -22,7 +22,6 @@
             <% running_total += line_total %>
             <td class="bakester-text-end"><%= number_to_currency(line_total / 100.0) %></td>
             <td class="text-center">
-            <p><%= @return %></p>
               <%= button_to bake_job, method: :put, params: {increment: 1}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
                 &#xFF0B;
               <% end %>
@@ -47,7 +46,6 @@
             <% running_total += line_total %>
             <td class="bakester-text-end"><%= number_to_currency(line_total / 100.0) %></td>
             <td class="text-center">
-            <p><%= @return %></p>
               <%= button_to cart_path, params: {bake_id: bake_id, quantity: 1}, class: 'btn btn-primary btn-sm bakester-text-bold shadow', form_class: "inline-button-to" do %>
                 &#xFF0B;
               <% end %>
@@ -71,5 +69,9 @@
     </tfoot>
   </table>
 <% else %>
-  <p>Your cart is empty!</p>
+  <% if action_name == "cart" %>
+    <p>Your cart is empty!</p>
+  <% else %>
+    <p>The cart is empty!</p>
+  <% end %>
 <% end %>

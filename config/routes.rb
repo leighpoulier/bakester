@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   post '/checkout', to: 'bake_orders#checkout'
   get '/myorders', to: 'bake_orders#my_bake_orders'
   get '/users/:user_id/orders', to: 'bake_orders#users_bake_orders', as: 'users_bake_orders'
+  get '/users/:user_id/cart', to: 'bake_orders#users_cart', as: 'users_cart'
   resources :bake_orders, path: 'orders'
   get '/mybakejobs', to: 'bake_jobs#my_bake_jobs', as: 'my_bake_jobs'
   get '/users/:user_id/bake_jobs', to: 'bake_jobs#users_bake_jobs', as: 'users_bake_jobs'
