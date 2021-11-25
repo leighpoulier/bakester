@@ -11,12 +11,14 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="input-group py-2">
+    <%#= form.label :name, class: 'form-label' %>
+    <span id="bakester-search-category-label" class="input-group-text bakester-bg-light-pink">Name:</span>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
 
-  <div class="actions">
-    <%= form.submit class: 'btn btn-primary shadow' %>
+  <div class="py-2">
+    <%= form.submit class: 'btn btn-secondary shadow' %>
   </div>
 <% end %>
+<%= button_to "Back", categories_path, method: :get, class: "btn btn-primary shadow", form_class: "inline-button-to"  %>

@@ -87,16 +87,13 @@
 <%#= hidden_field_tag :context, params[:return] %>
 
 <%= f.submit class: 'btn btn-secondary shadow' %>
-<% if current_user.admin %>
-      <button type="button" class="btn btn-primary shadow" data-bs-toggle="modal" data-bs-target="#deleteBakeJobModal">Delete Bake Job</button>
-<% end %>
-  
 <% end %>
 
-
-<p><%= @return %></p>
 <div class="py-2">
-  <%= button_to "Back", @return, method: :get, class: "btn btn-secondary shadow", form_class: "inline-button-to"  %>
+  <% if current_user.admin %>
+      <button type="button" class="btn btn-primary shadow" data-bs-toggle="modal" data-bs-target="#deleteBakeJobModal">Delete Bake Job</button>
+  <% end %>
+  <%= button_to "Back", @return, method: :get, class: "btn btn-primary shadow", form_class: "inline-button-to"  %>
 </div>
 
 <%# if current_user.admin %>

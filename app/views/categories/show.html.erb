@@ -4,6 +4,7 @@
 <p><%= pluralize(@category.bakes.count, "bake") %></p>
 <%= render 'bakes/list', bakes: @category.bakes %>
 
-
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
+<div class="py-2">
+  <%= link_to 'Edit', edit_category_path(@category) %> |
+  <%= link_to 'Back', categories_path %>
+</div>
