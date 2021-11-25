@@ -40,7 +40,9 @@ class ApplicationController < ActionController::Base
     end
 
     def set_return_instance
-      if session[:return] && session[:return] != ""
+      if params[:return] && params[:return] != ""
+        @return = params[:return]
+      elsif session[:return] && session[:return] != ""
         @return = session[:return]
       end
     end

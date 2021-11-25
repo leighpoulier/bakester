@@ -103,6 +103,7 @@ class BakeOrdersController < ApplicationController
       rescue
         render :cart
       else
+        session[:return] = '/bakes'
         redirect_to @cart
       end
     else
