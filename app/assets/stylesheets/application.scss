@@ -104,9 +104,6 @@ a:hover {
   max-width: 5rem;
 }
 
-.bakester-max-w-10 {
-  max-width: 10rem;
-}
 
 .bakester-whitespace-nowrap {
   white-space: nowrap;
@@ -553,6 +550,14 @@ $card-height: 100%;
   cursor: pointer;
 }
 
+
+.bakester-search-sort-select {
+  max-width: 10rem;
+}
+
+.bakester-search-sort-group {
+  justify-content: flex-end;
+}
 
 .hidden {
   height: 0;

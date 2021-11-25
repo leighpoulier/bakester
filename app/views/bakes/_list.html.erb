@@ -54,9 +54,9 @@
       <div class="d-flex py-2 bakester-flex-row-sm">
         <div id="bakester-search-form-activate" class="bakester-down-arrow bakester-whitespace-nowrap py-2">Advanced Search</div>
         <div class="flex-grow-1"></div>
-        <div class="input-group input-group-sm bakester-width-unset">
-          <%= f.select :sort_by, options_for_select(Bake::SORT_OPTIONS, selected: params[:sort_by]), {}, {class: "form-select bakester-max-w-10"} %>
-          <%= f.select :sort_dir, options_for_select({"Ascending" => "asc", "Descending" => "desc"}, selected: params[:sort_dir]), {}, {class: "form-select bakester-max-w-10"} %>
+        <div class="input-group input-group-sm bakester-width-unset bakester-search-sort-group">
+          <%= f.select :sort_by, options_for_select(Bake::SORT_OPTIONS, selected: params[:sort_by]), {}, {class: "form-select bakester-search-sort-select"} %>
+          <%= f.select :sort_dir, options_for_select({"Ascending" => "asc", "Descending" => "desc"}, selected: params[:sort_dir]), {}, {class: "form-select bakester-search-sort-select"} %>
           <%= f.submit "Sort", class: "btn btn-secondary shadow bakester-btn-end-rounded"  %>
 
         </div>
