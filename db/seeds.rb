@@ -36,9 +36,10 @@ resources.each { |model, plural|
 
     puts "Creating #{plural}"
 
-    resources_array.each { |resource| 
-      existing_model_object = Object.const_get(model).find(resource[:id])
-      unless existing_model_object
+    resources_array.each { |resource|
+      begin
+        existing_model_object = Object.const_get(model).find(resource[:id])
+      rescue
         Object.const_get(model).insert!(resource)
       end
       model_object = Object.const_get(model).find(resource[:id])
