@@ -34,9 +34,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # DELETE /resource
-  # def destroy
+  def destroy
   #   super
-  # end
+    @user = User.find(params[:id])
+    @user.carts.each { |cart|
+      cart.bake_jobs.each { |bake_job|
+        bake_job.destroy
+      }
+      cart.destroy
+    }
+    @user.destroy
+    redirect_to_context
+  end
 
   def show
     id = params[:id]

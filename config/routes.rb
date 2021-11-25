@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get '/users/:id/edit', to: 'users/registrations#edit', as: 'edit_user_reg'
     put '/users/:id', to: 'users/registrations#update'
     get '/users', to: 'users/registrations#index'
+    delete '/users/:id', to: 'users/registrations#destroy'
   end
   get '/mybakes', to: 'bakes#my_bakes', as: 'my_bakes'
   delete '/bakes_image/:id', to: 'bakes#purge_image', as: 'bakes_image_purge'
