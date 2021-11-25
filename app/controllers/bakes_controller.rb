@@ -91,13 +91,22 @@ class BakesController < ApplicationController
   end
 
   def resize_image
+    # temporary path to uploaded image
+
     uploaded_image = params[:bake][:bake_image_upload]
     uploaded_image_path = Pathname.new(uploaded_image)
+
+    # pass image to MiniMagick
     image = MiniMagick::Image.new(uploaded_image_path)
+
+    # resize image down to max dimensions
     image.resize "#{Bake::IMAGE_UPLOAD_MAX_WIDTH}x#{Bake::IMAGE_UPLOAD_MAX_HEIGHT}>"
     
+    # if it worked, and the new image dimensions are as expected
     if image.data["geometry"]["width"] <= Bake::IMAGE_UPLOAD_MAX_WIDTH && image.data["geometry"]["height"] <= Bake::IMAGE_UPLOAD_MAX_HEIGHT
+      # set the proper image parameter to the resized temporary image
       params[:bake][:image] = params[:bake][:bake_image_upload]
+      # delete the temporary parameter
       params[:bake].delete(:bake_image_upload)
     else
       @bake.errors.add(:image, "Image resizing failed !")

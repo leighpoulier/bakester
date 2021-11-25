@@ -68,8 +68,15 @@
     <div class="">
       <p><%= @bake.description %></p>
     </div>
+
+  <!-- View Count -->
     <div>
       <span><%= pluralize(@bake.view_count, "view") %></span>
     </div>
+
+  <!-- Hidden -->
+    <% if !@bake.active %>
+      <span class='card-text alert alert-danger' role="alert">Hidden</span>
+    <% end %>
   </div>
 </div>

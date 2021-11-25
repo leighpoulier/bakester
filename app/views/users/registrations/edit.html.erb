@@ -39,24 +39,24 @@
 
 <% end %>
  
-  <div class="border border-primary rounded shadow p-4 my-2">
+  <div class="border border-primary rounded shadow p-4 my-4">
     <%= link_to "Change Password", :change_password, class: 'h3' %>
   </div>
 
-  <div class="border border-primary rounded shadow p-4 my-2">
+  <div class="border border-primary rounded shadow p-4 my-4">
     <%= link_to "View My Orders", :myorders, class: 'h3' %>
   </div>
 
 
   <% if current_user.baker %>
-    <div class="border border-primary rounded shadow p-4 my-2">
+    <div class="border border-primary rounded shadow p-4 my-4">
       <%= link_to "View My Bakes", :my_bakes, class: 'h3' %>
     </div>
-    <div class="border border-primary rounded shadow p-4 my-2">
+    <div class="border border-primary rounded shadow p-4 my-4">
       <%= link_to "View My Bake Jobs", :my_bake_jobs, class: 'h3' %>
     </div>
   <% else %>
-    <div class="border border-primary rounded shadow p-4 my-2">
+    <div class="border border-primary rounded shadow p-4 my-4">
       <h3 class="py-2">Upgrade to Baker!</h3>
       <p class="px-4">Upgrade your account to sell your own bakes on Bakester!</p>
       <div class="px-4">

@@ -3,14 +3,17 @@
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
   <%= render "users/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div class="input-group py-2">
+    <%#= f.label :email %><br />
+    <span id="bakester-search-category-label" class="input-group-text bakester-bg-light-pink">Email:</span>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
   </div>
 
-  <div class="actions">
+  <div class="py-2">
     <%= f.submit "Send me reset password instructions", class: 'btn btn-primary shadow' %>
   </div>
 <% end %>
 
-<%= render "users/shared/links" %>
+<div class="py-2">
+  <%= render "users/shared/links" %>
+</div>
