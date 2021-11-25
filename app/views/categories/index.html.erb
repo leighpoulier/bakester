@@ -23,6 +23,8 @@
   </tbody>
 </table>
 
-<br>
 
-<%= button_to "New Category", new_category_path, method: :get, class: "btn btn-secondary shadow", form_class: "inline-button-to"  %>
+<div class='py-4'>
+  <%= button_to "New Category", new_category_path, method: :get, class: "btn btn-secondary shadow", form_class: "inline-button-to"  %>
+  <%= button_to "Back", :admin, method: :get, class: 'btn btn-primary shadow' , form_class: "inline-button-to" %>
+</div>

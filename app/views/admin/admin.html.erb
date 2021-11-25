@@ -1,17 +1,17 @@
-<h1>Admin</h1>
+<h1>Administration</h1>
 
-<div class="py-2">
+<div class="border border-primary rounded shadow p-4 my-4">
   <%= link_to "Categories", :categories, class: "h3" %>
 </div>
-<div class="py-2">
+<div class="border border-primary rounded shadow p-4 my-4">
   <%= link_to "Users", :users, class: "h3" %>
 </div>
-<div class="py-2">
+<div class="border border-primary rounded shadow p-4 my-4">
   <%= link_to "All Bakes", bakes_path(params: {active: "1", hidden: "1"}), class: "h3" %>
 </div>
-<div class="py-2">
+<div class="border border-primary rounded shadow p-4 my-4">
   <%= link_to "Orders", :bake_orders, class: "h3" %>
 </div>
-<div class="py-2">
+<div class="border border-primary rounded shadow p-4 my-4">
   <%= link_to "Bake Jobs", :bake_jobs, class: "h3" %>
 </div>
