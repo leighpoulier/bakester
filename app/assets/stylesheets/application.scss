@@ -352,6 +352,7 @@ $card-height: 100%;
 
 .card-img {
  width: 100%;
+ height: 100%;
 //  height: 0;
 //  padding-bottom: 75%;
  object-fit: cover;
@@ -371,8 +372,29 @@ $card-height: 100%;
 
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;  
+  -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.auto-height-4-3-ratio {
+  position: relative;
+}
+
+.bakester-card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // overflow: hidden;
+  // object-fit: cover;
+  height: 100%;
+  // width: 100%;
+
+  a {
+    display: block;
+    height: 100%;
+  }
 }
 
 

@@ -1,11 +1,18 @@
 <div class="card shadow">
-    <%= link_to bake do %>
-      <% if bake.image.attached? %>
-        <%= image_tag(bake.image, class: 'card-img card-img-top') %>
-      <% else %>
-        <%= image_tag('no-image.svg', class: 'card-img card-img-top') %>
-      <% end %>
-    <% end %>
+  <!-- image -->
+    <div class="auto-height-4-3-ratio">
+      <svg viewBox = "0 0 4 3"</svg>
+      <div class="bakester-card-image">
+        <%= link_to bake do %>
+          <% if bake.image.attached? %>
+            <%= image_tag(bake.image, class: 'card-img card-img-top') %>
+          <% else %>
+            <%= image_tag('no-image.svg', class: 'card-img card-img-top') %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
   <div class="card-body bakester-card">
 
   <div>
@@ -22,11 +29,18 @@
 
   <!-- Price -->
     <div class="h1 mb-0"><%= "#{number_to_currency(bake.price_dollars)}"%></div>
+
+  <!-- Unit Price -->
     <% if bake.unit_count > 1 %>
+    <div>  
       <span class="bakester-inline"><%= "#{bake.unit_count > 1 ? "#{bake.unit_count} " : ""}#{bake.unit.pluralize(bake.unit_count)}" %></span>
       <span class="bakester-inline"><%= " - #{number_to_currency(bake.unit_price_dollars)} each" %></span>
-    <% end %>    <% unless (controller_name == 'bakes' && action_name == 'my_bakes') || (controller_name == 'registrations' && action_name == 'show') %>
-    <span class='card-text'><%= raw "By #{link_to bake.baker.full_name, bake.baker}" %></span>
+    </div>
+    <% end %>
+
+  <!-- Baker -->
+    <% unless (controller_name == 'bakes' && action_name == 'my_bakes') || (controller_name == 'registrations' && action_name == 'show') %>
+      <span class='card-text'><%= raw "By #{link_to bake.baker.full_name, bake.baker}" %></span>
     <% end %>
 
   <!-- Description -->
