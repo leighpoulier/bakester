@@ -31,7 +31,7 @@ This web app aims to provide a marketplace solution to the above problems for tw
 
 |User Type|Definition|
 |---|---|
-|Customers| People who want to buy a home made cake or other baked item rather than make it themselves, due to lack of ability, time etc.|
+|Customers| People who want to buy a home made cake or other baked item rather than make it themselves, due to lack of ability, time etc.  They might be a busy parent or just useless in the kitchen.|
 |Bakers|People who want to bake at home on behalf of others in exchange for payment.|
 
 A third type of administrative user called an "Admin" is also part of the design for this web app, although this user does not necessarily participate in the marketplace.
@@ -650,31 +650,6 @@ Edit Bake Job page - desktop
 
 
 
+## Thankyou
 
-
-
-
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Thank you for your time and for making it this far
