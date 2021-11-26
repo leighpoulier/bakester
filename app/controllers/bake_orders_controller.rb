@@ -8,7 +8,7 @@ class BakeOrdersController < ApplicationController
     is_admin_or_owner?(@bake_order)
   end
   after_action :set_return, only: [:index, :my_bake_orders, :users_bake_orders, :cart]
-  before_action :set_return_instance, only: [:show, :edit, :update_cart]
+  before_action :set_return_instance, only: [:show, :edit, :update_cart, :users_cart]
 
   def index
     filter = params[:filter]
