@@ -1,12 +1,25 @@
 # Bakester
 
-## Links
+## Necessary info for marking
+
+### Links
 
 |Links||
 |-|-|
 |Deployed Website:|<http://bakester.herokuapp.com>|
 |Github:|<https://github.com/leighpoulier/bakester>|
 |Trello:|<https://trello.com/b/Uayp6SHv/bakester>|
+
+### Seeding the database.
+
+A series of json files are read by the seeds file, and their contents inserted into the database.  Images are also attached to their relevant entities and updloaded to AWS S3 as part of the seeds process.
+
+The json files have been modified to include fields that enable relation to other entities without use of foreign keys.  This is because the primary keys are probably different to what they were when the json data was taken from the database.  To avoid problems with holes in the sequence of primary keys, the original primary keys are ignored.  New primary keys are generated as part of the insertion.  For entities that contain foreign keys another field, either "name" or the timestamp contained in "created_at" fields, is used to ascertain the correct related entity relationship and rebuild new foreign keys.
+
+### User accounts
+
+
+
 
 ## About Bakester
 
@@ -73,6 +86,25 @@ The website implements the following features:
    - View any user's cart and past orders.
    - View any baker's list of bake jobs, and edit their status.
 
+### Tech Stack
+
+Bakester uses a Ruby on Rails application framework.  All of the programming code is written in Ruby, and the individual web pages are written in html with embedded Ruby, preprocessed by the puma server and delivered to the browser as standard HTML.  Pages are styled using SCSS.
+
+The backend database is managed by PostgreSQL.
+
+Bakester makes use the following additional components:
+- Devise - a rails engine for login authorisation and user, session, and password management.
+- Bootsrap - for styling and standardised features such as buttons, modal popup dialog boxes and tooltips.  Many of the standard bootstrap styles are customised and extended, in particular colours.
+- JQuery - for a small amount of required client side scripting, including modal popups and tooltips.
+- MiniMagick - a ruby gem for image manipulation - which is used to reduce the size of uploaded images before sending them to the Amazon S3 bucket.  
+
+Bakester is deployed to a Heroku on a free "Hobby Dev" level account.
+
+### Third Party Services
+
+Bakester makes use of Amazon Web Services S3 buckets for it's image storage.  Two different buckets are setup, one for the development environment, and one for the production.  This is so that the development bucket can be cleared easily, without affecting the online Heroku hosted website. 
+
+
 ### Sitemap
 
 The following diagram represents a map of the main areas of the Bakester site and the typical flow of navigation between them.  The bold "Bakes" node is the root of the site, and all initial access to the site starts on this page, which includes a listing of all the bakes available for order.
@@ -80,6 +112,8 @@ The following diagram represents a map of the main areas of the Bakester site an
 ![Bakester site map](docs/sitemap/bakester_sitemap.svg)
 
 There are four shaded regions on the sitemap, which represent the three classes of user accessing the site and a fourth state where the user is not logged in.
+
+### Walkthrough / Screenshots
 
 Different parts of the site are available according to the users' status as follows:
 
@@ -97,16 +131,6 @@ An admin can access all of the above, with the addition of the ability to manage
 
 However, an admin is not automatically a baker, they too will need to upgrade their account to baker if they wish to create bakes and manage bakejobs in their own name.
 
-### Tech Stack
-
-Bakester uses a Ruby on Rails application framework.  All of the programming code is written in Ruby, and the individual web pages are written in html with embedded Ruby, preprocessed by the puma server and delivered to the browser as standard HTML.  Pages are styled using SCSS.
-
-Bakester makes use the following additional components:
-- Devise - a rails engine for login authorisation and user, session, and password management.
-- Bootsrap - for styling and standardised features such as buttons, modal popup dialog boxes and tooltips.  Many of the standard bootstrap styles are customised and extended, in particular colours.
-- JQuery - for a small amount of required client side scripting, including modal popups and tooltips.
-
-Bakester is deployed to a Heroku on a free "Hobby Dev" level account.
 
 ### Walkthrough / Screenshots
 
@@ -175,7 +199,7 @@ Cart view page on desktop.
 
 The user can then press the "Checkout" button, which after confirmation transforms the cart into an order and sends bake jobs to bakers.  After checking out, the user sees the new order confirmation.
 
-![Bakester compelted order view on mobile and tablet](docs/screenshots/04_checkout_mobile_tablet.png)
+![Bakester completed order view on mobile and tablet](docs/screenshots/04_checkout_mobile_tablet.png)
 Completed order page on mobile and tablet.
 ![Bakester completed order view on desktop](docs/screenshots/04_checkout_desktop.png)
 Completed order page on desktop.
@@ -232,6 +256,207 @@ Bake edit form on desktop.
 If another user makes an order for a bake, a modal popup will appear to indicate this to the baker.
 
 
+![New Bake Job modal on mobile and tablet](docs/screenshots/10_new_bake_jobs_modal_mobile_tablet.png)
+New Bake Job modal on mobile and tablet.
+![New Bake Job modal on desktop](docs/screenshots/10_new_bake_jobs_modal_desktop.png)
+New Bake Job modal on desktop.
+
+#### Managing Bake Jobs
+
+This modal prompt will provide a link to the Bake Jobs page, where the baker can see the status of all bake jobs and filter them by their completed status.
+
+
+![My bake jobs page on mobile and tablet](docs/screenshots/11_bake_jobs_mobile_tablet.png)
+My bake jobs page on mobile and tablet.
+![My bake jobs page on desktop](docs/screenshots/11_bake_jobs_desktop.png)
+My bake jobs page on desktop.
+
+#### Updating Bake Job Status
+
+If the baker clicks on link on the Job Number, or the "edit" link to the right, the status of the bake job can be updated to "Processing", "Shipped", "Delivered"
+
+
+![Edit bake job status on mobile and tablet](docs/screenshots/12_bake_job_mobile_tablet.png)
+Edit bake job status on mobile and tablet.
+![Edit bake job status on desktop](docs/screenshots/12_bake_job_desktop.png)
+Edit bake job status on desktop.
+
+#### Admin page
+
+An admin user can access an admin dashbord, from where they can manage all entities of the web app, including categores, users, bakes, orders, and bake jobs.
+
+![Admin page on mobile and tablet](docs/screenshots/13_admin_mobile_tablet.png)
+Admin page on mobile and tablet.
+![Admin page on desktop](docs/screenshots/13_admin_desktop.png)
+Admin page on desktop.
+
+#### All Users listing
+
+Clicking on the "Users" link opens the admin-only Users index page which lists all users, and provides links to view their carts, orders, bake_jobs, and profiles.
+
+![Users list on mobile and tablet](docs/screenshots/14_all_users_mobile_tablet.png)
+Users list on mobile and tablet.
+![Users list on desktop](docs/screenshots/14_all_users_desktop.png)
+Users list on desktop.
+
+#### Categories List
+
+From the Admin page, clicking on the "Categories" link opens the categories list, from which categories can be edited and deleted if they are empty.
+
+![Categories list on mobile and tablet](docs/screenshots/15_categories_mobile_tablet.png)
+Categories list on mobile and tablet.
+![Categories list on desktop](docs/screenshots/15_categories_desktop.png)
+Categories list on desktop.
+
+#### All Bakes 
+
+The "All Bakes" link takes the administrator to the previously discussed Bakes list, but includes some admin only search form parameters - enabling the inclusion of hidden bakes.
+
+
+## Under the hood
+
+### Database
+
+The database underneath Bakester is provided by PostgreSQL.  The main abstractions stored in the database are <strong>users</strong>, <strong>categories</strong>, <strong>bakes</strong>, <strong>bake_orders</strong> and <strong>bake_jobs</strong>.  Additional tables "active_storage_attachments", "active_storage_blobs" and "active_storage_variant_records" were automatically added for the storage of information related to the images of bakes, which are handled as ActiveStorage attachments.
+
+#### Entity Relationship Diagram (ERD)
+
+![Bakester Entity Relationship Diagram](docs/erd/bakester.erd.svg)
+[Bakester Entity Relationship Diagram - Click here for a larger version](docs/erd/bakester.erd.png)
+
+
+#### Users
+
+A user is a person who uses the site and holds an account. Information relating to the user is used to manage the sign up and login process and identify who is responsible for the various other entities of the app.
+
+The users table stores information relating to the users of the database.  Most of the fields in the users table were created by the Rails engine "Devise", although some extra fields have been added manually, such as the "admin" boolean and the "baker" boolean, which define the users status in those regards.  The "boolean_at" field keeps a record of the date and time that the user became a baker. Fields for "first_name" and "last_name" were created in addition to the default email so that more personalisation was possible in the app's views.
+
+Foreign Keys links to the users "id" column are used in the orders table, to define the owner of an order, and the bakes table, to define the "baker" of a bake.  Each user has many orders, and is the baker of many bakes.
+
+#### Categories
+
+All bakes are placed in to a category when they are created.  The list of categories is available for selection in the bake create/update form, but only admin users are able to create, update, or delete categories.  Only the "name" field is used throughout the app's views.
+
+A Foreign Key field linking to the categories "id" column are present on the bakes table, which defines which category a bake belongs to, and defines a one-to-many relationship.  Each category has many bakes.
+
+#### Bakes
+
+A bake is the product of the web app.  It is a baked item that is offered for sale by a baker for other users to order.
+
+The bakes table holds the records of all the bakes that bakers have uploaded to the site for sale.  It includes many fields to describe the bake, such as "name", "description" and "price".
+
+Some bakes may include multiple items, for example a batch of 12 cupcakes, and so additional fields are used to store the "unit_count" (12) and "unit", (the name of the basic unit of the  bake, eg "cupcake").  Additional tooltips are provided in the bake create/edit form to explain these fields, as experience has shown them not to be intuitive.
+
+A "view_count" field keeps track of how many times a bake has been viewed, so that it's popularity can be gauged by the baker or customers.  The field "lead_time_days" records how many days a baker requires in order to create a bake, and gives the customer an idea of how much time needs to be allowed following an order.  It also allows the customer to filter out bakes that cannot be provided in the available time before an event.
+
+The "baker_id" field is a foreign_key field which relates to the "users" table, and defines the "baker" (user) of this bake.  It is used to define who may edit the bake, and where bake jobs containing this bake are sent.  The relationship is one-to-many.  One baker (user) can have many bakes.
+
+The "category_id" field defines which category the bake belongs to, and makes a "one-to-many" relationship.  Each bake has one category, but each category has many bakes.
+
+A Foreign Key field linking to the bakes "id" column is used in the bake_jobs table to define which bake is being requested as part of a bake job. This defines a one-to-many relationship, where each bake_job relates to one bake.
+
+#### Bake Orders
+
+A "Bake Order", or an order(*) is created by a user when they create a cart, and proceed through checkout.  It contains a list of bake_jobs, which are the tasks that are sent to bakers for production.
+
+A cart is a special unfished bake order, of which there should only be one per user if any.  The field "submitted" defines whether a cart has been transformed into a bake order, although both are stored in the same "bake_orders" table.  A "submitted_at" field records a time stamp of when this happened.
+
+This restriction is only enforced in the logic of the `BakeOrder` controller, and i could not find a way to ensure only one cart existed per user inside the database, because the same table is used to store multiple past orders.
+
+The "user_id" field is a foreign key referring to the "users" table, and relates the bake order to a user through a one-to-many relationship. One user can have many bake orders.
+
+A Foreign key field to the bake orders "id" column is used in the "bake jobs" table, which defines which bake_order is the "parent" of the bake job.  This defines a one-to-many relationship. All bake_jobs are related to one order, but each bake_order contains many bake_jobs.
+
+* Initially this table and the model was name "order" but it was found that it conflicted with the built-in Rails ActiveRecord query method "order" which is used to define the sort column and direction of an ActiveRecord relation.
+
+#### Bake Jobs
+
+A bake_job is a line item of a Bake Order.  Each bake order can contain many different bakes each provided by a different baker.  A bake_job encapsulates the information required to be sent to a baker to fulfil an order, which bake, how many etc.
+
+A "bake_job" defines the details of a particular transaction, and is a join table between the "bake_orders" and "bakes" table.  Each bake_job contains foreign key fields for a bake_order (one-to_many) and a bake (one_to_many). Through these two relationships there is therefore a many-to-many relationship between bakes and bake orders.  Each bake_order can contain many bakes, and each bake may appear in many bake orders.
+
+The user checks out an entire order at once, which may consist of many bake_orders, each of which has it's own baker and status to be managed by that baker.  The "status" field is updated by bakers when they manage their bake jobs, and the customer can view that bake job's status as part of their order.  A field "quantity" tracks if multiple of a particular bake were ordered in one go, and the field "price_at_order" is used to keep track of the price of the bake at the time of the transaction, which differ from the current price of the bake.
+
+#### Active Storage
+
+Each bake has an image, but these are not stored in the bakes table.  
+
+The "active_storage_blobs" table stores information about attached files, including size, a checksum, content type, original filename and the name of the service storing the attachment.
+
+The table "active_storage_attachments" records information related to the relationship between the bake and the "storage_blob".  It is related to the bakes table through a polymorphic join.  The "record_type" and "record_id" strings define the relationship, with the "record_type" equal to "Bake" for this database, and the "record_id" being a foreign key field defining a one to many relationsip with bakes.  Each bake could have multiple attached images, although in my implementation there is only one.
+
+The "active_storage_attachments" table also contains a foreign key field for "blob_id" which creates a one-to-many relationship to the "active_storage_blobs" table.  This actually makes the "active_storage_attachments" table a join table, and the relationship from bakes to active_storage_blobs through active_storage_attachments is many_to_many.  This means that each bake can refer to many blobs, and each blob can be related to many bakes, which helps to ensure that there is no need for duplication of attached files.
+
+I have no idea what the "active_storage_variant_records" talbe is for.  It is empty in my database, but it also refes to the blobs table with a foreign key "blob_id", so i assume it is some sort of record of varation or variants to each image.
+
+
+### Models
+
+The same 5 main abstractions (users, categories, bakes, bake orders and bake_jobs) are implemented as models in the Rails MVC (model, view, controller) paradigm.
+
+Although the foundation of the associations between them is as discussed above in the database relationships, there are many additional details implemented in each model definition.
+
+#### User model
+
+The User model, although created automatically with devise, has been customised to add additional functionality required by the Bakester app.
+
+Mirroring the database relationships, the User model has many bakes, and many bake_orders. 
+
+A "bake_jobs" association is defined which relates a user to bake_jobs through the bake_orders table.  This means that it is possible to quickly determine who was the origin of a bake_job.  
+
+In addition an association called "carts" is defined, related to the "BakeOrder" model.  It returns only bake orders which are not submitted, related to a particular user.  There is nothing stopping an error in logic inserting multiple carts for one user into the bake_orders table, although there SHOULD be only one.  When ever this scope is used in practice, it is chained with .first, so that only one cart is returned.  The "carts" association also employs eager loading to include references to the component bake_jobs and bakes as part of the order.
+
+A "bakers" scope filters the users table to only those users which are bakers (as defined by the "baker" boolean column).
+
+An "eager_loading" scope aims to speed up query of the users table, and includes bakes, categories, and image attachments.  When viewing a user profile, all their bakes are displayed and this scope ensures limits the number of queries required to build that view.
+
+Additional helper methods are required which join the users first_name and last_name columns into a "full_name", and return the first cart (from the carts scope), and return the size of the user's cart.
+
+#### Category model
+
+The category model is comparitively simple, and defines the expected "has many" association with the bakes model.  This means each category relates to many bakes.
+
+One helper method "filter_options" builds the list of categories that is displayed in various select boxes within the app, and prepends an "All" option.
+
+#### Bake model
+
+The Bake is rather more involved.
+
+Some constants are defined which govern the behaviour of the image resizing feature, and also hard cord the fields by which the bakes listing may be sorted.
+
+Each Bake belongs to a user in two distinct ways.  A User may be associated to a Bake through the BakeJobs and BakeOrders model, as "a user who has ordered this bake".  A User can also be related directly to the User model, as "a user who owns this bake".  Becuase user is ambiguous, the term "baker" is used to define the owner of a bake, and the assocation is define in the model as "belongs_to :baker, class_name: "User" to avoid this potential conflict.
+
+Each Bake is associated to a Category with a "belongs_to" association.  This means each bake "has one" category
+
+The Bake model has "has_many" assocations on the BakeJob model, and also the BakeOrder model through the BakeJob model, as detailed above.  It also "has_one_attached" :image, although a future feature may be to be able to add multiple images.
+
+Many scope are defined to implement the search / filter / sort feature of the bakes index page.  A few helper scopes are defined, which each implement one aspect of the feature, such as text searching, filtering on price, category, or lead time.  The text search scope actually splits a multi-word search up in to an array of strings so that the words can be AND'd, which means that he words don't have to appear in the entered order.
+
+A very large and complicated scope builds up an ActiveRecord relationship with all these helper scopes, which returns the data set requested in the form.
+
+#### Bake Order model
+
+The BakeOrder model implements a "belongs_to" association with the User model, which means each BakeOrder has one user who created it.
+
+There is a "has_many" assocation in the BakeOrder model with the BakeJob model, because each bake_order contains many bake_jobs.  If a bake_order is destroyed (or a cart is emptied), related bake_job model objects will be deleted also, due to the "dependent destroy" addition.
+
+Each Bake Order also "has_many" bakes, through the "bake_jobs" join table. This means it is easy to access the list of bakes contained within the bake_jobs which are themselves contained within a bake_order.
+
+Each Bake Order also "has_many" bakers, as they are associated with their bakes.  This is a double "through" "many-to-many" relationship, where the BakeOrder model is associated to the User model (as baker) through the BakeJob model and the Bake model.
+
+An eager loading scope is used to improve load times for views accessing a bake order, and allows the related User, Baker and BakeJob information to be loaded in one query.
+
+Scopes "submitted" and "carts" are mutually exclusive, and restrict the returned set of bake_orders to those which are carts (not submitted) or submitted bake orders.
+
+#### Bake Job model
+
+The BakeJob is a joining model, with "belongs_to" assocations to both the BakeOrder model and Bake model.  Each BakeJob refers to one Bake and one BakeOrder, which implements the many-to-many relationship between bake_orders and bakes.
+
+The BakeJob model also defines an association to the User model, through the Bake model.  This relates the baker of a bake to the bake_job.  The BakeJob could also define an association to the User model through BakeOrder, as the customer who created the job, but this was removed as it wasn't actually required for the functionality of the app.
+
+An enum defines the available values of the "status" field, relating a hash of values with integers which are stored in the database.  This gives man helper methods to the model, including one for each enumerated value.  A few additional scopes are defined to enable more general filtereing of bake_jobs based on their status, which can be seen on the Bake Job index view.
+
+Eager loading is also implemented on the model, so that queries may include related fields from the BakeOrder model, the Bake model and it's related User model (as baker).
 
 
 
@@ -432,3 +657,6 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+Images may be attached to bakes by bakers when they create or update a bake.  The Rails controller action which handles this first resizes this image to maximum of 500x500 pixels, to ensure that large images do not get uploaded to the amazon servers, and to ensure fast download speeds when images are requested by browsers.  The resizing is handled by a ruby gem called "MiniMagick".

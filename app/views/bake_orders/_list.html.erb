@@ -31,9 +31,9 @@
           <th>User</th>
           <th class="text-center">Submitted?</th>
         <% end %>
-        <th class="text-center">Submitted</th>
+        <th class="text-center bakester-table-cell-show-md">Submitted</th>
         <th class="text-center">Bakes</th>
-        <th>Includes</th>
+        <th class="bakester-table-cell-show-lg">Includes</th>
         <th class="bakester-text-end">Order Total</th>
       </tr>
     </thead>
@@ -45,9 +45,9 @@
             <td><%= bake_order.user.full_name %></td>
             <td class="text-center"><%= bake_order.submitted ? "Y" : "N" %></td>
           <% end %>
-          <td class="text-center"><%= bake_order.submitted ? bake_order.submitted_at.to_formatted_s(:day_month_year) : "" %></td>
+          <td class="text-center bakester-table-cell-show-md"><%= bake_order.submitted ? bake_order.submitted_at.to_formatted_s(:day_month_year) : "" %></td>
           <td class="text-center"><%= bake_order.bake_jobs.sum(:quantity) %></td>
-          <td>
+          <td class="bakester-table-cell-show-lg">
             <% links = []  %>
             <% bake_job_display_limit = 3 %>
             <% bake_order.bake_jobs.limit(bake_job_display_limit).each do |bake_job| %>

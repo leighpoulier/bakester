@@ -11,6 +11,7 @@
   <div class="py-2">
     <%= button_to "#{@user.first_name}'s Orders", users_bake_orders_path(@user.id), method: :get, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
     <%= button_to "#{@user.first_name}'s Bake Jobs", users_bake_jobs_path(@user.id), method: :get, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
+    <%= button_to "Back to Users", :users, method: :get, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
   </div>
 <% end %>
 
