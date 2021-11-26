@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
 
 
   def set_new_bake_jobs
-    if user_signed_in? && current_user.baker && session[:new_bake_jobs]
+    if user_signed_in? && current_user.baker
       new_bake_jobs_alerted = session[:new_bake_jobs_alerted] ? session[:new_bake_jobs_alerted] : 0
       @new_bake_jobs = current_user.bake_jobs.new_bake_jobs.count - new_bake_jobs_alerted
       if session[:new_bake_jobs_alerted]
