@@ -48,7 +48,7 @@
         <th class="bakester-table-cell-show-md text-center">Quantity</th>
         <th class="bakester-text-end">Payment</th>
         <th>Status</th>
-        <th></th>
+        <th class="bakester-table-cell-show-md"></th>
       </tr>
     </thead>
     <tbody>
@@ -85,7 +85,7 @@
             <% end %>          
           </td>
           <td><%= bake_job.status.humanize.titleize %></td>
-          <td><%= link_to "edit", edit_bake_job_url(bake_job.id, return: action_name) %></td>
+          <td class="bakester-table-cell-show-md"><%= link_to "edit", edit_bake_job_url(bake_job.id, return: action_name) %></td>
         </tr>
       <% end %>
     </tbody>

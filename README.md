@@ -312,6 +312,13 @@ Categories list on desktop.
 
 The "All Bakes" link takes the administrator to the previously discussed Bakes list, but includes some admin only search form parameters - enabling the inclusion of hidden bakes.
 
+#### All Orders
+
+![All Orders list on mobile and tablet](docs/screenshots/16_all_orders_mobile_tablet.png)
+All Orders list on mobile and tablet.
+![All Orders list on desktop](docs/screenshots/16_all_orders_desktop.png)
+All Orders list on desktop.
+
 
 ## Under the hood
 
