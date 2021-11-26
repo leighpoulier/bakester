@@ -82,7 +82,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def index
-    @users = User.all
+    @users = User.all.order(last_name: :asc, first_name: :asc)
   end
 
   def upgrade_to_admin

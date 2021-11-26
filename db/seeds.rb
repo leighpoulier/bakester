@@ -40,33 +40,72 @@ resources.each { |model, plural|
 
       resource.delete(:id)
 
-      case model
-      when 'Bake'
-        resource[:baker_id] = User.find_by(email: resource[:user_email]).id
-        resource.delete(:user_email)
-        resource[:category_id] = Category.find_by(name: resource[:category_name]).id
-        resource.delete(:category_name)
+      begin
 
-      when 'BakeOrder'
-        resource[:user_id] = User.find_by(email: resource[:user_email]).id
-        resource.delete(:user_email)
+        case model
+        when 'Bake'
+          baker_id = User.find_by(email: resource[:user_email]).id
+          if baker_id && baker_id.is_a?(Integer)
+            resource[:baker_id] = baker_id
+            resource.delete(:user_email)
 
-      when 'BakeJob'
-        resource[:bake_id] = Bake.find_by(created_at: resource[:bake_created_at]).id
-        resource.delete(:bake_created_at)
-        resource[:bake_order_id] = BakeOrder.find_by(created_at: resource[:bake_order_created_at]).id
-        resource.delete(:bake_order_created_at)
-      end
-      model_object_id = Object.const_get(model).insert!(resource).first.values[0]
+            category_id = Category.find_by(name: resource[:category_name]).id
+            if category_id && category_id.is_a?(Integer)
+              resource[:category_id] = category_id
+              resource.delete(:category_name)
+            else
+              raise Exception.new("Couldn't find #{model}.category_id foreign key for: #{resource}")
+            end
+          else
+            raise Exception.new("Couldn't find #{model}.baker_id foreign key for: #{resource}")
+          end
 
-      model_object = Object.const_get(model).find(model_object_id)
+        when 'BakeOrder'
+          user_id = User.find_by(email: resource[:user_email]).id
+          if user_id && user_id.is_a?(Integer)
+            resource[:user_id] = user_id
+            resource.delete(:user_email)
+          else
+            raise Exception.new("Couldn't find #{model}.user_id foreign key for: #{resource}")
+          end
+          
 
-      if model_object.respond_to?(:name)
-        puts "Created #{model} : #{model_object.name}"
-      elsif model_object.respond_to?(:first_name)
-        puts "Created #{model} : #{model_object.first_name}"
+        when 'BakeJob'
+          bake_id = Bake.find_by(created_at: resource[:bake_created_at]).id
+          if bake_id && bake_id.is_a?(Integer)
+            resource[:bake_id] = bake_id
+            resource.delete(:bake_created_at)
+
+            bake_order_id =  BakeOrder.find_by(created_at: resource[:bake_order_created_at]).id
+            if bake_order_id && bake_order_id.is_a?(Integer)
+              resource[:bake_order_id] = BakeOrder.find_by(created_at: resource[:bake_order_created_at]).id
+              resource.delete(:bake_order_created_at)
+            else
+              raise Exception.new("Couldn't find #{model}.bake_order_id foreign key for: #{resource}")
+            end
+          else
+            raise Exception.new("Couldn't find #{model}.bake_id foreign key for: #{resource}")
+          end
+        end
+
+      
+        model_object_id = Object.const_get(model).insert!(resource).first.values[0]
+        if model_object_id.is_a?(Integer)
+          model_object = Object.const_get(model).find(model_object_id)
+        else
+          raise Exception.new("Couldn't insert new object")
+        end
+      rescue Exception => e
+        puts "Unable to create #{model} from : #{resource}"
+        puts "Error full_message: #{e.message}"
       else
-        puts "Created #{model} from : #{resource}"
+        if model_object.respond_to?(:name)
+          puts "Created #{model} : #{model_object.name}"
+        elsif model_object.respond_to?(:first_name)
+          puts "Created #{model} : #{model_object.first_name}"
+        else
+          puts "Created #{model} from : #{resource}"
+        end
       end
     }
 
@@ -90,15 +129,20 @@ images.each do |image|
   bake_created_at = matches[:bake_created_at]
   image_extension = matches[:image_extension]
 
-  bake = Bake.find_by(created_at: bake_created_at)
 
-  if bake
-  
-    bake.image.attach(io: File.open(image), filename: basename)
-    puts "Attached image for #{bake.name}"
-
+  begin
+    if bake_created_at.empty? || image_extension.empty?
+      raise Exception.new("Couldn't regex match bake_created_at from filename #{basename}")
+    else
+      bake = Bake.find_by!(created_at: bake_created_at)
+      bake.image.attach(io: File.open(image), filename: basename)
+      puts "Attached image for #{bake.name}"
+      
+    end
+  rescue Exception => e
+    puts "Unable to find attach image for id: #{bake.id}"
+    puts "Error full_message: #{e.full_message}"
   else
-    puts "Unable to find matching image for id: #{bake.id}"
   end
 
 end
