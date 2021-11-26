@@ -26,6 +26,9 @@
           <p><%= alert %></p>
         </div>
       <% end %>
+      <% if @new_bake_jobs && @new_bake_jobs > 0 %>
+        <%= render "shared/new_bake_jobs" %>
+      <% end %>
         <%= yield %>
       </div>
     </main>

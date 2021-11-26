@@ -2,9 +2,9 @@ class BakeJobsController < ApplicationController
 
   before_action :authenticate_user!, except: []
   before_action :is_admin?, only: [:index, :users_bake_jobs]
-  before_action :set_bake_job, except: [:index, :my_bake_jobs, :users_bake_jobs ]
+  before_action :set_bake_job, except: [:index, :my_bake_jobs, :my_bake_jobs_acknowledge, :users_bake_jobs ]
   before_action :set_filter_list, only: [:index, :my_bake_jobs, :users_bake_jobs ]
-  before_action except: [:index, :my_bake_jobs, :users_bake_jobs] do
+  before_action except: [:index, :my_bake_jobs, :my_bake_jobs_acknowledge, :users_bake_jobs] do
     is_admin_or_owner?(@bake_job)
   end
   after_action :set_return, only: [:index, :my_bake_jobs, :users_bake_jobs]
@@ -49,12 +49,24 @@ class BakeJobsController < ApplicationController
   def destroy
     @bake_job.destroy
     redirect_to_context
-
   end
 
   def my_bake_jobs
     @bake_jobs = current_user.bake_jobs.eager_loading.order(:submitted_at)
     filter_bake_jobs
+  end
+
+
+   def my_bake_jobs_acknowledge
+    if params[:acknowledge] = "1"
+      new_bake_jobs = current_user.bake_jobs.new_bake_jobs
+
+      new_bake_jobs.each do |new_bake_job|
+        new_bake_job.update_attribute(:status, :processing)
+      end
+    end
+    session.delete(:new_bake_jobs_alerted)
+    redirect_to my_bake_jobs_path
   end
 
   def users_bake_jobs

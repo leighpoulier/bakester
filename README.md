@@ -24,16 +24,23 @@ The flipside of this situation is someone who DOES have the skills and time to b
 
 This web app aims to solve this problem by bringing these two types of users together in a marketplace.
 
-
-## The Solution
-
+## The Website
 
 
+![Bakester main page](docs/screenshots/01_bakes_index_tablet_mobile_border.png)
+Bakester main page on mobile and tablet.
+
+![Bakester main page](docs/screenshots/01_bakes_index_desktop_border.png)
+Bakester main page on desktop.
+
+The Bakester web app solves the above problems by allowing users to create an account, browse available bakes, and place an order.
 
 
-## Designing the app
+### User Stories
 
-The problem requires consideration from the two sides of the marketplace, the "user" - someone who doesn't bake and wishes 
+The users of the web app can be divided into two main groups, those who want to purchase bakes, and those who want to supply them.
+
+
 
 
 

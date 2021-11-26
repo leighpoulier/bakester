@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   get '/users/:user_id/cart', to: 'bake_orders#users_cart', as: 'users_cart'
   resources :bake_orders, path: 'orders'
   get '/mybakejobs', to: 'bake_jobs#my_bake_jobs', as: 'my_bake_jobs'
+  post '/mybakejobs/acknowledge', to: 'bake_jobs#my_bake_jobs_acknowledge', as: 'my_bake_jobs_acknowledge'
   get '/users/:user_id/bake_jobs', to: 'bake_jobs#users_bake_jobs', as: 'users_bake_jobs'
   resources :bake_jobs, path: 'bakejobs'
   get '/*page', to: 'bakes#index', page: /(?!bakes|categories|users|orders|admin|rails).*/  

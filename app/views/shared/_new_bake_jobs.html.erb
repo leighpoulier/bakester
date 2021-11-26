@@ -1,0 +1,16 @@
+<div class="modal fade" id="newBakeJobsModal" tabindex="-1" role="dialog" aria-labelledby="newBakeJobsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newBakeJobsModalLabel">New Bake Jobs</h5>
+        <button type="button" class="btn-close shadow" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">You have <%= @new_bake_jobs %> new bake jobs</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary shadow" data-bs-dismiss="modal">Close</button>
+        <%= button_to "Bake Jobs", :my_bake_jobs, method: :get, params: {filter: :pending}, class: 'btn btn-secondary shadow', form_class: "inline-button-to" %>
+
+      </div>
+    </div>
+  </div>
+</div>

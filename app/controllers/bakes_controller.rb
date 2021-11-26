@@ -9,6 +9,7 @@ class BakesController < ApplicationController
   after_action :set_return, only: [:index, :my_bakes, :users_bakes]
 
 
+
   def index
     @bakes = Bake.eager_loading.search_form(search_params)
   end

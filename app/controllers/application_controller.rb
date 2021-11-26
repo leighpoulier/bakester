@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_session_cart_size
+  before_action :set_new_bake_jobs
   protected
 
   def configure_permitted_parameters
@@ -71,6 +72,20 @@ class ApplicationController < ActionController::Base
       else
         redirect_to :cart
       end
+    end
+  end
+
+
+  def set_new_bake_jobs
+    if user_signed_in? && current_user.baker && session[:new_bake_jobs]
+      new_bake_jobs_alerted = session[:new_bake_jobs_alerted] ? session[:new_bake_jobs_alerted] : 0
+      @new_bake_jobs = current_user.bake_jobs.new_bake_jobs.count - new_bake_jobs_alerted
+      if session[:new_bake_jobs_alerted]
+        session[:new_bake_jobs_alerted] += @new_bake_jobs
+      else
+        session[:new_bake_jobs_alerted] = @new_bake_jobs
+      end
+
     end
   end
 

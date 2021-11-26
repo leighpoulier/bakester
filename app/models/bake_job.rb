@@ -27,6 +27,7 @@ class BakeJob < ApplicationRecord
   # scope :with_job_total, -> { select('(bake_jobs.quantity * bake_jobs.price_at_order) AS job_total')}
 
   scope :in_cart, ->{where(status: 0)}
+  scope :new_bake_jobs, -> {where(status: :received)}
   scope :active, -> { where('status > ?', 0) }
   scope :cancelled, -> {where(status: :cancelled)}
   scope :submitted, -> { joins(:bake_order).where({bake_order:{ submitted: true }}) }

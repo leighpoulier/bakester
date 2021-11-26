@@ -3,5 +3,8 @@
 <%= render 'list', bake_jobs: @bake_jobs %>
 
 <div class="mt-5">
-  <%= button_to "Back", :root, method: :get, class: 'btn btn-secondary shadow', form_class: "inline-button-to" %>
+  <% if @bake_jobs.new_bake_jobs.count > 0 %>
+    <%= button_to "Acknowledge New Bake Jobs", :my_bake_jobs_acknowledge, params:{acknowledge: 1}, class: 'btn btn-secondary shadow', form_class: "inline-button-to" %>
+  <% end %>
+  <%= button_to "Back", :root, method: :get, class: 'btn btn-primary shadow', form_class: "inline-button-to" %>
 </div>

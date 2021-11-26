@@ -27,3 +27,8 @@ $(document).on('turbolinks:load', function() {
       $(this).toggleClass('up');
   });
 });
+
+// new_bake_jobs modal show
+$(document).on('turbolinks:load', function() {
+  $('#newBakeJobsModal').modal('show');
+});
