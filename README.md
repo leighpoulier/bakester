@@ -350,19 +350,19 @@ The database underneath Bakester is provided by PostgreSQL.  The main abstractio
 
 A user is a person who uses the site and holds an account. Information relating to the user is used to manage the sign up and login process and identify who is responsible for the various other entities of the app.
 
-The users table stores information relating to the users of the database.  Most of the fields in the users table were created by the Rails engine "Devise", although some extra fields have been added manually, such as the "admin" boolean and the "baker" boolean, which define the users status in those regards.  The "boolean_at" field keeps a record of the date and time that the user became a baker. Fields for "first_name" and "last_name" were created in addition to the default email so that more personalisation was possible in the app's views.
+The users table stores information relating to the users of the database.  Most of the fields in the users table were created by the Rails engine "Devise", although some extra fields have been added manually, such as the "admin" boolean and the "baker" boolean, which define the users status in those regards.  The "baker_at" field keeps a record of the date and time that the user became a baker. Fields for "first_name" and "last_name" were created in addition to the default email so that more personalisation was possible in the app's views.
 
-Foreign Keys links to the users "id" column are used in the orders table, to define the owner of an order, and the bakes table, to define the "baker" of a bake.  Each user has many orders, and is the baker of many bakes.
+Foreign Key links to the users "id" column are used in the orders table, to define the owner of an order, and the bakes table, to define the "baker" of a bake.  This defines a one-to-many relationship; each user has many orders, and is the baker of many bakes.
 
 #### Categories
 
-All bakes are placed in to a category when they are created.  The list of categories is available for selection in the bake create/update form, but only admin users are able to create, update, or delete categories.  Only the "name" field is used throughout the app's views.
+All bakes are placed into a category when they are created.  The list of categories is available for selection in the bake create/update form, but only admin users are able to create, update, or delete categories.  Only the "name" field is used throughout the app's views.
 
-A Foreign Key field linking to the categories "id" column are present on the bakes table, which defines which category a bake belongs to, and defines a one-to-many relationship.  Each category has many bakes.
+A Foreign Key field linking to the categories "id" column is present on the bakes table, which defines which category a bake belongs to, and defines a one-to-many relationship.  Each category has many bakes.
 
 #### Bakes
 
-A bake is the product of the web app.  It is a baked item that is offered for sale by a baker for other users to order.
+A bake is the main product of the web app marketplace.  It is a baked item that is offered for sale by a baker for other users to order.
 
 The bakes table holds the records of all the bakes that bakers have uploaded to the site for sale.  It includes many fields to describe the bake, such as "name", "description" and "price".
 
@@ -374,17 +374,17 @@ The "baker_id" field is a foreign_key field which relates to the "users" table, 
 
 The "category_id" field defines which category the bake belongs to, and makes a "one-to-many" relationship.  Each bake has one category, but each category has many bakes.
 
-A Foreign Key field linking to the bakes "id" column is used in the bake_jobs table to define which bake is being requested as part of a bake job. This defines a one-to-many relationship, where each bake_job relates to one bake.
+A Foreign Key field linking to the bakes "id" column is used in the bake_jobs table to define which bake is being requested as part of a bake job. This defines a one-to-many relationship, where each bake_job relates to one bake but each bake may appear in may  bake jobs.
 
 #### Bake Orders
 
-A "Bake Order", or an order(*) is created by a user when they create a cart, and proceed through checkout.  It contains a list of bake_jobs, which are the tasks that are sent to bakers for production.
+A "Bake Order", or an order(*) is created by a user when they create a cart, and proceed through checkout.  It contains a list of bake_jobs, which are the tasks that are sent to bakers to request production of a bake.
 
-A cart is a special unfished bake order, of which there should only be one per user if any.  The field "submitted" defines whether a cart has been transformed into a bake order, although both are stored in the same "bake_orders" table.  A "submitted_at" field records a time stamp of when this happened.
+A cart is a special unfished bake order, of which there should only be one per user, if any.  The field "submitted" defines whether a cart has been transformed into a bake order, although both are stored in the same "bake_orders" table.  A "submitted_at" field records a time stamp of when this happened.
 
-This restriction is only enforced in the logic of the `BakeOrder` controller, and i could not find a way to ensure only one cart existed per user inside the database, because the same table is used to store multiple past orders.
+This restriction is only enforced in the logic of the "User" and "BakeOrder" controllers, and i could not find a way to ensure only one cart existed per user inside the database, because the same table is used to store multiple past orders.
 
-The "user_id" field is a foreign key referring to the "users" table, and relates the bake order to a user through a one-to-many relationship. One user can have many bake orders.
+The "user_id" field is a foreign key referring to the "users" table, and relates the bake order to a user through a one-to-many relationship. One user can have many bake orders but each bake order belongs to one user.
 
 A Foreign key field to the bake orders "id" column is used in the "bake jobs" table, which defines which bake_order is the "parent" of the bake job.  This defines a one-to-many relationship. All bake_jobs are related to one order, but each bake_order contains many bake_jobs.
 
@@ -392,11 +392,11 @@ A Foreign key field to the bake orders "id" column is used in the "bake jobs" ta
 
 #### Bake Jobs
 
-A bake_job is a line item of a Bake Order.  Each bake order can contain many different bakes each provided by a different baker.  A bake_job encapsulates the information required to be sent to a baker to fulfil an order, which bake, how many etc.
+A bake_job is a line item of a bake_order.  Each bake order can contain many different bakes each provided by a different baker.  A bake_job encapsulates the information required to be sent to a baker to fulfil an order, which bake, how many etc.
 
 A "bake_job" defines the details of a particular transaction, and is a join table between the "bake_orders" and "bakes" table.  Each bake_job contains foreign key fields for a bake_order (one-to_many) and a bake (one_to_many). Through these two relationships there is therefore a many-to-many relationship between bakes and bake orders.  Each bake_order can contain many bakes, and each bake may appear in many bake orders.
 
-The user checks out an entire order at once, which may consist of many bake_orders, each of which has it's own baker and status to be managed by that baker.  The "status" field is updated by bakers when they manage their bake jobs, and the customer can view that bake job's status as part of their order.  A field "quantity" tracks if multiple of a particular bake were ordered in one go, and the field "price_at_order" is used to keep track of the price of the bake at the time of the transaction, which differ from the current price of the bake.
+The user checks out an entire order at once, which may consist of many bake_jobs, each of which has it's own baker and status to be managed by that baker.  The "status" field is updated by bakers when they manage their bake jobs, and the customer can view that bake job's status as part of their order.  A field "quantity" tracks if multiple of a particular bake were ordered in one go, and the field "price_at_order" is used to keep track of the price of the bake at the time of the transaction, which may differ from the current price of the bake if the bake is updated later.
 
 #### Active Storage
 
@@ -404,11 +404,11 @@ Each bake has an image, but these are not stored in the bakes table.
 
 The "active_storage_blobs" table stores information about attached files, including size, a checksum, content type, original filename and the name of the service storing the attachment.
 
-The table "active_storage_attachments" records information related to the relationship between the bake and the "storage_blob".  It is related to the bakes table through a polymorphic join.  The "record_type" and "record_id" strings define the relationship, with the "record_type" equal to "Bake" for this database, and the "record_id" being a foreign key field defining a one to many relationsip with bakes.  Each bake could have multiple attached images, although in my implementation there is only one.
+The "active_storage_attachments" table records information related to the relationship between the bake and the "storage_blob".  It is related to the "bakes" table through a polymorphic join.  The "record_type" and "record_id" strings define the relationship, with the "record_type" equal to "Bake" for this database, and the "record_id" being a foreign key field defining a one to many relationsip with bakes.  Each bake could have multiple attached images, although in my implementation there is only one.
 
-The "active_storage_attachments" table also contains a foreign key field for "blob_id" which creates a one-to-many relationship to the "active_storage_blobs" table.  This actually makes the "active_storage_attachments" table a join table, and the relationship from bakes to active_storage_blobs through active_storage_attachments is many_to_many.  This means that each bake can refer to many blobs, and each blob can be related to many bakes, which helps to ensure that there is no need for duplication of attached files.
+The "active_storage_attachments" table also contains a foreign key field for "blob_id" which creates a one-to-many relationship to the "active_storage_blobs" table.  This actually makes the "active_storage_attachments" table a join table, and the relationship from bakes to active_storage_blobs through active_storage_attachments is many-to-many.  This means that each bake can refer to many blobs, and each blob can be related to many bakes, which helps to ensure that there is no need for duplication of attached files.
 
-I have no idea what the "active_storage_variant_records" talbe is for.  It is empty in my database, but it also refes to the blobs table with a foreign key "blob_id", so i assume it is some sort of record of varation or variants to each image.
+I have no idea what the "active_storage_variant_records" table is for.  It is empty in my database, but it also refes to the blobs table with a foreign key "blob_id", so i assume it is some sort of record of varation or variants to each image.
 
 
 ### Models
@@ -423,7 +423,7 @@ The User model, although created automatically with devise, has been customised 
 
 Mirroring the database relationships, the User model has many bakes, and many bake_orders. 
 
-A "bake_jobs" association is defined which relates a user to bake_jobs through the bake_orders table.  This means that it is possible to quickly determine who was the origin of a bake_job.  
+A "bake_jobs" association is defined which relates a user to bake_jobs through the bake_orders table.  This means that it is possible to quickly determine who was the originator of a bake_job.  
 
 In addition an association called "carts" is defined, related to the "BakeOrder" model.  It returns only bake orders which are not submitted, related to a particular user.  There is nothing stopping an error in logic inserting multiple carts for one user into the bake_orders table, although there SHOULD be only one.  When ever this scope is used in practice, it is chained with .first, so that only one cart is returned.  The "carts" association also employs eager loading to include references to the component bake_jobs and bakes as part of the order.
 
@@ -445,19 +445,19 @@ The Bake is rather more involved.
 
 Some constants are defined which govern the behaviour of the image resizing feature, and also hard cord the fields by which the bakes listing may be sorted.
 
-Each Bake belongs to a user in two distinct ways.  A User may be associated to a Bake through the BakeJobs and BakeOrders model, as "a user who has ordered this bake".  A User can also be related directly to the User model, as "a user who owns this bake".  Becuase user is ambiguous, the term "baker" is used to define the owner of a bake, and the assocation is define in the model as "belongs_to :baker, class_name: "User" to avoid this potential conflict.
+Each Bake belongs to a user in two distinct ways.  A User may be associated to a Bake through the BakeJobs and BakeOrders model, as "a user who has ordered this bake".  A User can also be related directly to the User model, as "a user who owns this bake".  Becuase user is ambiguous, the term "baker" is used to define the owner of a bake, and the assocation is defined in the model as `belongs_to :baker, class_name: "User"` to avoid this potential conflict.
 
-Each Bake is associated to a Category with a "belongs_to" association.  This means each bake "has one" category
+Each Bake is associated to a Category with a "belongs_to" association.  This means each bake "has one" category.
 
 The Bake model has "has_many" assocations on the BakeJob model, and also the BakeOrder model through the BakeJob model, as detailed above.  It also "has_one_attached" :image, although a future feature may be to be able to add multiple images.
 
-Many scope are defined to implement the search / filter / sort feature of the bakes index page.  A few helper scopes are defined, which each implement one aspect of the feature, such as text searching, filtering on price, category, or lead time.  The text search scope actually splits a multi-word search up in to an array of strings so that the words can be AND'd, which means that he words don't have to appear in the entered order.
+Many scopes are defined to implement the search / filter / sort feature of the bakes index page.  A few helper scopes are defined, which each implement one aspect of the feature, such as text searching, filtering on price, category, or lead time.  The text search scope actually splits a multi-word search up in to an array of strings so that the words can be AND'ed, which means that the words don't have to appear in the entered order.
 
 A very large and complicated scope builds up an ActiveRecord relationship with all these helper scopes, which returns the data set requested in the form.
 
 #### Bake Order model
 
-The BakeOrder model implements a "belongs_to" association with the User model, which means each BakeOrder has one user who created it.
+The BakeOrder model implements a "belongs_to" association with the User model, which means each BakeOrder has one user, the user who created it.
 
 There is a "has_many" assocation in the BakeOrder model with the BakeJob model, because each bake_order contains many bake_jobs.  If a bake_order is destroyed (or a cart is emptied), related bake_job model objects will be deleted also, due to the "dependent destroy" addition.
 
@@ -475,7 +475,7 @@ The BakeJob is a joining model, with "belongs_to" assocations to both the BakeOr
 
 The BakeJob model also defines an association to the User model, through the Bake model.  This relates the baker of a bake to the bake_job.  The BakeJob could also define an association to the User model through BakeOrder, as the customer who created the job, but this was removed as it wasn't actually required for the functionality of the app.
 
-An enum defines the available values of the "status" field, relating a hash of values with integers which are stored in the database.  This gives man helper methods to the model, including one for each enumerated value.  A few additional scopes are defined to enable more general filtereing of bake_jobs based on their status, which can be seen on the Bake Job index view.
+An enum defines the available values of the "status" field, relating a hash of values with integers which are stored in the database.  This gives many helper methods to the model, including one for each enumerated value.  A few additional scopes are defined to enable more general filtering of bake_jobs based on their status, which can be seen on the Bake Job index view.
 
 Eager loading is also implemented on the model, so that queries may include related fields from the BakeOrder model, the Bake model and it's related User model (as baker).
 
