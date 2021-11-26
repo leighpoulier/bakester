@@ -1,7 +1,4 @@
 # Bakester
-
-## Necessary info for marking
-
 ### Links
 
 |Links||
@@ -9,15 +6,6 @@
 |Deployed Website:|<http://bakester.herokuapp.com>|
 |Github:|<https://github.com/leighpoulier/bakester>|
 |Trello:|<https://trello.com/b/Uayp6SHv/bakester>|
-
-### Seeding the database.
-
-A series of json files are read by the seeds file, and their contents inserted into the database.  Images are also attached to their relevant entities and updloaded to AWS S3 as part of the seeds process.
-
-The json files have been modified to include fields that enable relation to other entities without use of foreign keys.  This is because the primary keys are probably different to what they were when the json data was taken from the database.  To avoid problems with holes in the sequence of primary keys, the original primary keys are ignored.  New primary keys are generated as part of the insertion.  For entities that contain foreign keys another field, either "name" or the timestamp contained in "created_at" fields, is used to ascertain the correct related entity relationship and rebuild new foreign keys.
-
-### User accounts
-
 
 
 
@@ -102,7 +90,10 @@ Bakester is deployed to a Heroku on a free "Hobby Dev" level account.
 
 ### Third Party Services
 
-Bakester makes use of Amazon Web Services S3 buckets for it's image storage.  Two different buckets are setup, one for the development environment, and one for the production.  This is so that the development bucket can be cleared easily, without affecting the online Heroku hosted website. 
+Bakester makes use of Amazon Web Services S3 buckets for it's image storage.  Two different buckets are setup, one for the development environment, and one for the production.  This is so that the development bucket can be cleared easily, without affecting the online Heroku hosted website.
+
+Images may be attached to bakes by bakers when they create or update a bake.  The Rails controller action which handles this first resizes this image to maximum of 500x500 pixels, to ensure that large images do not get uploaded to the amazon servers, and to ensure fast download speeds when images are requested by browsers.  The resizing is handled by a ruby gem called "MiniMagick".
+
 
 
 ### Sitemap
@@ -183,6 +174,7 @@ The user can click on a bake in the main list, and be taken to it's detail page 
 
 ![Bakester bake view mobile and tablet](docs/screenshots/02_bake_view_mobile_tablet.png)
 Bake view page on mobile and tablet.
+
 ![Bakester bake view desktop](docs/screenshots/02_bake_view_desktop.png)
 Bake view page on desktop.
 
@@ -192,6 +184,7 @@ Once the user clicks "Add to Cart", the bake is added to their cart.  If they ar
 
 ![Bakester cart view mobile and tablet](docs/screenshots/03_cart_view_mobile_tablet.png)
 Cart view page on mobile and tablet.
+
 ![Bakester cart view desktop](docs/screenshots/03_cart_view_desktop.png)
 Cart view page on desktop.
 
@@ -201,6 +194,7 @@ The user can then press the "Checkout" button, which after confirmation transfor
 
 ![Bakester completed order view on mobile and tablet](docs/screenshots/04_checkout_mobile_tablet.png)
 Completed order page on mobile and tablet.
+
 ![Bakester completed order view on desktop](docs/screenshots/04_checkout_desktop.png)
 Completed order page on desktop.
 
@@ -258,6 +252,7 @@ If another user makes an order for a bake, a modal popup will appear to indicate
 
 ![New Bake Job modal on mobile and tablet](docs/screenshots/10_new_bake_jobs_modal_mobile_tablet.png)
 New Bake Job modal on mobile and tablet.
+
 ![New Bake Job modal on desktop](docs/screenshots/10_new_bake_jobs_modal_desktop.png)
 New Bake Job modal on desktop.
 
@@ -268,6 +263,7 @@ This modal prompt will provide a link to the Bake Jobs page, where the baker can
 
 ![My bake jobs page on mobile and tablet](docs/screenshots/11_bake_jobs_mobile_tablet.png)
 My bake jobs page on mobile and tablet.
+
 ![My bake jobs page on desktop](docs/screenshots/11_bake_jobs_desktop.png)
 My bake jobs page on desktop.
 
@@ -278,6 +274,7 @@ If the baker clicks on link on the Job Number, or the "edit" link to the right, 
 
 ![Edit bake job status on mobile and tablet](docs/screenshots/12_bake_job_mobile_tablet.png)
 Edit bake job status on mobile and tablet.
+
 ![Edit bake job status on desktop](docs/screenshots/12_bake_job_desktop.png)
 Edit bake job status on desktop.
 
@@ -287,6 +284,7 @@ An admin user can access an admin dashbord, from where they can manage all entit
 
 ![Admin page on mobile and tablet](docs/screenshots/13_admin_mobile_tablet.png)
 Admin page on mobile and tablet.
+
 ![Admin page on desktop](docs/screenshots/13_admin_desktop.png)
 Admin page on desktop.
 
@@ -296,6 +294,7 @@ Clicking on the "Users" link opens the admin-only Users index page which lists a
 
 ![Users list on mobile and tablet](docs/screenshots/14_all_users_mobile_tablet.png)
 Users list on mobile and tablet.
+
 ![Users list on desktop](docs/screenshots/14_all_users_desktop.png)
 Users list on desktop.
 
@@ -305,6 +304,7 @@ From the Admin page, clicking on the "Categories" link opens the categories list
 
 ![Categories list on mobile and tablet](docs/screenshots/15_categories_mobile_tablet.png)
 Categories list on mobile and tablet.
+
 ![Categories list on desktop](docs/screenshots/15_categories_desktop.png)
 Categories list on desktop.
 
@@ -314,10 +314,24 @@ The "All Bakes" link takes the administrator to the previously discussed Bakes l
 
 #### All Orders
 
+The "All Orders" link takes the administrator to a list of all orders existing on the site, including not yet submitted bake_orders (saved carts), and can be filtered by status (submitted or cart)
+
 ![All Orders list on mobile and tablet](docs/screenshots/16_all_orders_mobile_tablet.png)
 All Orders list on mobile and tablet.
+
 ![All Orders list on desktop](docs/screenshots/16_all_orders_desktop.png)
 All Orders list on desktop.
+
+#### All Bake Jobs
+
+The "All Bake Jobs" link shows the administrator a list of all bake_jobs in the site, and can be filtered based on status (Pending, Complete, Cancelled, In Cart).
+
+![All Bake Jobs list on mobile and tablet](docs/screenshots/17_all_bake_jobs_mobile_tablet.png)
+All Bake Jobs list on mobile and tablet.
+
+![All Bake Jobs list on desktop](docs/screenshots/17_all_bake_jobs_desktop.png)
+All Bake Jobs list on desktop.
+
 
 
 ## Under the hood
@@ -664,6 +678,3 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
-
-
-Images may be attached to bakes by bakers when they create or update a bake.  The Rails controller action which handles this first resizes this image to maximum of 500x500 pixels, to ensure that large images do not get uploaded to the amazon servers, and to ensure fast download speeds when images are requested by browsers.  The resizing is handled by a ruby gem called "MiniMagick".
